@@ -1,153 +1,125 @@
 <?php
 
-    require_once('authentication.php');
-
-    $servername = "localhost";
-    $username = "username";
-    $password = "password";
-    $dbname = "das_app";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+	$DB_SERVER="localhost"; #la direccion del servidor
+	$DB_USER="Xahernandez141"; #el usuario para la base de datos
+	$DB_PASS="***"; #la clave para este usuario
+	$DB_DATABASE="Xahernandez141_prueba"; #la base de datos a la que hay que conectarse
+	
+    $mysqli = new mysqli($DB_SERVER, $DB_USER, $DB_PASS, $DB_DATABASE);
+    if ($mysqli->connect_errno) {
+        echo "Se ha producido un error al conectarse a MySQL: (" . $mysqli->connect_errno . ") ";
     }
 
-    function id_admin($admin) {
-        global $conn;
-        $sql = "SELECT id from users where username = '$admin'";
-        $result = $conn->query($sql);
-        $id = 0;
-        if ($row = $result->fetch_assoc()) {
-            $id = $row['id'];
-        }
-        return $id;
-    }
+    $mysqli->set_charset("utf8");
+	
 
-    function buscar_id_actividad($actividad) {
-        global $conn;
-        $sql = "SELECT id from actividad where name = '$actividad'";
-        $result = $conn->query($sql);
-        $id = 0;
-        if ($result->num_rows > 0) {
-            if ($row = $result->fetch_assoc()) {
-                $id = $row['id'];
-            }
-        }
-        return $id;
-    }
-
-    function id_participantes() {
-        global $conn;
-        $sql = "SELECT id from common";
-        $result = $conn->query($sql);
-        $tokens_array = [];
-        while ($row = mysqli_fetch_assoc($result)) {
-            $id = $row['id'];
-            // Conseguir el token de este id
-            $sql_token = "SELECT token from tokens as t join common as c on t.id_user = c.id where c.id = $id";
-            $res_token = $conn->query($sql_token);
-            if ($row_token = $res_token->fetch_assoc()) {
-                $token = $row_token['token'];
-                array_push($tokens_array, $token);
-            }
-        }
-        return $tokens_array;
-    }
 
     if(isset($_POST['function'])) {
-        $func = $_POST['function'];
-        if($func === "listar") {
-            if (verify_user() == 1) {
-                // Listar todas las activiadades disponibles
-                $sql = "SELECT name, description, fecha, city from actividad where active=1";
-                $result = $conn->query($sql);
-                $actividades = array();
-                while ($row = $result->fetch_assoc()) {
-                    $name = $row['name'];
-                    $description = $row['description'];
-                    $fecha = $row['fecha'];
-                    $city = $row['city'];
-                    array_push($actividades,$name);
-                    array_push($actividades,$description);
-                    array_push($actividades,$fecha);
-                    array_push($actividades,$city);
+        $function = $_POST['function'];
+	
+		// Mostrar las actividades del grupo (Buscar en participaciones + unir con las tablas teams y actividad)
+		if($function === "mostrarActivas") {
+			$username = $_POST['username'];
+			// Buscar el equipo del usuario
+
+            $sql_id_team = "SELECT id_team FROM common WHERE id = (SELECT id FROM users WHERE username = '$username')";
+            $res_id_team = $mysqli->query($sql_id_team);
+			
+			if($row = mysqli_fetch_assoc($res_id_team)) {
+				$id_team = $row['id_team'];
+				// Seleccionar las actividades de grupo
+				$sql_actividades_grupo = "SELECT actividad_id FROM participaciones WHERE team_id = $id_team";
+                $res_actividades_grupo = $mysqli->query($sql_actividades_grupo);
+                $actividades_activas_array = [];
+                while($row = mysqli_fetch_assoc($res_actividades_grupo)){
+                    $id_actividad = $row['actividad_id'];
+                    $sql_actividad_activa = "SELECT * FROM actividad WHERE id = $id_actividad AND active = 1";
+                    $res_actividad_activa = $mysqli->query($sql_actividad_activa);
+                    while($row_actividad_activa = mysqli_fetch_assoc($res_actividad_activa)){
+                        $id = $row_actividad_activa['id'];
+                        $name = $row_actividad_activa['name'];
+                        $description = $row_actividad_activa['description'];
+                        $active = $row_actividad_activa['active'];
+                        $fecha = $row_actividad_activa['fecha'];
+                        $city = $row_actividad_activa['city'];
+                        array_push($actividades_activas_array, $id);
+                        array_push($actividades_activas_array, $name);
+                        array_push($actividades_activas_array, $description);
+                        array_push($actividades_activas_array, $active);
+                        array_push($actividades_activas_array, $fecha);
+                        array_push($actividades_activas_array, $city);
+                    }
                 }
-                echo json_encode($actividades);
-            
-            } else {
-                echo "Access denied";
-                http_response_code(403);
-            }
-        
-        } elseif ($func === "crear") {
-            if (verify_user() == 1) {
-                // El adminsitrador ha creado una nueva actividad
-                $usuario = $_POST['usuario'];
-                $actividad = $_POST['actividad'];
-                $descripcion = $_POST['descripcion'];
-                $city = $_POST['city'];
-                $fecha = date('Y-m-d');
-
-                // Conseguir el identificador del administrador
-                $admin_id = id_admin($usuario);
-                // Añadir a actividad nuevo registro
-                $sql = "INSERT into actividad(name, description, active, fecha, city) values('$actividad', '$descripcion', 1, '$fecha', '$city')";
-                $result = $conn->query($sql);
-                // Conseguir el identificador de la actividad creada
-                $id_act = buscar_id_actividad($actividad);
-                // Añadir registro a la tabla actividad_admin
-                $sql = "INSERT INTO actividad_admin VALUES('$id_act','$admin_id')";
-                $result = $conn->query($sql);
-                // Enviar mensaje a todos los participantes del evento
-                // Buscar los tokens de los participantes
-                $tokens = id_participantes();
-                // Preparar el mensaje para ser enviado a los participantes
-                // Preparar el mensaje para enviar
-                $msg = array(
-                    'registration_ids' => $tokens,
-                    'data' => array(
-                        "actividad" => "$actividad"
-                    ),
-                    'notification' => array(
-                        "body" => "Se ha creado una nueva actividad",
-                        "title" => "Actividad creada",
-                        "icon" => "ic_stat_ic_notification"
-                    )
-                );
-
-                $msgJSON = json_encode($msg);
-                echo $msgJSON;
-
-                // Enviar el mensaje al receptor
-                $ch = curl_init(); #inicializar el handler de curl
-                #indicar el destino de la petición, el servicio FCM de google
-                curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-                #indicar que la conexión es de tipo POST
-                curl_setopt( $ch, CURLOPT_POST, true );
-                #agregar las cabeceras
-                curl_setopt( $ch, CURLOPT_HTTPHEADER, $cabecera);
-                #Indicar que se desea recibir la respuesta a la conexión en forma de string
-                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-                #agregar los datos de la petición en formato JSON
-                curl_setopt( $ch, CURLOPT_POSTFIELDS, $msgJSON );
-                #ejecutar la llamada
-                $resultado= curl_exec( $ch );
-                #cerrar el handler de curl
-                curl_close( $ch );
-
-                if(curl_errno($ch)) {
-                    print curl_error($ch);
-                }
-                echo $resultado;
+                echo json_encode($actividades_activas_array);
                 http_response_code(200);
-            
+				
             } else {
-                echo "Access denied";
-                http_response_code(403);
+				echo 'El jugador no pertenece a ningún equipo';
+                http_response_code(401);
             }
+	
+        }elseif($function === "mostrarNoInscritos"){
+            $username = $_POST['username'];
 
+            $sql_id_team = "SELECT id_team FROM common WHERE id = (SELECT id FROM users WHERE username = '$username')";
+            $res_id_team = $mysqli->query($sql_id_team);
+			if($row = mysqli_fetch_assoc($res_id_team)) {
+				$id_team = $row['id_team'];
+            // Seleccionar las actividades de grupo
+				$sql_actividades_grupo = "SELECT actividad_id FROM participaciones WHERE team_id = $id_team";
+                $res_actividades_grupo = $mysqli->query($sql_actividades_grupo);
+                $actividades_id_inscrito_array = [];
+                while($row = mysqli_fetch_assoc($res_actividades_grupo)){
+                    $id_actividad = $row['actividad_id'];
+                    $sql_actividades_grupo_activa = "SELECT id FROM actividad WHERE id = $id_actividad AND active = 1";
+                    $res_actividades_grupo_activa = $mysqli->query($sql_actividades_grupo_activa);
+                    if($row = mysqli_fetch_assoc($res_actividades_grupo_activa)){
+                        array_push($actividades_id_inscrito_array, $row['id']);
+                    }
+                }
+                $sql_todas_actividades_activas = "SELECT id FROM actividad WHERE active = 1";
+                $res_todas_actividades_activas = $mysqli->query($sql_todas_actividades_activas);
+                $actividades_id_todas_activas = [];
+                while($row = mysqli_fetch_assoc($res_todas_actividades_activas)){
+                    $id_actividad = $row['id'];
+                    array_push($actividades_id_todas_activas, $id_actividad);
+                }
+                
+                $no_inscritas = array_diff($actividades_id_todas_activas, $actividades_id_inscrito_array);
+                $array_final_no_inscritas = [];
+                foreach($no_inscritas as $id){
+                    $sql = "SELECT * FROM actividad WHERE id = $id";
+                    $res = $mysqli->query($sql);
+                    while($row = mysqli_fetch_assoc($res)){
+                        $id = $row['id'];
+                        $name = $row['name'];
+                        $description = $row['description'];
+                        $active = $row['active'];
+                        $fecha = $row['fecha'];
+                        $city = $row['city'];
+                        array_push($array_final_no_inscritas, $id);
+                        array_push($array_final_no_inscritas, $name);
+                        array_push($array_final_no_inscritas, $description);
+                        array_push($array_final_no_inscritas, $active);
+                        array_push($array_final_no_inscritas, $fecha);
+                        array_push($array_final_no_inscritas, $city);
+                    }
+                }
+                echo json_encode($array_final_no_inscritas);
+                http_response_code(200);
+            }else{
+                echo "mal";
+            }
+		}
+		
+		else {
+			http_response_code(500);  			
         }
+
+    } 
+	
+	else {
+		http_response_code(500);
+
     }
 ?>
