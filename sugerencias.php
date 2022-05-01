@@ -1,7 +1,10 @@
 <?php
+
+    require_once('authentication.php');
+
     $servername = "localhost";
-    $username = "user";
-    $password = "pass";
+    $username = "username";
+    $password = "password";
     $dbname = "das_app";
 
     // Create connection
@@ -122,23 +125,29 @@
             http_response_code(200);
         
         } elseif ($func == "mostrarSolicitudes") {
-            $sql = "SELECT a.name as actividad, a.description, a.fecha, a.city, t.name as grupo from actividad as a join actividad_grupo as g join teams as t on a.id = g.id and t.id = g.team_id where g.aceptada = 0";
-            $result = $conn->query($sql);
-            $actividades = array();
-            while ($row = mysqli_fetch_assoc($result)) {
-                $actividad = $row['actividad'];
-                $description = $row['description'];
-                $fecha = $row['fecha'];
-                $city = $row['city'];
-                $grupo = $row['grupo'];
-                array_push($actividades, $actividad);
-                array_push($actividades, $description);
-                array_push($actividades, $fecha);
-                array_push($actividades, $city);
-                array_push($actividades, $grupo);
-            }
+            if (verify_user() == 1) {
+                $sql = "SELECT a.name as actividad, a.description, a.fecha, a.city, t.name as grupo from actividad as a join actividad_grupo as g join teams as t on a.id = g.id and t.id = g.team_id where g.aceptada = 0";
+                $result = $conn->query($sql);
+                $actividades = array();
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $actividad = $row['actividad'];
+                    $description = $row['description'];
+                    $fecha = $row['fecha'];
+                    $city = $row['city'];
+                    $grupo = $row['grupo'];
+                    array_push($actividades, $actividad);
+                    array_push($actividades, $description);
+                    array_push($actividades, $fecha);
+                    array_push($actividades, $city);
+                    array_push($actividades, $grupo);
+                }
 
-            echo json_encode($actividades);
+                echo json_encode($actividades);
+            
+            } else {
+                echo "Access denied";
+                http_response_code(403);
+            }
         }
     }
 

@@ -1,7 +1,10 @@
 <?php
+
+    require_once('authentication.php');
+
     $servername = "localhost";
-    $username = "user";
-    $password = "pass";
+    $username = "username";
+    $password = "password";
     $dbname = "das_app";
 
     // Create connection

@@ -1,7 +1,10 @@
 <?php
+
+    require_once('authentication.php');
+
     $servername = "localhost";
-    $username = "user";
-    $password = "pass";
+    $username = "username";
+    $password = "password";
     $dbname = "das_app";
 
     // Create connection
@@ -56,82 +59,94 @@
     if(isset($_POST['function'])) {
         $func = $_POST['function'];
         if($func === "listar") {
-            // Listar todas las activiadades disponibles
-            $sql = "SELECT name, description, fecha, city from actividad where active=1";
-            $result = $conn->query($sql);
-            $actividades = array();
-            while ($row = $result->fetch_assoc()) {
-                $name = $row['name'];
-                $description = $row['description'];
-                $fecha = $row['fecha'];
-                $city = $row['city'];
-                array_push($actividades,$name);
-                array_push($actividades,$description);
-                array_push($actividades,$fecha);
-                array_push($actividades,$city);
+            if (verify_user() == 1) {
+                // Listar todas las activiadades disponibles
+                $sql = "SELECT name, description, fecha, city from actividad where active=1";
+                $result = $conn->query($sql);
+                $actividades = array();
+                while ($row = $result->fetch_assoc()) {
+                    $name = $row['name'];
+                    $description = $row['description'];
+                    $fecha = $row['fecha'];
+                    $city = $row['city'];
+                    array_push($actividades,$name);
+                    array_push($actividades,$description);
+                    array_push($actividades,$fecha);
+                    array_push($actividades,$city);
+                }
+                echo json_encode($actividades);
+            
+            } else {
+                echo "Access denied";
+                http_response_code(403);
             }
-            echo json_encode($actividades);
         
         } elseif ($func === "crear") {
-            // El adminsitrador ha creado una nueva actividad
-            $usuario = $_POST['usuario'];
-            $actividad = $_POST['actividad'];
-            $descripcion = $_POST['descripcion'];
-            $city = $_POST['city'];
-            $fecha = date('Y-m-d');
+            if (verify_user() == 1) {
+                // El adminsitrador ha creado una nueva actividad
+                $usuario = $_POST['usuario'];
+                $actividad = $_POST['actividad'];
+                $descripcion = $_POST['descripcion'];
+                $city = $_POST['city'];
+                $fecha = date('Y-m-d');
 
-            // Conseguir el identificador del administrador
-            $admin_id = id_admin($usuario);
-            // Añadir a actividad nuevo registro
-            $sql = "INSERT into actividad(name, description, active, fecha, city) values('$actividad', '$descripcion', 1, '$fecha', '$city')";
-            $result = $conn->query($sql);
-            // Conseguir el identificador de la actividad creada
-            $id_act = buscar_id_actividad($actividad);
-            // Añadir registro a la tabla actividad_admin
-            $sql = "INSERT INTO actividad_admin VALUES('$id_act','$admin_id')";
-            $result = $conn->query($sql);
-            // Enviar mensaje a todos los participantes del evento
-            // Buscar los tokens de los participantes
-            $tokens = id_participantes();
-            // Preparar el mensaje para ser enviado a los participantes
-            // Preparar el mensaje para enviar
-            $msg = array(
-                'registration_ids' => $tokens,
-                'data' => array(
-                    "actividad" => "$actividad"
-                ),
-                'notification' => array(
-                    "body" => "Se ha creado una nueva actividad",
-                    "title" => "Actividad creada",
-                    "icon" => "ic_stat_ic_notification"
-                )
-            );
+                // Conseguir el identificador del administrador
+                $admin_id = id_admin($usuario);
+                // Añadir a actividad nuevo registro
+                $sql = "INSERT into actividad(name, description, active, fecha, city) values('$actividad', '$descripcion', 1, '$fecha', '$city')";
+                $result = $conn->query($sql);
+                // Conseguir el identificador de la actividad creada
+                $id_act = buscar_id_actividad($actividad);
+                // Añadir registro a la tabla actividad_admin
+                $sql = "INSERT INTO actividad_admin VALUES('$id_act','$admin_id')";
+                $result = $conn->query($sql);
+                // Enviar mensaje a todos los participantes del evento
+                // Buscar los tokens de los participantes
+                $tokens = id_participantes();
+                // Preparar el mensaje para ser enviado a los participantes
+                // Preparar el mensaje para enviar
+                $msg = array(
+                    'registration_ids' => $tokens,
+                    'data' => array(
+                        "actividad" => "$actividad"
+                    ),
+                    'notification' => array(
+                        "body" => "Se ha creado una nueva actividad",
+                        "title" => "Actividad creada",
+                        "icon" => "ic_stat_ic_notification"
+                    )
+                );
 
-            $msgJSON = json_encode($msg);
-            echo $msgJSON;
+                $msgJSON = json_encode($msg);
+                echo $msgJSON;
 
-            // Enviar el mensaje al receptor
-            $ch = curl_init(); #inicializar el handler de curl
-            #indicar el destino de la petición, el servicio FCM de google
-            curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-            #indicar que la conexión es de tipo POST
-            curl_setopt( $ch, CURLOPT_POST, true );
-            #agregar las cabeceras
-            curl_setopt( $ch, CURLOPT_HTTPHEADER, $cabecera);
-            #Indicar que se desea recibir la respuesta a la conexión en forma de string
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-            #agregar los datos de la petición en formato JSON
-            curl_setopt( $ch, CURLOPT_POSTFIELDS, $msgJSON );
-            #ejecutar la llamada
-            $resultado= curl_exec( $ch );
-            #cerrar el handler de curl
-            curl_close( $ch );
+                // Enviar el mensaje al receptor
+                $ch = curl_init(); #inicializar el handler de curl
+                #indicar el destino de la petición, el servicio FCM de google
+                curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+                #indicar que la conexión es de tipo POST
+                curl_setopt( $ch, CURLOPT_POST, true );
+                #agregar las cabeceras
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, $cabecera);
+                #Indicar que se desea recibir la respuesta a la conexión en forma de string
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                #agregar los datos de la petición en formato JSON
+                curl_setopt( $ch, CURLOPT_POSTFIELDS, $msgJSON );
+                #ejecutar la llamada
+                $resultado= curl_exec( $ch );
+                #cerrar el handler de curl
+                curl_close( $ch );
 
-            if(curl_errno($ch)) {
-                print curl_error($ch);
+                if(curl_errno($ch)) {
+                    print curl_error($ch);
+                }
+                echo $resultado;
+                http_response_code(200);
+            
+            } else {
+                echo "Access denied";
+                http_response_code(403);
             }
-            echo $resultado;
-            http_response_code(200);
 
         }
     }

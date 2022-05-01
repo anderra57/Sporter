@@ -1,7 +1,10 @@
 <?php
+
+    require_once('authentication.php');
+
     $servername = "localhost";
-    $username = "user";
-    $password = "pass";
+    $username = "username";
+    $password = "password";
     $dbname = "das_app";
 
     // Create connection
@@ -67,149 +70,161 @@
         $usuario = $_POST['usuario'];
         $actividad = $_POST['actividad'];
         if($func === "aceptar") {
-            // El administrador ha aceptado la solicitudud del grupo
+            if (verify_user() == 1) {
+                // El administrador ha aceptado la solicitudud del grupo
+                
+                // Conseguir identificador de la actividad
+                $id_act = actividad_id($actividad);
+                // Cambiar valor de la columna 'activo' a 1 en actividad
+                $sql = "UPDATE actividad set active = 1 where id = $id_act";
+                $conn->query($sql);
+                // Cambiar valor de la columna 'aceptada' a 1 en actividad_grupo
+                $sql = "UPDATE actividad_grupo set aceptada = 1 where id = $id_act";
+                $conn->query($sql);
+                // Enviar mensaje a todos los participantes del grupo que han sugerido la actividad
+                $tok_team = tokens_grupo($usuario);
+                // Preparar el mensaje para enviar
+                // Preparar el mensaje para enviar
+                $msg = array(
+                    'registration_ids' => $tok_team,
+                    'data' => array(
+                        "actividad" => "$actividad"
+                    ),
+                    'notification' => array(
+                        "body" => "La actividad $actividad ha sido aceptada",
+                        "title" => "Actividad aceptada",
+                        "icon" => "ic_stat_ic_notification"
+                    )
+                );
+
+                $msgJSON = json_encode($msg);
+                echo $msgJSON;
+
+                // Enviar el mensaje al receptor
+                $ch = curl_init(); #inicializar el handler de curl
+                #indicar el destino de la petición, el servicio FCM de google
+                curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+                #indicar que la conexión es de tipo POST
+                curl_setopt( $ch, CURLOPT_POST, true );
+                #agregar las cabeceras
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, $cabecera);
+                #Indicar que se desea recibir la respuesta a la conexión en forma de string
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                #agregar los datos de la petición en formato JSON
+                curl_setopt( $ch, CURLOPT_POSTFIELDS, $msgJSON );
+                #ejecutar la llamada
+                $resultado= curl_exec( $ch );
+                #cerrar el handler de curl
+                curl_close( $ch );
+
+                if(curl_errno($ch)) {
+                    print curl_error($ch);
+                }
+                echo $resultado;
+                // Enviar mensaje a todos los participantes informando de que hay una nueva actividad disponible
+                $tok_participantes = tokens_participantes();
+                // Preparar el mensaje para enviar
+                // Preparar el mensaje para enviar
+                $msg = array(
+                    'registration_ids' => $tok_participantes,
+                    'data' => array(
+                        "actividad" => "$actividad"
+                    ),
+                    'notification' => array(
+                        "body" => "Se ha creado nueva actividad",
+                        "title" => "Actividad creada",
+                        "icon" => "ic_stat_ic_notification"
+                    )
+                );
+
+                $msgJSON = json_encode($msg);
+                echo $msgJSON;
+
+                // Enviar el mensaje al receptor
+                $ch = curl_init(); #inicializar el handler de curl
+                #indicar el destino de la petición, el servicio FCM de google
+                curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+                #indicar que la conexión es de tipo POST
+                curl_setopt( $ch, CURLOPT_POST, true );
+                #agregar las cabeceras
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, $cabecera);
+                #Indicar que se desea recibir la respuesta a la conexión en forma de string
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                #agregar los datos de la petición en formato JSON
+                curl_setopt( $ch, CURLOPT_POSTFIELDS, $msgJSON );
+                #ejecutar la llamada
+                $resultado= curl_exec( $ch );
+                #cerrar el handler de curl
+                curl_close( $ch );
+
+                if(curl_errno($ch)) {
+                    print curl_error($ch);
+                }
+                echo $resultado;
             
-            // Conseguir identificador de la actividad
-            $id_act = actividad_id($actividad);
-            // Cambiar valor de la columna 'activo' a 1 en actividad
-            $sql = "UPDATE actividad set active = 1 where id = $id_act";
-            $conn->query($sql);
-            // Cambiar valor de la columna 'aceptada' a 1 en actividad_grupo
-            $sql = "UPDATE actividad_grupo set aceptada = 1 where id = $id_act";
-            $conn->query($sql);
-            // Enviar mensaje a todos los participantes del grupo que han sugerido la actividad
-            $tok_team = tokens_grupo($usuario);
-            // Preparar el mensaje para enviar
-            // Preparar el mensaje para enviar
-            $msg = array(
-                'registration_ids' => $tok_team,
-                'data' => array(
-                    "actividad" => "$actividad"
-                ),
-                'notification' => array(
-                    "body" => "La actividad $actividad ha sido aceptada",
-                    "title" => "Actividad aceptada",
-                    "icon" => "ic_stat_ic_notification"
-                )
-            );
-
-            $msgJSON = json_encode($msg);
-            echo $msgJSON;
-
-            // Enviar el mensaje al receptor
-            $ch = curl_init(); #inicializar el handler de curl
-            #indicar el destino de la petición, el servicio FCM de google
-            curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-            #indicar que la conexión es de tipo POST
-            curl_setopt( $ch, CURLOPT_POST, true );
-            #agregar las cabeceras
-            curl_setopt( $ch, CURLOPT_HTTPHEADER, $cabecera);
-            #Indicar que se desea recibir la respuesta a la conexión en forma de string
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-            #agregar los datos de la petición en formato JSON
-            curl_setopt( $ch, CURLOPT_POSTFIELDS, $msgJSON );
-            #ejecutar la llamada
-            $resultado= curl_exec( $ch );
-            #cerrar el handler de curl
-            curl_close( $ch );
-
-            if(curl_errno($ch)) {
-                print curl_error($ch);
+            } else {
+                echo "Access denied";
+                http_response_code(403);
             }
-            echo $resultado;
-            // Enviar mensaje a todos los participantes informando de que hay una nueva actividad disponible
-            $tok_participantes = tokens_participantes();
-            // Preparar el mensaje para enviar
-            // Preparar el mensaje para enviar
-            $msg = array(
-                'registration_ids' => $tok_participantes,
-                'data' => array(
-                    "actividad" => "$actividad"
-                ),
-                'notification' => array(
-                    "body" => "Se ha creado nueva actividad",
-                    "title" => "Actividad creada",
-                    "icon" => "ic_stat_ic_notification"
-                )
-            );
-
-            $msgJSON = json_encode($msg);
-            echo $msgJSON;
-
-            // Enviar el mensaje al receptor
-            $ch = curl_init(); #inicializar el handler de curl
-            #indicar el destino de la petición, el servicio FCM de google
-            curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-            #indicar que la conexión es de tipo POST
-            curl_setopt( $ch, CURLOPT_POST, true );
-            #agregar las cabeceras
-            curl_setopt( $ch, CURLOPT_HTTPHEADER, $cabecera);
-            #Indicar que se desea recibir la respuesta a la conexión en forma de string
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-            #agregar los datos de la petición en formato JSON
-            curl_setopt( $ch, CURLOPT_POSTFIELDS, $msgJSON );
-            #ejecutar la llamada
-            $resultado= curl_exec( $ch );
-            #cerrar el handler de curl
-            curl_close( $ch );
-
-            if(curl_errno($ch)) {
-                print curl_error($ch);
-            }
-            echo $resultado;
 
         } elseif ($func === "rechazar") {
-            // El administrado ha rechazado la sugerencia
+            if (verify_user() == 1) {
+                // El administrado ha rechazado la sugerencia
 
-            // Conseguir identificador de la actividad
-            $id_act = actividad_id($actividad);
-            // Borrar registro de la tabla actividad_grupo
-            $sql = "DELETE from actividad_grupo where id = $id_act";
-            $conn->query($sql);
-            // Borrar el registro de la actividad
-            $sql = "DELETE from actividad where id = $id_act";
-            $conn->query($sql);
-            // Enviar mensaje a todos los participantes del grupo que han sugerido la actividad
-            $tok_team = tokens_grupo($usuario);
+                // Conseguir identificador de la actividad
+                $id_act = actividad_id($actividad);
+                // Borrar registro de la tabla actividad_grupo
+                $sql = "DELETE from actividad_grupo where id = $id_act";
+                $conn->query($sql);
+                // Borrar el registro de la actividad
+                $sql = "DELETE from actividad where id = $id_act";
+                $conn->query($sql);
+                // Enviar mensaje a todos los participantes del grupo que han sugerido la actividad
+                $tok_team = tokens_grupo($usuario);
 
-            // Preparar el mensaje para enviar
-            // Preparar el mensaje para enviar
-            $msg = array(
-                'registration_ids' => $tok_team,
-                'data' => array(
-                    "actividad" => "$actividad"
-                ),
-                'notification' => array(
-                    "body" => "La actividad $actividad ha sido rechazada",
-                    "title" => "Actividad rechaza",
-                    "icon" => "ic_stat_ic_notification"
-                )
-            );
+                // Preparar el mensaje para enviar
+                // Preparar el mensaje para enviar
+                $msg = array(
+                    'registration_ids' => $tok_team,
+                    'data' => array(
+                        "actividad" => "$actividad"
+                    ),
+                    'notification' => array(
+                        "body" => "La actividad $actividad ha sido rechazada",
+                        "title" => "Actividad rechaza",
+                        "icon" => "ic_stat_ic_notification"
+                    )
+                );
 
-            $msgJSON = json_encode($msg);
-            echo $msgJSON;
+                $msgJSON = json_encode($msg);
+                echo $msgJSON;
 
-            // Enviar el mensaje al receptor
-            $ch = curl_init(); #inicializar el handler de curl
-            #indicar el destino de la petición, el servicio FCM de google
-            curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-            #indicar que la conexión es de tipo POST
-            curl_setopt( $ch, CURLOPT_POST, true );
-            #agregar las cabeceras
-            curl_setopt( $ch, CURLOPT_HTTPHEADER, $cabecera);
-            #Indicar que se desea recibir la respuesta a la conexión en forma de string
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-            #agregar los datos de la petición en formato JSON
-            curl_setopt( $ch, CURLOPT_POSTFIELDS, $msgJSON );
-            #ejecutar la llamada
-            $resultado= curl_exec( $ch );
-            #cerrar el handler de curl
-            curl_close( $ch );
+                // Enviar el mensaje al receptor
+                $ch = curl_init(); #inicializar el handler de curl
+                #indicar el destino de la petición, el servicio FCM de google
+                curl_setopt( $ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+                #indicar que la conexión es de tipo POST
+                curl_setopt( $ch, CURLOPT_POST, true );
+                #agregar las cabeceras
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, $cabecera);
+                #Indicar que se desea recibir la respuesta a la conexión en forma de string
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                #agregar los datos de la petición en formato JSON
+                curl_setopt( $ch, CURLOPT_POSTFIELDS, $msgJSON );
+                #ejecutar la llamada
+                $resultado= curl_exec( $ch );
+                #cerrar el handler de curl
+                curl_close( $ch );
 
-            if(curl_errno($ch)) {
-                print curl_error($ch);
+                if(curl_errno($ch)) {
+                    print curl_error($ch);
+                }
+                echo $resultado;
+            
+            } else {
+                echo "Access denied";
+                http_response_code(403);
             }
-            echo $resultado;
         }
     }
 
