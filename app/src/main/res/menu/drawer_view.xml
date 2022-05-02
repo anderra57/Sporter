@@ -1,0 +1,30 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_first_fragment"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="First" />
+        <item
+            android:id="@+id/nav_second_fragment"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Second" />
+        <item
+            android:id="@+id/nav_third_fragment"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Third" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/grupo">
+        <item
+            android:id="@+id/nav_cuarto"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Cuarto" />
+        <item
+            android:id="@+id/nav_quinto"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Quinto" />
+    </group>
+
+</menu>
