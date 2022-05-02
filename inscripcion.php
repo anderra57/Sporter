@@ -3,8 +3,8 @@
     require_once('authentication.php');
 
     $servername = "localhost";
-    $username = "username";
-    $password = "password";
+    $username = "uname";
+    $password = "passwd";
     $dbname = "das_app";
 
     // Create connection
@@ -14,9 +14,9 @@
     die("Connection failed: " . $conn->connect_error);
     }
 
-    function buscar_id_grupo($usuario) {
+    function buscar_id_grupo($id_user) {
         global $conn;
-        $sql = "SELECT id_team from common as c join users as u on c.id = u.id where u.username = '$usuario'";
+        $sql = "SELECT id_team from common where id = $id_user";
         $result = $conn->query($sql);
         $id = 0;
         if ($result->num_rows > 0) {
@@ -41,18 +41,22 @@
     }
 
     if(isset($_POST['function'])) {
-        $func = $_POST['function'];
-        if($func === "inscribirse") {
-            $usuario = $_POST['usuario'];
-            $actividad = $_POST['actividad'];
-            // Primeramente buscamos el identificador del grupo al que pertenece este usuario
-            $id_team = buscar_id_grupo($usuario);
-            // Ahora buscamos el identificador de esta actividad del
-            $id_act = buscar_id_actividad($actividad);
-            // Insertamos una nueva fila en la base de datos en
-            $sql = "INSERT INTO participaciones VALUES('$id_act','$id_team')";
-            $result = $conn->query($sql);
-            http_response_code(200);
+        if (valid_session()) {
+            $func = $_POST['function'];
+            if($func === "inscribirse") {
+                $actividad = $_POST['actividad'];
+                // Primeramente buscamos el identificador del grupo al que pertenece este usuario
+                $id_team = buscar_id_grupo($_SESSION['id']);
+                // Ahora buscamos el identificador de esta actividad del
+                $id_act = buscar_id_actividad($actividad);
+                // Insertamos una nueva fila en la base de datos en
+                $sql = "INSERT INTO participaciones VALUES('$id_act','$id_team')";
+                $result = $conn->query($sql);
+                http_response_code(200);
+            }
+        } else {
+            echo "Invalid session";
+            http_response_code(401);
         }
     }
 

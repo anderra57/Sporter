@@ -3,8 +3,8 @@
 	require_once('authentication.php');
 
 	$servername = "localhost";
-    $username = "username";
-    $password = "password";
+    $username = "uname";
+    $password = "passwd";
 	$dbname = "das_app";
 
 	// Create connection
@@ -12,6 +12,20 @@
 	// Check connection
 	if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
+	}
+
+	function has_team() {
+		global $conn;
+		if (valid_session()) {
+			$id = $_SESSION['id'];
+			$sql = "SELECT id from common where id=$id";
+			$result = $conn->query($sql);
+			if ($result->num_rows > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
     if(isset($_POST['function'])) {
@@ -47,7 +61,11 @@
 					if ($row['isAdmin']) {
 						echo "Has iniciado como Administrador";
 					} else {
-						echo "Has iniciado como usuarion normal";
+						if (has_team()) {
+							echo "Has iniciado como usuario normal y tienes equipo";
+						} else {
+							echo "Has iniciado como usuario normal, pero no tienes equipo";
+						}
 					}
 					http_response_code(200);
 

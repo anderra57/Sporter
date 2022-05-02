@@ -3,8 +3,8 @@
     session_start();
 
     $servername = "localhost";
-    $username = "username";
-    $password = "password";
+    $username = "uname";
+    $password = "passwd";
 	$dbname = "das_app";
 
 	// Create connection
@@ -16,7 +16,7 @@
 
     function verify_user() {
         global $conn;
-        if (isset($_SESSION['id'])) {
+        if (isset($_SESSION['id']) && $_SESSION['id'] != '') {
             $id_user = $_SESSION['id'];
             // Comprobar si es un usuario normal o un administrador
             $sql = "SELECT isAdmin from users where id = $id_user";
@@ -32,6 +32,14 @@
             }
         } else {
             die("This session is invalid");
+        }
+    }
+
+    function valid_session() {
+        if (isset($_SESSION['id']) && $_SESSION['id'] != '') {
+            return true;
+        } else {
+            return false;
         }
     }
 
