@@ -35,10 +35,10 @@
                     $res_actividades_grupo = $conn->query($sql_actividades_grupo);
                     $actividades_activas_array = [];
                     while($row = mysqli_fetch_assoc($res_actividades_grupo)){
-                        $name = $row_actividad_activa['name'];
-                        $description = $row_actividad_activa['description'];
-                        $fecha = $row_actividad_activa['fecha'];
-                        $city = $row_actividad_activa['city'];
+                        $name = $row['name'];
+                        $description = $row['description'];
+                        $fecha = $row['fecha'];
+                        $city = $row['city'];
                         array_push($actividades_activas_array, $name);
                         array_push($actividades_activas_array, $description);
                         array_push($actividades_activas_array, $fecha);
@@ -63,10 +63,10 @@
                     $res_actividades_grupo = $conn->query($sql_actividades_grupo);
                     $array_final_no_inscritas = [];
                     while($row = mysqli_fetch_assoc($res_actividades_grupo)){
-                        $name = $row_actividad_activa['name'];
-                        $description = $row_actividad_activa['description'];
-                        $fecha = $row_actividad_activa['fecha'];
-                        $city = $row_actividad_activa['city'];
+                        $name = $row['name'];
+                        $description = $row['description'];
+                        $fecha = $row['fecha'];
+                        $city = $row['city'];
                         array_push($array_final_no_inscritas, $name);
                         array_push($array_final_no_inscritas, $description);
                         array_push($array_final_no_inscritas, $fecha);

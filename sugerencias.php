@@ -63,7 +63,7 @@
             $func = $_POST['function'];
             if($func === "sugerir") {
                 $actividad = $_POST['actividad'];
-                $descripcion = $_POST['descripcion'];
+                $descripcion = $_POST['description'];
                 $city = $_POST['city'];
                 $fecha = date('Y-m-d');
                 // Primeramente añadimos una nueva actividad que no estará activa

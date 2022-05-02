@@ -75,7 +75,7 @@
                 if (verify_user() == 1) {
                     // El adminsitrador ha creado una nueva actividad
                     $actividad = $_POST['actividad'];
-                    $descripcion = $_POST['descripcion'];
+                    $descripcion = $_POST['description'];
                     $city = $_POST['city'];
                     $fecha = date('Y-m-d');
 
