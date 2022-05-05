@@ -82,7 +82,7 @@ public class OtraActividad extends AppCompatActivity {
                 break;
             case R.id.nav_quinto:
                 break;
-            case R.id.logoff:
+            case R.id.logout:
                 intent = new Intent(this, LoginMain.class);
                 startActivity(intent);
                 finish();

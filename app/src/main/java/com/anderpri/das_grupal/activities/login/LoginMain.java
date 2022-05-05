@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,21 +27,24 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+import androidx.work.impl.model.Preference;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.UnaActividad;
 import com.anderpri.das_grupal.controllers.LoginController;
+import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
 
 public class LoginMain extends AppCompatActivity {
 
-    EditText user, password;
+    EditText user, pass;
     TextView registro, warning;
     ImageView imagen;
     Button botonLogin;
     static boolean userExists;
     static String token;
-    String username;
+    //String username, password;
+    private SharedPreferences preferences;
 
     LoginController loginController;
 
@@ -50,8 +55,12 @@ public class LoginMain extends AppCompatActivity {
         setContentView(R.layout.activity_login_main);
         //defineReceiver();
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        token = "testToken";
+
         user = findViewById(R.id.login_main_txt_user);
-        password = findViewById(R.id.login_main_txt_pass);
+        pass = findViewById(R.id.login_main_txt_pass);
         imagen = findViewById(R.id.login_main_banner);
         botonLogin = findViewById(R.id.login_main_btn);
         registro = findViewById(R.id.login_main_txt_title);
@@ -68,7 +77,96 @@ public class LoginMain extends AppCompatActivity {
     /// GESTIONAR LOGIN ///
 
     public void onLogin(View v) {
-        System.out.println("login");
+        String username = user.getText().toString();
+        String password = pass.getText().toString();
+
+        // Los campos del login no pueden estar vacios
+        if(username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, getString(R.string.login_no_empty_field), Toast.LENGTH_SHORT).show();
+            warning.setText(getString(R.string.login_no_empty_field));
+            warning.setVisibility(View.VISIBLE);
+            warning.setTextColor(Color.RED);
+        } else {
+            // login al usuario en la aplicación
+            try {
+                // Preparar los datos para enviar al backend
+                Data logindata = new Data.Builder()
+                        .putString("funcion", "login")
+                        .putString("username", username)
+                        .putString("password", password)
+                        .putString("token", token)
+                        .build();
+
+                // Tiene que existir conexión a internet
+                Constraints restricciones = new Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build();
+
+                // Preparar la petición
+                OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(UsersWorker.class)
+                        .setConstraints(restricciones)
+                        .setInputData(logindata)
+                        .build();
+
+                // Lanzar la petición
+                WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
+                        .observe(this, status -> {
+                            if (status != null && status.getState().isFinished()) {
+                                String id_user = status.getOutputData().getString("datos").trim();
+                                String cookie = status.getOutputData().getString("cookie").trim();
+                                if(!id_user.isEmpty()) {
+                                    // añadir el token del dispositivo a la base de datos
+                                    //addFirebasetoken(username);
+                                    // Avanzar a la siguiente actividad (MainActivity)
+
+                                    saveCookie(cookie);
+                                    manageIdUser(id_user);
+                                    /*
+                                    Intent intent = new Intent(this, MainActivity.class);
+                                    intent.putExtra("username", username);
+                                    startActivity(intent);
+                                    finish();*/
+                                } else {
+                                    Toast.makeText(this, getString(R.string.login_wrong_user_pass), Toast.LENGTH_SHORT).show();
+                                    warning.setText(getString(R.string.login_wrong_user_pass));
+                                    warning.setVisibility(View.VISIBLE);
+                                    warning.setTextColor(Color.RED);
+                                }
+                            }
+                        });
+
+                WorkManager.getInstance(this).enqueue(req);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void saveCookie(String cookie) {
+        Log.d("cookie_loginmain",cookie);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("cookie",cookie);
+        editor.commit();
+    }
+
+    private void manageIdUser(String id_user) {
+        if (id_user.equals("administrator")){
+            Intent intent = new Intent(this, UnaActividad.class);
+            startActivity(intent);
+            finish();
+        } else if (id_user.equals("nogroup")){ // user normal SIN grupo
+            Intent intent = new Intent(this, LoginTeamButtons.class);
+            startActivity(intent);
+            finish();
+        } else { // user normal con grupo
+            Intent intent = new Intent(this, UnaActividad.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    /*
+    public void onLogin(View v) {
         username = this.user.getText().toString();
         String password = this.password.getText().toString();
         // Uso de Toast para evitar un nombre repetido, un nombre vacío, o un nombre genérico.
@@ -83,14 +181,16 @@ public class LoginMain extends AppCompatActivity {
             userExists(username, password);
         }
 
-    }
+    }*/
 
+    /*
     private void userExists(String username, String password) {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
             Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         }
+
         Data datos = new Data.Builder().putString("usuario", username).putString("password", password).putString("token", token).build();
         Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
         OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(UserExistsWebService.class).setInputData(datos).setConstraints(restricciones).build();
@@ -117,29 +217,15 @@ public class LoginMain extends AppCompatActivity {
             }
         });
         WorkManager.getInstance(this).enqueue(req);
-    }
-
-    public static class UserExistsWebService extends Worker {
-
-        public UserExistsWebService(@NonNull Context context, @NonNull WorkerParameters workerParams) {
-            super(context, workerParams);
-        }
-
-        @NonNull
-        @Override
-        public ListenableWorker.Result doWork() {
-            Data datos = new Data.Builder().putBoolean("existe", false).build();
-            return Result.success(datos);
-        }
-    }
+    }*/
 
     /// GESTIONAR CLICK EN REGISTRARSE ///
 
+
     public void onRegister(View v){
-        System.out.println("register");
         Intent intent = new Intent(this, LoginCreate.class);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
 }

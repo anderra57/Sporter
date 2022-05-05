@@ -25,10 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
+import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
 public class LoginCreate extends AppCompatActivity {
 
-    EditText user, password;
+    EditText user, pass;
     TextView registro, warning;
     ImageView imagen;
     Button botonRegistro;
@@ -47,7 +48,7 @@ public class LoginCreate extends AppCompatActivity {
 
     private void getItems(){
         user = findViewById(R.id.login_create_txt_user);
-        password = findViewById(R.id.login_create_txt_pass);
+        pass = findViewById(R.id.login_create_txt_pass);
         imagen = findViewById(R.id.login_create_banner);
         botonRegistro = findViewById(R.id.login_create_btn);
         registro = findViewById(R.id.login_create_txt_title);
@@ -59,6 +60,68 @@ public class LoginCreate extends AppCompatActivity {
     }
 
     // Método para gestionar click en login
+
+    public void onRegister(View v) {
+        String username = user.getText().toString();
+        String password = pass.getText().toString();
+
+        // Los campos del login no pueden estar vacios
+        if(username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, getString(R.string.login_no_empty_field), Toast.LENGTH_SHORT).show();
+            warning.setText(getString(R.string.login_no_empty_field));
+            warning.setVisibility(View.VISIBLE);
+            warning.setTextColor(Color.RED);
+        } else {
+            // login al usuario en la aplicación
+            try {
+                // Preparar los datos para enviar al backend
+                Data logindata = new Data.Builder()
+                        .putString("funcion", "register")
+                        .putString("username", username)
+                        .putString("password", password)
+                        .build();
+
+                // Tiene que existir conexión a internet
+                Constraints restricciones = new Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build();
+
+                // Preparar la petición
+                OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(UsersWorker.class)
+                        .setConstraints(restricciones)
+                        .setInputData(logindata)
+                        .build();
+
+                // Lanzar la petición
+                WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
+                        .observe(this, status -> {
+                            if (status != null && status.getState().isFinished()) {
+                                String id_user = status.getOutputData().getString("datos").trim();
+                                if(id_user.isEmpty()) {
+                                    // añadir el token del dispositivo a la base de datos
+                                    //addFirebasetoken(username);
+                                    // Avanzar a la siguiente actividad (MainActivity)
+
+                                    Toast.makeText(this, getString(R.string.login_registered_correctly), Toast.LENGTH_SHORT).show();
+                                    finish();
+
+                                } else {
+                                    Toast.makeText(this, getString(R.string.login_user_in_use), Toast.LENGTH_SHORT).show();
+                                    warning.setText(getString(R.string.login_user_in_use));
+                                    warning.setVisibility(View.VISIBLE);
+                                    warning.setTextColor(Color.RED);
+                                }
+                            }
+                        });
+
+                WorkManager.getInstance(this).enqueue(req);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /*
     public void onRegister(View v) {
         String username = this.user.getText().toString();
         String password = this.password.getText().toString();
@@ -79,6 +142,9 @@ public class LoginCreate extends AppCompatActivity {
             jugadorExisteRegistro(username, password);
         }
     }
+
+    */
+
 
     // comprobar si existe el usuario
     private void jugadorExisteRegistro(String username, String password) {

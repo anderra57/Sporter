@@ -13,10 +13,13 @@ import androidx.work.WorkerParameters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,25 +27,97 @@ import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.UnaActividad;
+import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
+import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
 public class LoginFindTeam extends AppCompatActivity {
 
-    EditText pinText, teamText, passText;
+    EditText teamText, passText;
     TextView warning;
     String pin, team, pass;
+    String cookie;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_find_team);
-        //pinText = findViewById(R.id.login_create_team_txt_name);
-        teamText = findViewById(R.id.login_find_team_txt_pass);
+        teamText = findViewById(R.id.login_find_team_txt_name);
         passText = findViewById(R.id.login_find_team_txt_pass);
         warning = findViewById(R.id.login_find_team_txt_warning);
 
+        getCookie();
+        Log.d("cookie_join",cookie);
+    }
+
+    private void getCookie() {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        cookie = preferences.getString("cookie","");
     }
 
     public void onFind(View v) {
+        String name = teamText.getText().toString();
+        String password = passText.getText().toString();
+
+        // Los campos del login no pueden estar vacios
+        if(name.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, getString(R.string.login_no_empty_field), Toast.LENGTH_SHORT).show();
+            warning.setText(getString(R.string.login_no_empty_field));
+            warning.setVisibility(View.VISIBLE);
+            warning.setTextColor(Color.RED);
+        } else {
+            // login al usuario en la aplicación
+            try {
+                // Preparar los datos para enviar al backend
+                Data logindata = new Data.Builder()
+                        .putString("funcion", "login")
+                        .putString("teamname", name)
+                        .putString("teampass", password)
+                        .putString("cookie", cookie)
+                        .build();
+
+                // Tiene que existir conexión a internet
+                Constraints restricciones = new Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build();
+
+                // Preparar la petición
+                OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(TeamsWorker.class)
+                        .setConstraints(restricciones)
+                        .setInputData(logindata)
+                        .build();
+
+                // Lanzar la petición
+                WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
+                        .observe(this, status -> {
+                            if (status != null && status.getState().isFinished()) {
+                                String id_team = status.getOutputData().getString("datos").trim();
+                                if(id_team.isEmpty()) {
+                                    // añadir el token del dispositivo a la base de datos
+                                    //addFirebasetoken(username);
+                                    // Avanzar a la siguiente actividad (MainActivity)
+
+                                    Intent intent = new Intent(this, UnaActividad.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(this, getString(R.string.login_wrong_team_pass), Toast.LENGTH_SHORT).show();
+                                    warning.setText(getString(R.string.login_wrong_team_pass));
+                                    warning.setVisibility(View.VISIBLE);
+                                    warning.setTextColor(Color.RED);
+                                }
+                            }
+                        });
+
+                WorkManager.getInstance(this).enqueue(req);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+/*
+    public void onFind1(View v) {
         //pin = this.pinText.getText().toString();
         team = this.teamText.getText().toString();
         pass = this.passText.getText().toString();
@@ -126,42 +201,12 @@ public class LoginFindTeam extends AppCompatActivity {
 
     }
     */
-
+/*
     private boolean pinExists(String pin) {
         return pin.equals("5555");
     }
+*/
 
-    private void enterTeam() {
-        //TODO REGISTRAR USUARIO EN EQUIPO EN BBDD
 
-        // Una vez registrado, cargamos el main
-        Intent i = new Intent(this, UnaActividad.class);
-        startActivity(i);
-        finish();
-    }
 
-    public static class TeamExistsWebService extends Worker {
-
-        public TeamExistsWebService(@NonNull Context context, @NonNull WorkerParameters workerParams) {
-            super(context, workerParams);
-        }
-
-        @NonNull
-        @Override
-        public ListenableWorker.Result doWork() {
-
-            String result = "1";
-            Data datos = null;
-            if(result.equals("1")){
-                datos = new Data.Builder()
-                        .putBoolean("exists", true)
-                        .build();
-            }else{
-                datos = new Data.Builder()
-                        .putBoolean("exists", false)
-                        .build();
-            }
-            return Result.success(datos);
-        }
-    }
 }

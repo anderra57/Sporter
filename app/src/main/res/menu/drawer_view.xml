@@ -35,9 +35,9 @@
             android:icon="@drawable/ic_launcher_background"
             android:title="Settings" />
         <item
-            android:id="@+id/logoff"
+            android:id="@+id/logout"
             android:icon="@drawable/ic_launcher_background"
-            android:title="Logoff" />
+            android:title="Logout" />
     </group>
 
 </menu>
