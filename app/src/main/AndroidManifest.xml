@@ -4,16 +4,25 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_new"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.DAS_Grupal">
         <activity
-            android:name=".OtraActividad"
+            android:name=".activities.login.LoginCreate"
             android:exported="false" />
         <activity
-            android:name=".UnaActividad"
+            android:name=".activities.login.LoginCreateTeam"
+            android:exported="false" />
+        <activity
+            android:name=".activities.login.LoginFindTeam"
+            android:exported="false" />
+        <activity
+            android:name=".activities.login.LoginTeamButtons"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LauncherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +30,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.login.LoginMain"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".activities.OtraActividad"
+            android:exported="false" />
+        <activity
+            android:name=".activities.UnaActividad"
+            android:exported="true" />
     </application>
 
 </manifest>
