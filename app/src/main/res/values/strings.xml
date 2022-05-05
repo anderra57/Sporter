@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">DAS_Grupal</string>
+    <string name="app_name">5porter</string>
+    <string name="nombre">Usuario</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="registrar">¿No tienes cuenta? Registrate aquí</string>
+    <string name="iniciarSesion">Iniciar sesión</string>
+    <string name="ningunCampoVacio">No puede haber ningún campo vacío</string>
+    <string name="noInternet">No hay conexión a internet</string>
+    <string name="jugadorNoExisteInvalidPassword">No existe ningún usuario con ese nombre o la contraseña es incorrecta</string>
+    <string name="paginaRegistro">Regístrate</string>
+    <string name="requisitosContraseña">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="usuarioYaExiste">Ese nombre de usuario ya está escogido. Elige otro</string>
+    <string name="registradoIniciaSesion">Registrado correctamente. Inicia sesión</string>
 </resources>

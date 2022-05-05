@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:roundPercent="1"
-        app:srcCompat="@drawable/ejemplo" />
+        app:srcCompat="@drawable/default_icon_user" />
 
     <TextView
         android:id="@+id/usuario"

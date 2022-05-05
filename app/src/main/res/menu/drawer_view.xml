@@ -15,8 +15,9 @@
             android:icon="@drawable/ic_launcher_background"
             android:title="Third" />
     </group>
-    <group android:checkableBehavior="single"
-        android:id="@+id/grupo">
+    <group
+        android:id="@+id/grupo"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_cuarto"
             android:icon="@drawable/ic_launcher_background"
@@ -25,6 +26,18 @@
             android:id="@+id/nav_quinto"
             android:icon="@drawable/ic_launcher_background"
             android:title="Quinto" />
+    </group>
+    <group
+        android:id="@+id/grupo2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Settings" />
+        <item
+            android:id="@+id/logoff"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Logoff" />
     </group>
 
 </menu>
