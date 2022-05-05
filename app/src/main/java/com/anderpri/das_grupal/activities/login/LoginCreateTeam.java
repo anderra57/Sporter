@@ -107,8 +107,8 @@ public class LoginCreateTeam extends AppCompatActivity {
     public void onRegister(View view) {
         String teamName = this.name.getText().toString();
         if(teamName.isEmpty()){
-            Toast.makeText(this, getString(R.string.ningunCampoVacio), Toast.LENGTH_SHORT).show();
-            warning.setText(getString(R.string.ningunCampoVacio));
+            Toast.makeText(this, getString(R.string.login_no_empty_field), Toast.LENGTH_SHORT).show();
+            warning.setText(getString(R.string.login_no_empty_field));
             warning.setVisibility(View.VISIBLE);
             warning.setTextColor(Color.RED);
         }
@@ -121,7 +121,7 @@ public class LoginCreateTeam extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
-            Toast.makeText(this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         }
         Data datos = new Data.Builder().putString("team", team).build();
         Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();

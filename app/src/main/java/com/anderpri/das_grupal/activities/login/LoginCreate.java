@@ -53,9 +53,9 @@ public class LoginCreate extends AppCompatActivity {
         registro = findViewById(R.id.login_create_txt_title);
         warning = findViewById(R.id.login_create_txt_warning);
 
-        registro.setText(R.string.registrar);
+        registro.setText(R.string.login_register_here);
         warning.setVisibility(View.INVISIBLE);
-        botonRegistro.setText(R.string.paginaRegistro);
+        botonRegistro.setText(R.string.login_register);
     }
 
     // Método para gestionar click en login
@@ -64,14 +64,14 @@ public class LoginCreate extends AppCompatActivity {
         String password = this.password.getText().toString();
         // Uso de Toast para evitar un nombre repetido, un nombre vacío, o un nombre genérico.
         if(username.isEmpty() || password.isEmpty()){
-            Toast.makeText(this, getString(R.string.ningunCampoVacio), Toast.LENGTH_SHORT).show();
-            warning.setText(getString(R.string.ningunCampoVacio));
+            Toast.makeText(this, getString(R.string.login_no_empty_field), Toast.LENGTH_SHORT).show();
+            warning.setText(getString(R.string.login_no_empty_field));
             warning.setVisibility(View.VISIBLE);
             warning.setTextColor(Color.RED);
         }
         else if(password.length() < 6) {
-            Toast.makeText(this, getString(R.string.requisitosContraseña), Toast.LENGTH_SHORT).show();
-            warning.setText(getString(R.string.ningunCampoVacio));
+            Toast.makeText(this, getString(R.string.login_pass_requirements), Toast.LENGTH_SHORT).show();
+            warning.setText(getString(R.string.login_no_empty_field));
             warning.setVisibility(View.VISIBLE);
             warning.setTextColor(Color.RED);
         }
@@ -89,8 +89,8 @@ public class LoginCreate extends AppCompatActivity {
                 existeUsuario = status.getOutputData().getBoolean("existe", false);
                 existeUsuario = testExiste(username);
                 if(existeUsuario){
-                    Toast.makeText(this, getString(R.string.usuarioYaExiste), Toast.LENGTH_SHORT).show();
-                    warning.setText(getString(R.string.usuarioYaExiste));
+                    Toast.makeText(this, getString(R.string.login_user_in_use), Toast.LENGTH_SHORT).show();
+                    warning.setText(getString(R.string.login_user_in_use));
                     warning.setVisibility(View.VISIBLE);
                     warning.setTextColor(Color.RED);
                 }
@@ -111,7 +111,7 @@ public class LoginCreate extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
-            Toast.makeText(this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         }
         //FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> token = instanceIdResult.getToken());
         Data datos = new Data.Builder().putString("usuario", username).putString("password", password).putString("token", token).build();
@@ -125,7 +125,7 @@ public class LoginCreate extends AppCompatActivity {
                     intentMenuOnline.putExtra("user", username);
                     setResult(RESULT_OK, intentMenuOnline);
                     startActivity(intentMenuOnline);*/
-                    Toast.makeText(this, getString(R.string.registradoIniciaSesion), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.login_registered_correctly), Toast.LENGTH_LONG).show();
                     Intent i = new Intent(this, LoginTeamButtons.class);
                     startActivity(i);
                     finish();

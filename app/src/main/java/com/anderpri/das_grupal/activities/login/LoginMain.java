@@ -57,9 +57,9 @@ public class LoginMain extends AppCompatActivity {
         registro = findViewById(R.id.login_main_txt_title);
         warning = findViewById(R.id.login_main_txt_warning);
 
-        registro.setText(R.string.registrar);
+        registro.setText(R.string.login_register_here);
         warning.setVisibility(View.INVISIBLE);
-        botonLogin.setText(R.string.iniciarSesion);
+        botonLogin.setText(R.string.login_log_in);
         //FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> token = instanceIdResult.getToken());
 
         loginController = LoginController.getInstance();
@@ -73,8 +73,8 @@ public class LoginMain extends AppCompatActivity {
         String password = this.password.getText().toString();
         // Uso de Toast para evitar un nombre repetido, un nombre vacío, o un nombre genérico.
         if(username.isEmpty() || password.isEmpty()){
-            Toast.makeText(this, getString(R.string.ningunCampoVacio), Toast.LENGTH_SHORT).show();
-            warning.setText(getString(R.string.ningunCampoVacio));
+            Toast.makeText(this, getString(R.string.login_no_empty_field), Toast.LENGTH_SHORT).show();
+            warning.setText(getString(R.string.login_no_empty_field));
             warning.setVisibility(View.VISIBLE);
             warning.setTextColor(Color.RED);
         }
@@ -89,7 +89,7 @@ public class LoginMain extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
-            Toast.makeText(this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         }
         Data datos = new Data.Builder().putString("usuario", username).putString("password", password).putString("token", token).build();
         Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
@@ -99,8 +99,8 @@ public class LoginMain extends AppCompatActivity {
                 userExists = status.getOutputData().getBoolean("existe", false);
                 if (username.equals("a") && password.equals("a")) userExists = true; // temporal
                 if(!userExists){
-                    Toast.makeText(this, getString(R.string.jugadorNoExisteInvalidPassword), Toast.LENGTH_SHORT).show();
-                    warning.setText(getString(R.string.jugadorNoExisteInvalidPassword));
+                    Toast.makeText(this, getString(R.string.login_wrong_user_pass), Toast.LENGTH_SHORT).show();
+                    warning.setText(getString(R.string.login_wrong_user_pass));
                     warning.setVisibility(View.VISIBLE);
                     warning.setTextColor(Color.RED);
                 }

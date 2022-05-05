@@ -1,30 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Global strings -->
-    <string name="app_name">No hay conexión a internet</string>
+    <string name="app_name">5porter</string>
     <string name="no_internet">No hay conexión a internet</string>
     <string name="logout">Log out</string>
-
-    <!-- Login activity strings -->
-    <!-- Main -->
     <string name="login_name">Usuario</string>
     <string name="login_pass">Contraseña</string>
     <string name="login_log_in">Iniciar sesión</string>
     <string name="login_register_here">¿No tienes cuenta? Registrate aquí</string>
     <string name="login_wrong_user_pass">No existe ningún usuario con ese nombre o la contraseña es incorrecta</string>
-    <!-- Create -->
     <string name="login_register">Regístrate</string>
     <string name="login_no_empty_field">No puede haber ningún campo vacío</string>
     <string name="login_pass_requirements">La contraseña debe tener al menos 6 caracteres</string>
     <string name="login_user_in_use">Ese nombre de usuario ya está escogido. Elige otro</string>
     <string name="login_registered_correctly">Registrado correctamente. Inicia sesión</string>
-    <!-- TeamButtons -->
     <string name="login_btn_create">Crear equipo</string>
-    <string name="login_btn_find">Unirse a equipo</string>
-    <!-- Create -->
-
-    <!-- Find -->
-
-    <!-- Settings activity strings -->
     <string name="settings_lang_text">Idioma</string>
     <string name="settings_lang_radio_en">Inglés</string>
     <string name="settings_lang_radio_es">Castellano</string>
@@ -32,6 +21,5 @@
     <string name="settings_theme_radio_dark">Tema oscuro</string>
     <string name="settings_theme_radio_light">Tema claro</string>
     <string name="settings_theme_text">Tema</string>
-
-
+    <string name="login_btn_find">Unirse a equipo</string>
 </resources>
