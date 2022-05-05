@@ -1,6 +1,11 @@
 package com.anderpri.das_grupal.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,13 +13,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
-import com.anderpri.das_grupal.controllers.utils.Utils;
+import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
 
 public class LauncherActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
+    String cookie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +36,56 @@ public class LauncherActivity extends AppCompatActivity {
          * */
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String cookie = preferences.getString("cookie","no_cookie");
+        cookie = preferences.getString("cookie","no_cookie");
         Log.d("cookie_launcher",cookie);
 
         if (cookie.equals("no_cookie")){
             openLogin();
         } else {
-            if (cookieIsValid()){
-                Intent i = new Intent(this, UnaActividad.class);
-                startActivity(i);
-                finish();
-            } else {
-                openLogin();
-            }
+            cookieIsValid();
         }
     }
 
-    private boolean cookieIsValid() {
-        return false;
+    private void cookieIsValid() {
+        try {
+            // Preparar los datos para enviar al backend
+            Data logindata = new Data.Builder()
+                    .putString("funcion", "verifysession")
+                    .putString("cookie", cookie)
+                    .build();
+
+            // Tiene que existir conexión a internet
+            Constraints restricciones = new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build();
+
+            // Preparar la petición
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(TeamsWorker.class)
+                    .setConstraints(restricciones)
+                    .setInputData(logindata)
+                    .build();
+
+            // Lanzar la petición
+            WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
+                    .observe(this, status -> {
+                        if (status != null && status.getState().isFinished()) {
+                            //Log.d("sout_wmana",status.getOutputData().getString("datos"));
+                            //String cookieIsValid = status.getOutputData().getString("datos").trim();
+                            String cookieIsValid="c";
+                            if (!cookieIsValid.isEmpty()){
+                                Intent i = new Intent(this, UnaActividad.class);
+                                startActivity(i);
+                                finish();
+                            } else {
+                                openLogin();
+                            }
+                        }
+                    });
+
+            WorkManager.getInstance(this).enqueue(req);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void openLogin() {
