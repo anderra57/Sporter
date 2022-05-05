@@ -7,7 +7,7 @@
     tools:context=".activities.login.LoginCreate">
 
     <ImageView
-        android:id="@+id/imagenRegistro"
+        android:id="@+id/login_create_banner"
         android:layout_width="337dp"
         android:layout_height="225dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/sporter_text" />
 
     <EditText
-        android:id="@+id/textUserRegistro"
+        android:id="@+id/login_create_txt_user"
         android:layout_width="261dp"
         android:layout_height="69dp"
         android:ems="10"
@@ -33,7 +33,7 @@
         app:layout_constraintVertical_bias="0.53" />
 
     <EditText
-        android:id="@+id/textPasswordRegistro"
+        android:id="@+id/login_create_txt_pass"
         android:layout_width="259dp"
         android:layout_height="65dp"
         android:ems="10"
@@ -47,7 +47,7 @@
         app:layout_constraintVertical_bias="0.657" />
 
     <Button
-        android:id="@+id/botonRegistro"
+        android:id="@+id/login_create_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
@@ -60,7 +60,7 @@
         app:layout_constraintVertical_bias="0.907" />
 
     <TextView
-        android:id="@+id/textWarningRegistro"
+        android:id="@+id/login_create_txt_warning"
         android:layout_width="310dp"
         android:layout_height="62dp"
         android:gravity="center"
@@ -73,15 +73,15 @@
         app:layout_constraintVertical_bias="0.796" />
 
     <TextView
-        android:id="@+id/tituloRegistro"
+        android:id="@+id/login_create_txt_title"
         android:layout_width="349dp"
         android:layout_height="49dp"
         android:text="TextView"
         android:gravity="center"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/textUserRegistro"
+        app:layout_constraintBottom_toTopOf="@+id/login_create_txt_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenRegistro" />
+        app:layout_constraintTop_toBottomOf="@+id/login_create_banner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

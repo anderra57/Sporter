@@ -35,10 +35,10 @@ public class LoginFindTeam extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_find_team);
-        pinText = findViewById(R.id.text_pin_find);
-        teamText = findViewById(R.id.text_pass_find);
-        passText = findViewById(R.id.text_name_find);
-        warning = findViewById(R.id.warning_find);
+        //pinText = findViewById(R.id.login_create_team_txt_name);
+        teamText = findViewById(R.id.login_find_team_txt_pass);
+        passText = findViewById(R.id.login_find_team_txt_pass);
+        warning = findViewById(R.id.login_find_team_txt_warning);
 
     }
 

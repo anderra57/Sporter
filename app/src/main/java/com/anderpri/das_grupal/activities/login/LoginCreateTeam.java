@@ -13,7 +13,6 @@ import androidx.work.WorkerParameters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -46,12 +45,12 @@ public class LoginCreateTeam extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_create_team);
 
-        btn = findViewById(R.id.button_create_team);
-        img = findViewById(R.id.image_create);
-        name = findViewById(R.id.text_pin_find);
-        warning = findViewById(R.id.warning_find);
+        btn = findViewById(R.id.login_create_team_btn_img);
+        img = findViewById(R.id.login_create_team_img);
+        name = findViewById(R.id.login_create_team_txt_name);
+        warning = findViewById(R.id.login_create_team_txt_warning);
 
-        btn_x = findViewById(R.id.button_x);
+        btn_x = findViewById(R.id.login_create_team_btn_x);
         btn_x.setVisibility(View.GONE);
 
     }

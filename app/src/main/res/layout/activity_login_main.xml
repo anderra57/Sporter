@@ -7,7 +7,7 @@
     tools:context=".activities.login.LoginMain">
 
     <ImageView
-        android:id="@+id/imagenLogin"
+        android:id="@+id/login_main_banner"
         android:layout_width="337dp"
         android:layout_height="225dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/sporter_text" />
 
     <EditText
-        android:id="@+id/textUser"
+        android:id="@+id/login_main_txt_user"
         android:layout_width="261dp"
         android:layout_height="69dp"
         android:ems="10"
@@ -31,7 +31,7 @@
         app:layout_constraintVertical_bias="0.443" />
 
     <EditText
-        android:id="@+id/textPassword"
+        android:id="@+id/login_main_txt_pass"
         android:layout_width="259dp"
         android:layout_height="65dp"
         android:ems="10"
@@ -44,7 +44,7 @@
         app:layout_constraintVertical_bias="0.578" />
 
     <Button
-        android:id="@+id/botonLogin"
+        android:id="@+id/login_main_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onLogin"
@@ -54,9 +54,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.805" />
+    <TextView
+        android:id="@+id/login_main_txt_warning"
+        android:layout_width="310dp"
+        android:layout_height="62dp"
+        android:text="TextView"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.711" />
 
     <TextView
-        android:id="@+id/textRegistro"
+        android:id="@+id/login_main_txt_title"
         android:layout_width="298dp"
         android:layout_height="70dp"
         android:clickable="true"
@@ -69,16 +80,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.933" />
 
-    <TextView
-        android:id="@+id/textWarning"
-        android:layout_width="310dp"
-        android:layout_height="62dp"
-        android:text="TextView"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.711" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

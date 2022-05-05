@@ -46,12 +46,12 @@ public class LoginCreate extends AppCompatActivity {
     }
 
     private void getItems(){
-        user = findViewById(R.id.textUserRegistro);
-        password = findViewById(R.id.textPasswordRegistro);
-        imagen = findViewById(R.id.imagenRegistro);
-        botonRegistro = findViewById(R.id.botonRegistro);
-        registro = findViewById(R.id.tituloRegistro);
-        warning = findViewById(R.id.textWarningRegistro);
+        user = findViewById(R.id.login_create_txt_user);
+        password = findViewById(R.id.login_create_txt_pass);
+        imagen = findViewById(R.id.login_create_banner);
+        botonRegistro = findViewById(R.id.login_create_btn);
+        registro = findViewById(R.id.login_create_txt_title);
+        warning = findViewById(R.id.login_create_txt_warning);
 
         registro.setText(R.string.registrar);
         warning.setVisibility(View.INVISIBLE);

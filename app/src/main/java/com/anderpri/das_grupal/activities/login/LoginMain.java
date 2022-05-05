@@ -50,12 +50,12 @@ public class LoginMain extends AppCompatActivity {
         setContentView(R.layout.activity_login_main);
         //defineReceiver();
 
-        user = findViewById(R.id.textUser);
-        password = findViewById(R.id.textPassword);
-        imagen = findViewById(R.id.imagenLogin);
-        botonLogin = findViewById(R.id.botonLogin);
-        registro = findViewById(R.id.textRegistro);
-        warning = findViewById(R.id.textWarning);
+        user = findViewById(R.id.login_main_txt_user);
+        password = findViewById(R.id.login_main_txt_pass);
+        imagen = findViewById(R.id.login_main_banner);
+        botonLogin = findViewById(R.id.login_main_btn);
+        registro = findViewById(R.id.login_main_txt_title);
+        warning = findViewById(R.id.login_main_txt_warning);
 
         registro.setText(R.string.registrar);
         warning.setVisibility(View.INVISIBLE);
