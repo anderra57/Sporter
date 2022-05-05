@@ -1,4 +1,4 @@
-package com.anderpri.das_grupal;
+package com.anderpri.das_grupal.activities;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.anderpri.das_grupal.R;
+import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.google.android.material.navigation.NavigationView;
 
 public class UnaActividad extends AppCompatActivity {
@@ -83,6 +85,11 @@ public class UnaActividad extends AppCompatActivity {
             case R.id.nav_cuarto:
                 break;
             case R.id.nav_quinto:
+                break;
+            case R.id.logoff:
+                intent = new Intent(this, LoginMain.class);
+                startActivity(intent);
+                finish();
                 break;
             default:
                 break;
