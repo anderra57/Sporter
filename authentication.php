@@ -4,8 +4,8 @@
 
     $servername = "localhost";
     $username = "uname";
-    $password = "passwd";
-	$dbname = "das_app";
+    $password = "pass";
+	$dbname = "uname_dasapp";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -43,10 +43,4 @@
         }
     }
 
-    function destroy_session() {
-        if (isset($_SESSION['id'])) {
-            $_SESSION['id'] = '';
-            session_destroy();
-        }
-    }
 ?>

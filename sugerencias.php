@@ -4,8 +4,8 @@
 
     $servername = "localhost";
     $username = "uname";
-    $password = "passwd";
-    $dbname = "das_app";
+    $password = "pass";
+    $dbname = "uname_dasapp";
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);

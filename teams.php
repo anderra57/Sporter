@@ -4,8 +4,8 @@
 
 	$servername = "localhost";
     $username = "uname";
-    $password = "passwd";
-	$dbname = "das_app";
+    $password = "pass";
+	$dbname = "uname_dasapp";
 
 	// Create connection
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -56,23 +56,22 @@
 				$res_comprobar_nombre_equipo = $conn->query($sql_comprobar_nombre_equipo);
 				// Ya hay equipo con ese nombre
 				if($res_comprobar_nombre_equipo->num_rows > 0){
-					echo "Ya existe un equipo con ese nombre";
-					http_response_code(401);
-
+					if ($row = mysqli_fetch_assoc($res_comprobar_nombre_equipo)) {
+						// Existe un usuario con el mismo nombre
+						echo $row['id'];
+						http_response_code(200);
+					}
 				}else{
 					$secure_password = password_hash($teampass, PASSWORD_DEFAULT);
 					$sql_create_team = "INSERT INTO teams (name, password) VALUES ('$teamname', '$secure_password')";
 					$res_create_team = $conn->query($sql_create_team);
 					if($res_create_team){
-						echo "Equipo creado correctamente";
 						// Insertar a la tabla common el id del usuario y del equipo recien creado
 						$sql_insertar_common = "INSERT INTO common (id, id_team) VALUES ($id_user, (SELECT id FROM teams WHERE name = '$teamname'))";
 						$res_insertar_common = $conn->query($sql_insertar_common);
 						if($res_insertar_common){
-							echo "Id de usuario y equipo añadidos correctamente a COMMON";
 							http_response_code(200);
 						}else{
-							echo "Ha ocurido un error al añadir id usuario y equipo a COMMON";
 							http_response_code(401);
 						}
 					}else{
