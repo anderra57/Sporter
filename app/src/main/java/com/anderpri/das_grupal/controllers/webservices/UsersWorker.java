@@ -107,18 +107,12 @@ public class UsersWorker extends Worker {
                 // Se realizar el registro del usuario en la base de datos
                 String username = getInputData().getString("username");
                 String password = getInputData().getString("password");
-                String name = getInputData().getString("name");
-                String city = getInputData().getString("city");
-                String age = getInputData().getString("age");
 
                 // Preparar los parámetros para enviar en la petición
                 Uri.Builder builder = new Uri.Builder()
                         .appendQueryParameter("function", funcion)
                         .appendQueryParameter("username", username)
-                        .appendQueryParameter("password", password)
-                        .appendQueryParameter("name", name)
-                        .appendQueryParameter("city", city)
-                        .appendQueryParameter("age", age);
+                        .appendQueryParameter("password", password);
                 String parametros = builder.build().getEncodedQuery();
 
                 // Se incluyen los parámetros en la petición HTTP
@@ -128,26 +122,31 @@ public class UsersWorker extends Worker {
 
                 // Se ejecuta la llamada al servicio web
                 int statusCode = urlConnection.getResponseCode();
-                String line;
-                StringBuilder result = new StringBuilder();
-                if (statusCode == 200) {
-                    // Cósigo 200 OK, se leen los datos de la respuesta
-                    BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-
-                    while ((line = bufferedReader.readLine()) != null) {
-                        result.append(line);
-                    }
-                    inputStream.close();
+                String result = "";
+                if (statusCode == 500) {
+                    // Ya existe un usuario con ese username
+                    result = "Invalid";
                 }
 
                 Data resultados = new Data.Builder()
-                        .putString("datos", result.toString())
+                        .putString("datos", result)
                         .build();
 
                 // Devolver que t0do ha ido bien
                 return Result.success(resultados);
             } else if("logout".equals(funcion)) {
+                String session = getInputData().getString("cookie");
+                // Comprobar si la cookie es correcta
+                urlConnection.setRequestProperty("Cookie","PHPSESSID=" + session);
+                // Preparar los parámetros para enviar en la petición
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("function", funcion);
+                String parametros = builder.build().getEncodedQuery();
+
+                // Se incluyen los parámetros en la petición HTTP
+                PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
+                out.print(parametros);
+                out.close();
 
                 // Se ejecuta la llamada al servicio web
                 urlConnection.getResponseCode();
@@ -158,10 +157,11 @@ public class UsersWorker extends Worker {
                 // Se ejecuta la llamada al servicio web
                 String cookie = getInputData().getString("cookie");
 
+                // Comprobar si la cookie es correcta
+                urlConnection.setRequestProperty("Cookie","PHPSESSID=" + cookie);
                 // Preparar los parámetros para enviar en la petición
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("function", "verifysession")
-                        .appendQueryParameter("cookie", cookie);
+                        .appendQueryParameter("function", funcion);
                 String parametros = builder.build().getEncodedQuery();
 
                 // Se incluyen los parámetros en la petición HTTP
@@ -171,28 +171,19 @@ public class UsersWorker extends Worker {
 
                 // Se ejecuta la llamada al servicio web
                 int statusCode = urlConnection.getResponseCode();
-                String line;
-                StringBuilder result = new StringBuilder();
-                result.append("");
-                if (statusCode == 200) {
-                    // Cósigo 200 OK, se leen los datos de la respuesta
-                    BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-
-                    while ((line = bufferedReader.readLine()) != null) {
-                        result.append(line);
-                    }
-                    inputStream.close();
+                Log.d("La cookie es", Integer.toString(statusCode));
+                String result = "";
+                if(statusCode == 401) { // La cookie es incorrecta o el usuario no tiene grupo
+                    result = "Invalid";
                 }
 
-                Log.d("sout_wer",result.toString());
-
                 Data resultados = new Data.Builder()
-                        .putString("datos", result.toString())
+                        .putString("datos", result)
+                        .putString("cookie", cookie)
                         .build();
 
-                // Devolver que t0do ha ido bien
                 return Result.success(resultados);
+
             } else {
                 // Algo no ha ido de forma correcta
                 return Result.failure();

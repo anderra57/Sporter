@@ -33,6 +33,12 @@ import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.UnaActividad;
 import com.anderpri.das_grupal.controllers.LoginController;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
+/*import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;*/
+
+import java.sql.SQLOutput;
 
 
 public class LoginMain extends AppCompatActivity {
@@ -57,8 +63,6 @@ public class LoginMain extends AppCompatActivity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        token = "testToken";
-
         user = findViewById(R.id.login_main_txt_user);
         pass = findViewById(R.id.login_main_txt_pass);
         imagen = findViewById(R.id.login_main_banner);
@@ -79,6 +83,8 @@ public class LoginMain extends AppCompatActivity {
     public void onLogin(View v) {
         String username = user.getText().toString();
         String password = pass.getText().toString();
+        //getFirebaseToken();
+        token = "test"; // provisional
 
         // Los campos del login no pueden estar vacios
         if(username.isEmpty() || password.isEmpty()) {
@@ -164,6 +170,29 @@ public class LoginMain extends AppCompatActivity {
             finish();
         }
     }
+
+    /*// Conseguimos el token de firebase
+    // El script del backend está configurado tal que si el token ya existiera, no se haría nada,
+    // en caso de no existir, se inserta en la base de datos
+    private void getFirebaseToken() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d("firebase_error", "Firebase error: " + task.getException().toString());
+                            return;
+                        }
+                        String token = task.getResult().getToken();
+                        Log.d("token_firebase", "Token: " + token);
+                        setToken(token);
+                    }
+                });
+    }
+
+    private void setToken(String tok) {
+        token = tok;
+    }*/
 
     /*
     public void onLogin(View v) {

@@ -24,7 +24,7 @@
     <string name="login_team_in_use">Ese nombre de equipo ya está escogido. Elige otro</string>
 
     <!-- Find -->
-    <string name="login_wrong_team_pass">No existe ningún usuario con ese nombre o la contraseña es incorrecta</string>
+    <string name="login_wrong_team_pass">No existe ningún grupo con ese nombre o la contraseña es incorrecta</string>
 
     <!-- Settings activity strings -->
     <string name="settings_lang_text">Idioma</string>

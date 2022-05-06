@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.work.Constraints;
+import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -108,13 +109,18 @@ public class UnaActividad extends AppCompatActivity {
         // borrar de SP
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
+        String cookie = preferences.getString("cookie","");
         editor.remove("cookie");
         editor.apply();
 
         // llamada al servidor
         try {
+            Data logout = new Data.Builder()
+                    .putString("funcion", "logout")
+                    .putString("cookie", cookie)
+                    .build();
             Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(UsersWorker.class).setConstraints(restricciones).build();
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(UsersWorker.class).setConstraints(restricciones).setInputData(logout).build();
             WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
                 if (status != null && status.getState().isFinished()) {
                     Intent intent = new Intent(this, LoginMain.class);

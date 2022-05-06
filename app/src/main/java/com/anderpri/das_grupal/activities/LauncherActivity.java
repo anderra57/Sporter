@@ -14,7 +14,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.anderpri.das_grupal.activities.login.LoginMain;
+import com.anderpri.das_grupal.activities.login.LoginTeamButtons;
 import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
+import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
 public class LauncherActivity extends AppCompatActivity {
 
@@ -39,7 +41,7 @@ public class LauncherActivity extends AppCompatActivity {
         cookie = preferences.getString("cookie","no_cookie");
         Log.d("cookie_launcher",cookie);
 
-        if (cookie.equals("no_cookie")){
+        if (cookie.equals("no_cookie")){ // No hay cookoe guradado, por lo que accedemos al login
             openLogin();
         } else {
             cookieIsValid();
@@ -60,7 +62,7 @@ public class LauncherActivity extends AppCompatActivity {
                     .build();
 
             // Preparar la petición
-            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(TeamsWorker.class)
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(UsersWorker.class)
                     .setConstraints(restricciones)
                     .setInputData(logindata)
                     .build();
@@ -71,13 +73,14 @@ public class LauncherActivity extends AppCompatActivity {
                         if (status != null && status.getState().isFinished()) {
                             //Log.d("sout_wmana",status.getOutputData().getString("datos"));
                             //String cookieIsValid = status.getOutputData().getString("datos").trim();
-                            String cookieIsValid="c";
-                            if (!cookieIsValid.isEmpty()){
+                            String result = status.getOutputData().getString("datos").trim();
+                            System.out.println("Res " + result);
+                            if (!result.isEmpty()) {
+                                openLogin();
+                            } else {
                                 Intent i = new Intent(this, UnaActividad.class);
                                 startActivity(i);
                                 finish();
-                            } else {
-                                openLogin();
                             }
                         }
                     });

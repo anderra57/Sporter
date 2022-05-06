@@ -70,23 +70,15 @@ public class TeamsWorker extends Worker {
 
                 // Se ejecuta la llamada al servicio web
                 int statusCode = urlConnection.getResponseCode();
-                String line;
-                StringBuilder result = new StringBuilder();
-                if (statusCode == 200) {
-                    // Cósigo 200 OK, se leen los datos de la respuesta
-                    BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-
-                    while ((line = bufferedReader.readLine()) != null) {
-                        result.append(line);
-                    }
-                    inputStream.close();
+                String result = "";
+                if (statusCode == 401 || statusCode == 500) {
+                    result = "Invalid login";
                 }
 
-                Log.d("TeamsWorker", String.valueOf(result));
+                Log.d("TeamsWorker", result);
 
                 Data resultados = new Data.Builder()
-                        .putString("datos", result.toString())
+                        .putString("datos", result)
                         .build();
 
                 // Devolver que t0do ha ido bien

@@ -19,12 +19,10 @@ public class LoginTeamButtons extends AppCompatActivity {
     public void createBtn(View v) {
         Intent i = new Intent(this, LoginCreateTeam.class);
         startActivity(i);
-        finish();
     }
 
     public void findBtn(View v) {
         Intent i = new Intent(this, LoginFindTeam.class);
         startActivity(i);
-        finish();
     }
 }

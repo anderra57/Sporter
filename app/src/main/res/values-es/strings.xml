@@ -22,6 +22,6 @@
     <string name="settings_theme_radio_light">Tema claro</string>
     <string name="settings_theme_text">Tema</string>
     <string name="login_btn_find">Unirse a equipo</string>
-    <string name="login_wrong_team_pass">No existe ningún usuario con ese nombre o la contraseña es incorrecta</string>
+    <string name="login_wrong_team_pass">No existe ningún grupo con ese nombre o la contraseña es incorrecta</string>
     <string name="login_team_in_use">Ese nombre de equipo ya está escogido. Elige otro</string>
 </resources>
