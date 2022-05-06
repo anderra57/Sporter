@@ -14,8 +14,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.anderpri.das_grupal.activities.login.LoginMain;
-import com.anderpri.das_grupal.activities.login.LoginTeamButtons;
-import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
 public class LauncherActivity extends AppCompatActivity {
@@ -78,7 +76,7 @@ public class LauncherActivity extends AppCompatActivity {
                             if (!result.isEmpty()) {
                                 openLogin();
                             } else {
-                                Intent i = new Intent(this, UnaActividad.class);
+                                Intent i = new Intent(this, Lista_Actividades.class);
                                 startActivity(i);
                                 finish();
                             }

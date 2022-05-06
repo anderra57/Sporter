@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
@@ -16,29 +18,39 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
+import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.google.android.material.navigation.NavigationView;
 
-public class UnaActividad extends AppCompatActivity {
-    /*
-        Tanto esta actividad como UnaActividad son solo para tener una Actividad "base" con el menu lateral
-     */
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 
+public class Lista_Actividades extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
-
-    // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
+    private Lista_Actividades_Recycler_View_Adapter adapter;
+    private ArrayList<Actividad> listaActividades;
+    private String cookie;
+    private SharedPreferences preferences;
+
+    public Lista_Actividades() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_una_actividad);
+        setContentView(R.layout.activity_lista_actividades);
+
+
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -47,12 +59,72 @@ public class UnaActividad extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        mDrawer = (DrawerLayout) findViewById(R.id.lista_actividades_drawer_layout);
+        nvDrawer = (NavigationView) findViewById(R.id.lista_actividades_navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
 
+        listaActividades = new ArrayList<Actividad>();
+        RecyclerView recyclerView = findViewById(R.id.lista_actividades_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new Lista_Actividades_Recycler_View_Adapter(this, listaActividades);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
+
+        getCookie();
+        prueba();
+
+    }
+
+    private void getCookie() {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        cookie = preferences.getString("cookie","");
+    }
+
+    private void prueba() {
+
+        try {
+            // Preparar los datos para enviar al backend
+            Data logindata = new Data.Builder()
+                    .putString("funcion", "mostrarActivas")
+                    .putString("cookie", cookie)
+                    .build();
+
+            // Tiene que existir conexión a internet
+            Constraints restricciones = new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build();
+
+            // Preparar la petición
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ActivitiesWorker.class)
+                    .setConstraints(restricciones)
+                    .setInputData(logindata)
+                    .build();
+
+            // Lanzar la petición
+            WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
+                    .observe(this, status -> {
+                        if (status != null && status.getState().isFinished()) {
+                            try {
+                                JSONArray miArray = new JSONArray(status.getOutputData().getString("datos"));
+                                for(int i = 0; i<miArray.length(); i++){ //asi es, no se hacer un foreach en java
+                                    JSONObject miJson = new JSONObject(miArray.get(i).toString());
+                                    Actividad actual= new Actividad(miJson.getString("name"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"));
+                                    listaActividades.add(actual);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+            WorkManager.getInstance(this).enqueue(req);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -134,5 +206,13 @@ public class UnaActividad extends AppCompatActivity {
             WorkManager.getInstance(this).enqueue(req);
         } catch (Exception e) {  e.printStackTrace();  }
 
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        /*
+        TODO
+        lo que sea que tenga que ocurrir cuando haces clic en una actividad
+         */
     }
 }

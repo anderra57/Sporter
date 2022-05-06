@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
+import com.anderpri.das_grupal.activities.Lista_Actividades;
 import com.anderpri.das_grupal.activities.UnaActividad;
 import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
@@ -155,7 +156,7 @@ public class LoginCreateTeam extends AppCompatActivity {
                                     //addFirebasetoken(username);
                                     // Avanzar a la siguiente actividad (MainActivity)
 
-                                    Intent intent = new Intent(this, UnaActividad.class);
+                                    Intent intent = new Intent(this, Lista_Actividades.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                     finish();

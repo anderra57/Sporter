@@ -15,6 +15,11 @@ import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.google.android.material.navigation.NavigationView;
 
 public class OtraActividad extends AppCompatActivity {
+    /*
+        Tanto esta actividad como UnaActividad son solo para tener una Actividad "base" con el menu lateral
+     */
+
+
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;

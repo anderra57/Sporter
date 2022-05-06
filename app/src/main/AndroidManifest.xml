@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.anderpri.das_grupal">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DAS_Grupal"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activities.Lista_Actividades"
+            android:exported="false" />
         <activity
             android:name=".activities.login.LoginCreate"
             android:exported="false" />
