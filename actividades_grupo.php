@@ -4,7 +4,7 @@
 
 	$servername = "localhost";
     $username = "uname";
-    $password = "pass";
+    $password = "passwd";
 	$dbname = "uname_dasapp";
 
 	// Create connection
@@ -35,14 +35,12 @@
                     $res_actividades_grupo = $conn->query($sql_actividades_grupo);
                     $actividades_activas_array = [];
                     while($row = mysqli_fetch_assoc($res_actividades_grupo)){
-                        $name = $row['name'];
-                        $description = $row['description'];
-                        $fecha = $row['fecha'];
-                        $city = $row['city'];
-                        array_push($actividades_activas_array, $name);
-                        array_push($actividades_activas_array, $description);
-                        array_push($actividades_activas_array, $fecha);
-                        array_push($actividades_activas_array, $city);
+                        $element = [];
+                        $element['name'] = $row['name'];
+                        $element['description'] = $row['description'];
+                        $element['fecha'] = $row['fecha'];
+                        $element['city'] = $row['city'];
+                        array_push($actividades_activas_array, $element);
                     }
                     echo json_encode($actividades_activas_array);
                     http_response_code(200);
@@ -63,14 +61,12 @@
                     $res_actividades_grupo = $conn->query($sql_actividades_grupo);
                     $array_final_no_inscritas = [];
                     while($row = mysqli_fetch_assoc($res_actividades_grupo)){
-                        $name = $row['name'];
-                        $description = $row['description'];
-                        $fecha = $row['fecha'];
-                        $city = $row['city'];
-                        array_push($array_final_no_inscritas, $name);
-                        array_push($array_final_no_inscritas, $description);
-                        array_push($array_final_no_inscritas, $fecha);
-                        array_push($array_final_no_inscritas, $city);
+                        $element = [];
+                        $element['name'] = $row['name'];
+                        $element['description'] = $row['description'];
+                        $element['fecha'] = $row['fecha'];
+                        $element['city'] = $row['city'];
+                        array_push($array_final_no_inscritas, $element);
                     }
                     echo json_encode($array_final_no_inscritas);
                     http_response_code(200);

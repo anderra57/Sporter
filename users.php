@@ -4,7 +4,7 @@
 
 	$servername = "localhost";
     $username = "uname";
-    $password = "pass";
+    $password = "passwd";
 	$dbname = "uname_dasapp";
 
 	// Create connection

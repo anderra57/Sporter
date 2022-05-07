@@ -4,7 +4,7 @@
 
     $servername = "localhost";
     $username = "uname";
-    $password = "pass";
+    $password = "passwd";
     $dbname = "uname_dasapp";
 
     // Create connection
@@ -130,16 +130,13 @@
                     $result = $conn->query($sql);
                     $actividades = array();
                     while ($row = mysqli_fetch_assoc($result)) {
-                        $actividad = $row['actividad'];
-                        $description = $row['description'];
-                        $fecha = $row['fecha'];
-                        $city = $row['city'];
-                        $grupo = $row['grupo'];
-                        array_push($actividades, $actividad);
-                        array_push($actividades, $description);
-                        array_push($actividades, $fecha);
-                        array_push($actividades, $city);
-                        array_push($actividades, $grupo);
+                        $element = array();
+                        $element['actividad'] = $row['actividad'];
+                        $element['description'] = $row['description'];
+                        $element['fecha'] = $row['fecha'];
+                        $element['city'] = $row['city'];
+                        $element['grupo'] = $row['grupo'];
+                        array_push($actividades, $element);
                     }
 
                     echo json_encode($actividades);
