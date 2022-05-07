@@ -17,14 +17,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
-import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.google.android.material.navigation.NavigationView;
 
@@ -34,7 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class UnaActividad extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
+public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -44,13 +42,13 @@ public class UnaActividad extends AppCompatActivity implements Lista_Actividades
     private String cookie;
     private SharedPreferences preferences;
 
-    public UnaActividad() {
+    public ListaActividadesAdmin() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_una_actividad);
+        setContentView(R.layout.activity_lista_actividades_admin);
 
 
 
