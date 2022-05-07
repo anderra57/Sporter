@@ -20,7 +20,7 @@
 
         <!-- The main content view where fragments are loaded -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/lista_actividades_constraint_layout"
+            android:id="@+id/lista_actividades_no_inscrito_constraint_layout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
@@ -41,7 +41,7 @@
     <!-- The navigation drawer that comes from the left -->
     <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/lista_actividades_navigation_view"
+        android:id="@+id/ina_actividad_navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

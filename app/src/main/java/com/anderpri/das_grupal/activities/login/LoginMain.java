@@ -1,12 +1,9 @@
 package com.anderpri.das_grupal.activities.login;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -17,29 +14,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.Constraints;
 import androidx.work.Data;
-import androidx.work.ListenableWorker;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
-import androidx.work.impl.model.Preference;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.Lista_Actividades;
-import com.anderpri.das_grupal.activities.UnaActividad;
+import com.anderpri.das_grupal.activities.ListaActividadesAdmin;
 import com.anderpri.das_grupal.controllers.LoginController;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 /*import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;*/
-
-import java.sql.SQLOutput;
 
 
 public class LoginMain extends AppCompatActivity {
@@ -158,7 +148,7 @@ public class LoginMain extends AppCompatActivity {
 
     private void manageIdUser(String id_user) {
         if (id_user.equals("administrator")){
-            Intent intent = new Intent(this, UnaActividad.class);
+            Intent intent = new Intent(this, ListaActividadesAdmin.class);
             startActivity(intent);
             finish();
         } else if (id_user.equals("nogroup")){ // user normal SIN grupo

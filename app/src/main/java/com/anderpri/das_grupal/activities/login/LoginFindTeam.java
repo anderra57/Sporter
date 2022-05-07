@@ -1,22 +1,15 @@
 package com.anderpri.das_grupal.activities.login;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.Constraints;
 import androidx.work.Data;
-import androidx.work.ListenableWorker;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -27,9 +20,7 @@ import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.Lista_Actividades;
-import com.anderpri.das_grupal.activities.UnaActividad;
 import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
-import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
 public class LoginFindTeam extends AppCompatActivity {
 

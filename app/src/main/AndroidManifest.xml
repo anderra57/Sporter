@@ -13,6 +13,12 @@
         android:theme="@style/Theme.DAS_Grupal"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.ListaActividadesNoInscrito"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Lista_Actividades_Admin"
+            android:exported="false" />
+        <activity
             android:name=".activities.Lista_Actividades"
             android:exported="false" />
         <activity
@@ -46,7 +52,7 @@
             android:name=".activities.OtraActividad"
             android:exported="false" />
         <activity
-            android:name=".activities.UnaActividad"
+            android:name=".activities.ListaActividadesAdmin"
             android:exported="true" />
     </application>
 

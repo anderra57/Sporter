@@ -23,6 +23,7 @@ import android.view.View;
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
+import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
+public class ListaActividadesNoInscrito extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -42,13 +43,13 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
     private String cookie;
     private SharedPreferences preferences;
 
-    public ListaActividadesAdmin() {
+    public ListaActividadesNoInscrito() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_actividades_admin);
+        setContentView(R.layout.activity_lista_actividades_no_inscrito);
 
 
 
@@ -59,7 +60,7 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.lista_actividades_admin_drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.lista_actividades_no_inscrito_drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.ina_actividad_navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
@@ -88,7 +89,7 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
         try {
             // Preparar los datos para enviar al backend
             Data data = new Data.Builder()
-                    .putString("funcion", "listar")
+                    .putString("funcion", "mostrarNoInscritos")
                     .putString("cookie", cookie)
                     .build();
 
@@ -98,7 +99,7 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
                     .build();
 
             // Preparar la petición
-            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ActivitiesAdminWorker.class)
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ActivitiesWorker.class)
                     .setConstraints(restricciones)
                     .setInputData(data)
                     .build();

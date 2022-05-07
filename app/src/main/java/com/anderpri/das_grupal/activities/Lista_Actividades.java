@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -49,6 +50,7 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_actividades);
+        Log.d("entro", "entro");
 
 
 
@@ -60,7 +62,7 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.lista_actividades_drawer_layout);
-        nvDrawer = (NavigationView) findViewById(R.id.lista_actividades_navigation_view);
+        nvDrawer = (NavigationView) findViewById(R.id.ina_actividad_navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
@@ -164,6 +166,9 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
                 startActivity(intent);
                 break;
             case R.id.nav_third_fragment:
+                intent = new Intent(this, ListaActividadesNoInscrito.class);
+                finish();
+                startActivity(intent);
                 break;
             case R.id.nav_cuarto:
                 break;

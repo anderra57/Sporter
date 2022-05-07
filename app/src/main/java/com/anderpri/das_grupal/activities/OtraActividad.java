@@ -40,7 +40,7 @@ public class OtraActividad extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.lista_actividades_admin_drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
@@ -74,7 +74,7 @@ public class OtraActividad extends AppCompatActivity {
         Intent intent;
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                intent = new Intent(this, UnaActividad.class);
+                intent = new Intent(this, ListaActividadesAdmin.class);
                 finish();
                 startActivity(intent);
                 break;
