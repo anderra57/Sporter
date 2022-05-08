@@ -3,13 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_crear_actividad.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_lista_actividades.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_lista_actividades_admin.xml" value="0.2269021739130435" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_lista_actividades_no_inscrito.xml" value="0.15885416666666666" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_create.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_create_team.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_find_team.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_main.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_team_buttons.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_main.xml" value="0.221875" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_main2.xml" value="0.221875" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_otra_actividad.xml" value="0.221875" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_sugerir_actividad.xml" value="0.1265625" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_una_actividad.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/lista_actividades_recycler_view_row.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/nav_header.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/toolbar.xml" value="0.14270833333333333" />
       </map>
     </option>
   </component>

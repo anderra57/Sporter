@@ -13,6 +13,12 @@
         android:theme="@style/Theme.DAS_Grupal"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.SugerirActividad"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CrearActividad"
+            android:exported="false" />
+        <activity
             android:name=".activities.ListaActividadesNoInscrito"
             android:exported="false" />
         <activity

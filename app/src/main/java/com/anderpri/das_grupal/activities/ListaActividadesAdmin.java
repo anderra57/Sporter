@@ -166,6 +166,9 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
             case R.id.nav_third_fragment:
                 break;
             case R.id.nav_cuarto:
+                intent = new Intent(this, CrearActividad.class);
+                finish();
+                startActivity(intent);
                 break;
             case R.id.nav_quinto:
                 break;

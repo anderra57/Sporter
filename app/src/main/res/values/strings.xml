@@ -34,6 +34,13 @@
     <string name="settings_theme_radio_dark">Tema oscuro</string>
     <string name="settings_theme_radio_light">Tema claro</string>
     <string name="settings_theme_text">Tema</string>
+    <string name="nombre_actividad">Nombre actividad</string>
+    <string name="numero_participantes">Número de participantes máximo</string>
+    <string name="explicacion">Explicación</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="fecha">Fecha</string>
+    <string name="sugerir">Sugerir</string>
+    <string name="crear">Crear</string>
 
 
 </resources>

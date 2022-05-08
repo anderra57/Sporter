@@ -24,4 +24,11 @@
     <string name="login_btn_find">Unirse a equipo</string>
     <string name="login_wrong_team_pass">No existe ningún grupo con ese nombre o la contraseña es incorrecta</string>
     <string name="login_team_in_use">Ese nombre de equipo ya está escogido. Elige otro</string>
+    <string name="nombre_actividad">Nombre actividad</string>
+    <string name="numero_participantes">Número de participantes máximo</string>
+    <string name="explicacion">Explicación</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="fecha">Fecha</string>
+    <string name="sugerir">Sugerir</string>
+    <string name="crear">Crear</string>
 </resources>

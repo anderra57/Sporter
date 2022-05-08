@@ -17,7 +17,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -50,9 +49,6 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_actividades);
-        Log.d("entro", "entro");
-
-
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,7 +57,7 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.lista_actividades_drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.crear_actividad_drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.ina_actividad_navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
@@ -171,6 +167,9 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
                 startActivity(intent);
                 break;
             case R.id.nav_cuarto:
+                intent = new Intent(this, SugerirActividad.class);
+                finish();
+                startActivity(intent);
                 break;
             case R.id.nav_quinto:
                 break;
