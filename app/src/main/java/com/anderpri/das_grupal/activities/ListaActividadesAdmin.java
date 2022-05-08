@@ -159,9 +159,6 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_second_fragment:
-                intent = new Intent(this, OtraActividad.class);
-                finish();
-                startActivity(intent);
                 break;
             case R.id.nav_third_fragment:
                 break;
@@ -174,7 +171,6 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
                 break;
             case R.id.logout:
                 logout();
-
                 break;
             default:
                 break;

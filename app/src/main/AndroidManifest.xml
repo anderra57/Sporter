@@ -25,7 +25,7 @@
             android:name=".activities.Lista_Actividades_Admin"
             android:exported="false" />
         <activity
-            android:name=".activities.Lista_Actividades"
+            android:name=".activities.ListaActividades"
             android:exported="false" />
         <activity
             android:name=".activities.login.LoginCreate"

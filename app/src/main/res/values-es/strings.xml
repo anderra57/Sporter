@@ -31,4 +31,8 @@
     <string name="fecha">Fecha</string>
     <string name="sugerir">Sugerir</string>
     <string name="crear">Crear</string>
+    <string name="noCampoVacio">No puede haber ningún campo vacío</string>
+    <string name="fechaActividadErronea">La fecha de la actividad debe ser posterior a la fecha actual</string>
+    <string name="sugerirExito">Actividad sugerida con éxito. Espere a la validación de los administradores</string>
+    <string name="crearExito">Actividad creada con éxito</string>
 </resources>

@@ -22,7 +22,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.anderpri.das_grupal.R;
-import com.anderpri.das_grupal.activities.Lista_Actividades;
+import com.anderpri.das_grupal.activities.ListaActividades;
 import com.anderpri.das_grupal.activities.ListaActividadesAdmin;
 import com.anderpri.das_grupal.controllers.LoginController;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
@@ -156,7 +156,7 @@ public class LoginMain extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else { // user normal con grupo
-            Intent intent = new Intent(this, Lista_Actividades.class);
+            Intent intent = new Intent(this, ListaActividades.class);
             startActivity(intent);
             finish();
         }

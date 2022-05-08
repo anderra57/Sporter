@@ -76,7 +76,7 @@ public class LauncherActivity extends AppCompatActivity {
                             if (!result.isEmpty()) {
                                 openLogin();
                             } else {
-                                Intent i = new Intent(this, Lista_Actividades.class);
+                                Intent i = new Intent(this, ListaActividades.class);
                                 startActivity(i);
                                 finish();
                             }

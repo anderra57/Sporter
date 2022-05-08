@@ -5,19 +5,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
+import com.anderpri.das_grupal.controllers.webservices.SugerenciasWorker;
+import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.anderpri.das_grupal.fragments.DatePickerFragment;
 import com.google.android.material.navigation.NavigationView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SugerirActividad extends AppCompatActivity {
 
@@ -26,8 +42,11 @@ public class SugerirActividad extends AppCompatActivity {
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
 
-    Button botonCrear;
+    Button botonSugerir;
     EditText nombre, ciudad, fecha, explicacion, numeroParticipantes;
+
+    private String cookie;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +65,14 @@ public class SugerirActividad extends AppCompatActivity {
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
-        botonCrear = findViewById(R.id.sugerir_actividad_boton);
+        botonSugerir = findViewById(R.id.sugerir_actividad_boton);
         nombre = findViewById(R.id.sugerir_actividad_nombre_text);
         ciudad = findViewById(R.id.sugerir_actividad_ciudad_text);
         fecha = findViewById(R.id.sugerir_actividad_fecha_text);
         explicacion = findViewById(R.id.sugerir_actividad_explicacion_text);
         numeroParticipantes = findViewById(R.id.sugerir_actividad_numero_text);
+
+        getCookie();
 
         fecha.setOnClickListener(view -> {
             switch (view.getId()){
@@ -61,6 +82,56 @@ public class SugerirActividad extends AppCompatActivity {
             }
         });
 
+        botonSugerir.setOnClickListener(view -> {
+            if ("".equals(nombre.getText().toString()) || "".equals(ciudad.getText().toString()) || "".equals(fecha.getText().toString()) || "".equals(explicacion.getText().toString()) || "".equals(numeroParticipantes.getText().toString())) {
+                Toast.makeText(this, R.string.noCampoVacio, Toast.LENGTH_SHORT).show();
+            }else if (!fechaCorrecta(fecha.getText().toString())) {// la fecha debe ser posterior a la fecha actual
+                Toast.makeText(this, R.string.fechaActividadErronea, Toast.LENGTH_SHORT).show();
+            }else{ // Todos los parámetros guay, llamamos al worker
+                solicitudSugerir(nombre.getText().toString(), ciudad.getText().toString(), numeroParticipantes.getText().toString(), fecha.getText().toString(), explicacion.getText().toString());
+            }
+        });
+
+    }
+
+    private void solicitudSugerir(String nombre, String ciudad, String numero, String fecha, String explicacion) {
+        Data solicitud = new Data.Builder()
+                .putString("funcion", "sugerir")
+                .putString("cookie", cookie)
+                .putString("actividad", nombre)
+                .putString("descripcion", explicacion)
+                .putString("city", ciudad)
+                .putString("fecha", fecha)
+                .build();
+        Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(SugerenciasWorker.class).setConstraints(restricciones).setInputData(solicitud).build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
+            if (status != null && status.getState().isFinished()) {
+                Toast.makeText(this, R.string.sugerirExito, Toast.LENGTH_SHORT).show();
+            }
+        });
+        WorkManager.getInstance(this).enqueue(req);
+    }
+
+    private boolean fechaCorrecta(String fechaUsuario) {
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        final String selectedDate = year + "-" + (month+1) + "-" + day;
+        Date parametro = null;
+        try {
+            parametro = new SimpleDateFormat("yyyy-MM-dd").parse(fechaUsuario);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Date actual = null;
+        try {
+            actual = new SimpleDateFormat("yyyy-MM-dd").parse(selectedDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return parametro.after(actual);
     }
 
     @Override
@@ -91,26 +162,24 @@ public class SugerirActividad extends AppCompatActivity {
         Intent intent;
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                intent = new Intent(this, ListaActividadesAdmin.class);
+                intent = new Intent(this, ListaActividades.class);
                 finish();
                 startActivity(intent);
                 break;
             case R.id.nav_second_fragment:
-                mDrawer.closeDrawer(GravityCompat.START);
-                break;
-            case R.id.nav_third_fragment:
-                break;
-            case R.id.nav_cuarto:
-                intent = new Intent(this, SugerirActividad.class);
+                intent = new Intent(this, ListaActividadesNoInscrito.class);
                 finish();
                 startActivity(intent);
+                break;
+            case R.id.nav_third_fragment:
+                mDrawer.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_cuarto:
                 break;
             case R.id.nav_quinto:
                 break;
             case R.id.logout:
-                intent = new Intent(this, LoginMain.class);
-                startActivity(intent);
-                finish();
+                logout();
                 break;
             default:
                 break;
@@ -130,5 +199,37 @@ public class SugerirActividad extends AppCompatActivity {
         });
 
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    private void getCookie() {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        cookie = preferences.getString("cookie","");
+    }
+    private void logout() {
+        // borrar de SP
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        String cookie = preferences.getString("cookie","");
+        editor.remove("cookie");
+        editor.apply();
+
+        // llamada al servidor
+        try {
+            Data logout = new Data.Builder()
+                    .putString("funcion", "logout")
+                    .putString("cookie", cookie)
+                    .build();
+            Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(UsersWorker.class).setConstraints(restricciones).setInputData(logout).build();
+            WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
+                if (status != null && status.getState().isFinished()) {
+                    Intent intent = new Intent(this, LoginMain.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            WorkManager.getInstance(this).enqueue(req);
+        } catch (Exception e) {  e.printStackTrace();  }
+
     }
 }

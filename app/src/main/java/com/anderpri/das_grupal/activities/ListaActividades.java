@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Lista_Actividades extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
+public class ListaActividades extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -42,7 +42,7 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
     private String cookie;
     private SharedPreferences preferences;
 
-    public Lista_Actividades() {
+    public ListaActividades() {
     }
 
     @Override
@@ -72,7 +72,7 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
         recyclerView.setAdapter(adapter);
 
         getCookie();
-        prueba();
+        solicitud();
 
     }
 
@@ -81,7 +81,7 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
         cookie = preferences.getString("cookie","");
     }
 
-    private void prueba() {
+    private void solicitud() {
 
         try {
             // Preparar los datos para enviar al backend
@@ -157,19 +157,16 @@ public class Lista_Actividades extends AppCompatActivity implements Lista_Activi
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.nav_second_fragment:
-                intent = new Intent(this, OtraActividad.class);
-                finish();
-                startActivity(intent);
-                break;
-            case R.id.nav_third_fragment:
                 intent = new Intent(this, ListaActividadesNoInscrito.class);
                 finish();
                 startActivity(intent);
                 break;
-            case R.id.nav_cuarto:
+            case R.id.nav_third_fragment:
                 intent = new Intent(this, SugerirActividad.class);
                 finish();
                 startActivity(intent);
+                break;
+            case R.id.nav_cuarto:
                 break;
             case R.id.nav_quinto:
                 break;

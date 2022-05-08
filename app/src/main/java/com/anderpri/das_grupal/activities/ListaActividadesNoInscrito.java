@@ -22,7 +22,6 @@ import android.view.View;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
-import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.google.android.material.navigation.NavigationView;
@@ -157,14 +156,17 @@ public class ListaActividadesNoInscrito extends AppCompatActivity implements Lis
 
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                mDrawer.closeDrawer(GravityCompat.START);
-                break;
-            case R.id.nav_second_fragment:
-                intent = new Intent(this, OtraActividad.class);
+                intent = new Intent(this, ListaActividades.class);
                 finish();
                 startActivity(intent);
                 break;
+            case R.id.nav_second_fragment:
+                mDrawer.closeDrawer(GravityCompat.START);
+                break;
             case R.id.nav_third_fragment:
+                intent = new Intent(this, SugerirActividad.class);
+                finish();
+                startActivity(intent);
                 break;
             case R.id.nav_cuarto:
                 break;
