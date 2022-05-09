@@ -171,14 +171,21 @@ public class UsersWorker extends Worker {
 
                 // Se ejecuta la llamada al servicio web
                 int statusCode = urlConnection.getResponseCode();
-                Log.d("La cookie es", Integer.toString(statusCode));
-                String result = "";
-                if(statusCode == 401) { // La cookie es incorrecta o el usuario no tiene grupo
-                    result = "Invalid";
+                String line;
+                StringBuilder result = new StringBuilder();
+                if (statusCode == 200) {
+                    // Cósigo 200 OK, se leen los datos de la respuesta
+                    BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result.append(line);
+                    }
+                    inputStream.close();
                 }
 
                 Data resultados = new Data.Builder()
-                        .putString("datos", result)
+                        .putString("datos", result.toString())
                         .putString("cookie", cookie)
                         .build();
 

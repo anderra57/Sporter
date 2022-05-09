@@ -69,14 +69,17 @@ public class LauncherActivity extends AppCompatActivity {
             WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
                     .observe(this, status -> {
                         if (status != null && status.getState().isFinished()) {
-                            //Log.d("sout_wmana",status.getOutputData().getString("datos"));
-                            //String cookieIsValid = status.getOutputData().getString("datos").trim();
                             String result = status.getOutputData().getString("datos").trim();
                             System.out.println("Res " + result);
-                            if (!result.isEmpty()) {
+                            if (result.isEmpty()) {
                                 openLogin();
                             } else {
-                                Intent i = new Intent(this, ListaActividadesInscrito.class);
+                                Intent i;
+                                if(result.equals("1")) { // Redirigir a listaActividades del administrador
+                                    i = new Intent(this, ListaActividadesAdmin.class);
+                                } else { // Redirigir a lista de usuario normal
+                                    i = new Intent(this, ListaActividadesInscrito.class);
+                                }
                                 startActivity(i);
                                 finish();
                             }
