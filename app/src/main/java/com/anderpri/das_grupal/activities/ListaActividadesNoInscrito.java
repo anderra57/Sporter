@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
@@ -19,11 +17,16 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
+import com.anderpri.das_grupal.adapters.AdapterActividades;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
+import com.anderpri.das_grupal.activities.VisualizarInfoActividad;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -31,16 +34,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class ListaActividadesNoInscrito extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
+public class ListaActividadesNoInscrito extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-    private Lista_Actividades_Recycler_View_Adapter adapter;
-    private ArrayList<Actividad> listaActividades;
     private String cookie;
     private SharedPreferences preferences;
+
+    private AdapterActividades adapterActividades;
+    private ArrayList<Actividad> listaActividades;
+    private ListView list_actividades;
 
     public ListaActividadesNoInscrito() {
     }
@@ -65,17 +71,53 @@ public class ListaActividadesNoInscrito extends AppCompatActivity implements Lis
         setupDrawerContent(nvDrawer);
 
 
+        // Inicalizar la lista de actividades
         listaActividades = new ArrayList<Actividad>();
-        RecyclerView recyclerView = findViewById(R.id.lista_actividades_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Lista_Actividades_Recycler_View_Adapter(this, listaActividades);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
+        list_actividades = (ListView) findViewById(R.id.lista_actividades_recycler_view);
 
         getCookie();
-        listarActividades();
+        getActivities();
 
+        list_actividades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                visualizarActividad(listaActividades.get(i));
+            }
+        });
+
+    }
+
+    private void visualizarActividad(Actividad actividad) {
+        Intent intent = new Intent(this, VisualizarInfoActividad.class);
+        intent.putExtra("funcion", "lista_noinscritos");
+        intent.putExtra("titulo", actividad.name);
+        intent.putExtra("descripcion", actividad.description);
+        intent.putExtra("fecha", actividad.fecha);
+        intent.putExtra("ciudad", actividad.city);
+        startActivity(intent);
+    }
+
+    private void listarActividades() {
+        if (listaActividades.size() != 0) {
+            adapterActividades = new AdapterActividades(this, getTitles(listaActividades));
+            list_actividades.setAdapter(adapterActividades);
+        } else {
+            Toast.makeText(this, getString(R.string.noActividades), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Este método dado una lista de actividades, devolverá un array con los títulos
+    private String[] getTitles(ArrayList<Actividad> lista) {
+        Iterator<Actividad> itr = lista.iterator();
+        Actividad act;
+        String[] titles = new String[lista.size()];
+        int i = 0;
+        while(itr.hasNext()) {
+            act = itr.next();
+            titles[i] = act.name;
+            i++;
+        }
+        return titles;
     }
 
     private void getCookie() {
@@ -83,7 +125,7 @@ public class ListaActividadesNoInscrito extends AppCompatActivity implements Lis
         cookie = preferences.getString("cookie","");
     }
 
-    private void listarActividades() {
+    private void getActivities() {
 
         try {
             // Preparar los datos para enviar al backend
@@ -113,8 +155,8 @@ public class ListaActividadesNoInscrito extends AppCompatActivity implements Lis
                                     JSONObject miJson = new JSONObject(miArray.get(i).toString());
                                     Actividad actual= new Actividad(miJson.getString("name"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"));
                                     listaActividades.add(actual);
-                                    adapter.notifyDataSetChanged();
                                 }
+                                listarActividades();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -156,7 +198,7 @@ public class ListaActividadesNoInscrito extends AppCompatActivity implements Lis
 
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                intent = new Intent(this, ListaActividades.class);
+                intent = new Intent(this, ListaActividadesInscrito.class);
                 finish();
                 startActivity(intent);
                 break;
@@ -206,13 +248,5 @@ public class ListaActividadesNoInscrito extends AppCompatActivity implements Lis
             WorkManager.getInstance(this).enqueue(req);
         } catch (Exception e) {  e.printStackTrace();  }
 
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        /*
-        TODO
-        lo que sea que tenga que ocurrir cuando haces clic en una actividad
-         */
     }
 }

@@ -1,0 +1,50 @@
+package com.anderpri.das_grupal.adapters;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.anderpri.das_grupal.R;
+
+public class AdapterActividades extends BaseAdapter {
+
+    private Context context;
+    private LayoutInflater layoutInflater;
+    private String[] titulos;
+
+    public AdapterActividades(Context pContext, String[] pTitulos) {
+        context = pContext;
+        titulos = pTitulos;
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public int getCount() {
+        return titulos.length;
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return titulos[i];
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        // fila personalizada para mostrar en la lista
+        view = layoutInflater.inflate(R.layout.lista_actividades_recycler_view_row, null);
+        // Inicializar valores de la fila
+        TextView nombre = (TextView) view.findViewById(R.id.lista_actividades_recycler_view_row_cardview_texto);
+        // Añadirlos a la lista
+        nombre.setText(titulos[i]);
+
+        return view;
+    }
+}

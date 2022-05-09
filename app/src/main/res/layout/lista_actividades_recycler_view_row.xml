@@ -38,17 +38,6 @@
                 card_view:layout_constraintTop_toTopOf="parent"
                 card_view:layout_constraintVertical_bias="0.175" />
 
-            <TextView
-                android:id="@+id/lista_actividades_recycler_view_row_cardview_descripcion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/lista_actividades_recycler_view_row_cardview_texto"
-                android:textAlignment="center"
-                android:singleLine="false"/>
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

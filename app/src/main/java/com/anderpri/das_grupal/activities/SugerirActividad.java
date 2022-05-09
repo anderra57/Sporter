@@ -164,7 +164,7 @@ public class SugerirActividad extends AppCompatActivity {
         Intent intent;
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                intent = new Intent(this, ListaActividades.class);
+                intent = new Intent(this, ListaActividadesInscrito.class);
                 finish();
                 startActivity(intent);
                 break;

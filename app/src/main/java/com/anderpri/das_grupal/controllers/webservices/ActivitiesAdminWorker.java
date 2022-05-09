@@ -54,10 +54,10 @@ public class ActivitiesAdminWorker extends Worker {
             // Comprobar qué se quiere hacer
 
             // Login
-            if("listar".equals(funcion)){
+            if("listar".equals(funcion)) {
                 // Se recogen el usuario y la contraseña
                 String cookie = getInputData().getString("cookie");
-                urlConnection.setRequestProperty("Cookie","PHPSESSID=" + cookie);
+                urlConnection.setRequestProperty("Cookie", "PHPSESSID=" + cookie);
                 // Preparar los parámetros para enviar en la petición
                 Uri.Builder builder = new Uri.Builder()
                         .appendQueryParameter("function", "listar");
@@ -84,6 +84,37 @@ public class ActivitiesAdminWorker extends Worker {
 
                 Data resultados = new Data.Builder()
                         .putString("datos", result.toString())
+                        .build();
+                // Devolver que t0do ha ido bien
+                return Result.success(resultados);
+
+            } else if("borrar".equals(funcion)){
+                // Se recogen el usuario y la contraseña
+                String cookie = getInputData().getString("cookie");
+                String actividad = getInputData().getString("actividad");
+
+                urlConnection.setRequestProperty("Cookie","PHPSESSID=" + cookie);
+                // Preparar los parámetros para enviar en la petición
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("function", funcion)
+                        .appendQueryParameter("actividad", actividad);
+                String parametros = builder.build().getEncodedQuery();
+
+                // Se incluyen los parámetros en la petición HTTP
+                PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
+                out.print(parametros);
+                out.close();
+
+                // Se ejecuta la llamada al servicio web
+                int statusCode = urlConnection.getResponseCode();
+                String result = "";
+                if (statusCode != 200) {
+                    // Código 200 OK, se leen los datos de la respuesta
+                    result = "Invalid session";
+                }
+
+                Data resultados = new Data.Builder()
+                        .putString("datos", result)
                         .build();
                 // Devolver que t0do ha ido bien
                 return Result.success(resultados);

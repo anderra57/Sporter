@@ -25,10 +25,13 @@
             android:name=".activities.ListaActividadesNoInscrito"
             android:exported="false" />
         <activity
-            android:name=".activities.Lista_Actividades_Admin"
+            android:name=".activities.ListaActividadesAdmin"
             android:exported="false" />
         <activity
-            android:name=".activities.ListaActividades"
+            android:name=".activities.VisualizarInfoActividad"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ListaActividadesInscrito"
             android:exported="false" />
         <activity
             android:name=".activities.login.LoginCreate"
@@ -60,9 +63,6 @@
         <activity
             android:name=".activities.OtraActividad"
             android:exported="false" />
-        <activity
-            android:name=".activities.ListaActividadesAdmin"
-            android:exported="true" />
     </application>
 
 </manifest>

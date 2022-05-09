@@ -22,10 +22,13 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
+import com.anderpri.das_grupal.adapters.AdapterActividades;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
 import com.anderpri.das_grupal.controllers.webservices.CrearActividadWorker;
 import com.anderpri.das_grupal.controllers.webservices.SolicitudesWorker;
@@ -38,16 +41,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class AceptarRechazarActividad extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
+public class
+AceptarRechazarActividad extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-    private Lista_Actividades_Recycler_View_Adapter adapter;
-    private ArrayList<Actividad> listaActividades;
     private String cookie;
     private SharedPreferences preferences;
+
+    private AdapterActividades adapterActividades;
+    private ArrayList<Actividad> listaActividades;
+    private ListView list_actividades;
 
     public AceptarRechazarActividad() {
     }
@@ -70,17 +77,43 @@ public class AceptarRechazarActividad extends AppCompatActivity implements Lista
         setupDrawerContent(nvDrawer);
 
 
+        // Inicalizar la lista de actividades
         listaActividades = new ArrayList<Actividad>();
-        RecyclerView recyclerView = findViewById(R.id.lista_actividades_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Lista_Actividades_Recycler_View_Adapter(this, listaActividades);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
+        list_actividades = (ListView) findViewById(R.id.lista_actividades_recycler_view);
 
         getCookie();
-        listarActividades();
+        getActivities();
 
+        list_actividades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println("Se ha clickado el elemento " + i);
+            }
+        });
+
+    }
+
+    private void listarActividades() {
+        if (listaActividades.size() != 0) {
+            adapterActividades = new AdapterActividades(this, getTitles(listaActividades));
+            list_actividades.setAdapter(adapterActividades);
+        } else {
+            Toast.makeText(this, getString(R.string.noActividades), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Este método dado una lista de actividades, devolverá un array con los títulos
+    private String[] getTitles(ArrayList<Actividad> lista) {
+        Iterator<Actividad> itr = lista.iterator();
+        Actividad act;
+        String[] titles = new String[lista.size()];
+        int i = 0;
+        while(itr.hasNext()) {
+            act = itr.next();
+            titles[i] = act.name;
+            i++;
+        }
+        return titles;
     }
 
     private void getCookie() {
@@ -88,7 +121,7 @@ public class AceptarRechazarActividad extends AppCompatActivity implements Lista
         cookie = preferences.getString("cookie","");
     }
 
-    private void listarActividades() {
+    private void getActivities() {
 
         try {
             // Preparar los datos para enviar al backend
@@ -118,8 +151,8 @@ public class AceptarRechazarActividad extends AppCompatActivity implements Lista
                                     JSONObject miJson = new JSONObject(miArray.get(i).toString());
                                     Actividad actual= new Actividad(miJson.getString("actividad"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"));
                                     listaActividades.add(actual);
-                                    adapter.notifyDataSetChanged();
                                 }
+                                listarActividades();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -213,7 +246,7 @@ public class AceptarRechazarActividad extends AppCompatActivity implements Lista
 
     }
 
-    @Override
+    /*@Override
     public void onItemClick(View view, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.acerptarRechazarActividad));
@@ -225,7 +258,7 @@ public class AceptarRechazarActividad extends AppCompatActivity implements Lista
             rechazarActividad(listaActividades.get(position).name);
         });
         builder.show();
-    }
+    }*/
 
     private void aceptarActividad(String actividad){
 

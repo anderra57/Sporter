@@ -58,6 +58,13 @@
     <string name="no">No</string>
     <string name="activiadadAceptadaExito">Actividad aceptada con éxito</string>
     <string name="actividadRechazadaExito">Actividad rechazada con éxito</string>
-
+    <string name="noActividades">No existe ninguna actividad</string>
+    <string name="inscripcion">Inscripción correctamente realizada</string>
+    <string name="desapuntar">Te has desapuntado de la actividad</string>
+    <string name="inscribirse">Inscribirse</string>
+    <string name="desapuntarse">Desapuntarse</string>
+    <string name="borrar">Borrar</string>
+    <string name="borrado">Actividad borrada correctamente</string>
+    <string name="invalidSession">Sesión no válida, vuelve a autenticarte</string>
 
 </resources>
