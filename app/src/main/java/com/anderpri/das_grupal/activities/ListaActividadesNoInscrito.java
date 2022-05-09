@@ -60,7 +60,7 @@ public class ListaActividadesNoInscrito extends AppCompatActivity implements Lis
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.lista_actividades_no_inscrito_drawer_layout);
-        nvDrawer = (NavigationView) findViewById(R.id.ina_actividad_navigation_view);
+        nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
@@ -168,13 +168,10 @@ public class ListaActividadesNoInscrito extends AppCompatActivity implements Lis
                 finish();
                 startActivity(intent);
                 break;
-            case R.id.nav_cuarto:
-                break;
-            case R.id.nav_quinto:
+            case R.id.settings:
                 break;
             case R.id.logout:
                 logout();
-
                 break;
             default:
                 break;

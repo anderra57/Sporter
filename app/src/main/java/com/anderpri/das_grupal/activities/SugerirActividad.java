@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -61,7 +60,7 @@ public class SugerirActividad extends AppCompatActivity {
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.sugerir_actividad_drawer_layout);
-        nvDrawer = (NavigationView) findViewById(R.id.ina_actividad_navigation_view);
+        nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
@@ -108,6 +107,9 @@ public class SugerirActividad extends AppCompatActivity {
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
             if (status != null && status.getState().isFinished()) {
                 Toast.makeText(this, R.string.sugerirExito, Toast.LENGTH_SHORT).show();
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
             }
         });
         WorkManager.getInstance(this).enqueue(req);
@@ -174,9 +176,7 @@ public class SugerirActividad extends AppCompatActivity {
             case R.id.nav_third_fragment:
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
-            case R.id.nav_cuarto:
-                break;
-            case R.id.nav_quinto:
+            case R.id.settings:
                 break;
             case R.id.logout:
                 logout();

@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,8 +26,6 @@ import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.CrearActividadWorker;
-import com.anderpri.das_grupal.controllers.webservices.SugerenciasWorker;
-import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.anderpri.das_grupal.fragments.DatePickerFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -63,7 +60,7 @@ public class CrearActividad extends AppCompatActivity {
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.crear_actividad_drawer_layout);
-        nvDrawer = (NavigationView) findViewById(R.id.ina_actividad_navigation_view);
+        nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
@@ -110,6 +107,9 @@ public class CrearActividad extends AppCompatActivity {
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
             if (status != null && status.getState().isFinished()) {
                 Toast.makeText(this, R.string.crearExito, Toast.LENGTH_SHORT).show();
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
             }
         });
         WorkManager.getInstance(this).enqueue(req);
@@ -150,12 +150,9 @@ public class CrearActividad extends AppCompatActivity {
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
                 });
     }
 
@@ -169,13 +166,14 @@ public class CrearActividad extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.nav_second_fragment:
-                break;
-            case R.id.nav_third_fragment:
-                break;
-            case R.id.nav_cuarto:
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
-            case R.id.nav_quinto:
+            case R.id.nav_third_fragment:
+                intent = new Intent(this, AceptarRechazarActividad.class);
+                finish();
+                startActivity(intent);
+                break;
+            case R.id.settings:
                 break;
             case R.id.logout:
                 logout();

@@ -1,6 +1,7 @@
 package com.anderpri.das_grupal.activities;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -13,17 +14,22 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
 import com.anderpri.das_grupal.controllers.webservices.CrearActividadWorker;
+import com.anderpri.das_grupal.controllers.webservices.SolicitudesWorker;
+import com.anderpri.das_grupal.controllers.webservices.SugerenciasWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.google.android.material.navigation.NavigationView;
 
@@ -33,7 +39,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
+public class AceptarRechazarActividad extends AppCompatActivity implements Lista_Actividades_Recycler_View_Adapter.ItemClickListener {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -43,15 +49,13 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
     private String cookie;
     private SharedPreferences preferences;
 
-    public ListaActividadesAdmin() {
+    public AceptarRechazarActividad() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_actividades_admin);
-
-
+        setContentView(R.layout.activity_aceptar_rechazar_actividad);
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,7 +64,7 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.lista_actividades_admin_drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.aceptar_rechazar_actividad_drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
@@ -89,7 +93,7 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
         try {
             // Preparar los datos para enviar al backend
             Data data = new Data.Builder()
-                    .putString("funcion", "listar")
+                    .putString("funcion", "mostrarSolicitudes")
                     .putString("cookie", cookie)
                     .build();
 
@@ -99,7 +103,7 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
                     .build();
 
             // Preparar la petición
-            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ActivitiesAdminWorker.class)
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(SugerenciasWorker.class)
                     .setConstraints(restricciones)
                     .setInputData(data)
                     .build();
@@ -112,7 +116,7 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
                                 JSONArray miArray = new JSONArray(status.getOutputData().getString("datos"));
                                 for(int i = 0; i<miArray.length(); i++){ //asi es, no se hacer un foreach en java
                                     JSONObject miJson = new JSONObject(miArray.get(i).toString());
-                                    Actividad actual= new Actividad(miJson.getString("name"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"));
+                                    Actividad actual= new Actividad(miJson.getString("actividad"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"));
                                     listaActividades.add(actual);
                                     adapter.notifyDataSetChanged();
                                 }
@@ -157,7 +161,9 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
 
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                mDrawer.closeDrawer(GravityCompat.START);
+                intent = new Intent(this, ListaActividadesAdmin.class);
+                finish();
+                startActivity(intent);
                 break;
             case R.id.nav_second_fragment:
                 intent = new Intent(this, CrearActividad.class);
@@ -165,9 +171,7 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
                 startActivity(intent);
                 break;
             case R.id.nav_third_fragment:
-                intent = new Intent(this, AceptarRechazarActividad.class);
-                finish();
-                startActivity(intent);
+                mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.settings:
                 break;
@@ -211,9 +215,78 @@ public class ListaActividadesAdmin extends AppCompatActivity implements Lista_Ac
 
     @Override
     public void onItemClick(View view, int position) {
-        /*
-        TODO
-        lo que sea que tenga que ocurrir cuando haces clic en una actividad
-         */
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.acerptarRechazarActividad));
+        builder.setMessage(getString(R.string.aceptarActividad));
+        builder.setPositiveButton(getString(R.string.si), (dialogInterface, i) -> {
+            aceptarActividad(listaActividades.get(position).name);
+        });
+        builder.setNegativeButton(getString(R.string.no), (dialogInterface, i) -> {
+            rechazarActividad(listaActividades.get(position).name);
+        });
+        builder.show();
+    }
+
+    private void aceptarActividad(String actividad){
+
+        // Preparar los datos para enviar al backend
+        Data data = new Data.Builder()
+                .putString("funcion", "aceptar")
+                .putString("cookie", cookie)
+                .putString("actividad", actividad)
+                .build();
+        // Tiene que existir conexión a internet
+        Constraints restricciones = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        // Preparar la petición
+        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(SolicitudesWorker.class)
+                .setConstraints(restricciones)
+                .setInputData(data)
+                .build();
+
+        // Lanzar la petición
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
+                    if (status != null && status.getState().isFinished()) {
+                        Toast.makeText(this, R.string.activiadadAceptadaExito, Toast.LENGTH_SHORT).show();
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+
+        WorkManager.getInstance(this).enqueue(req);
+    }
+
+    private void rechazarActividad(String actividad){
+// Preparar los datos para enviar al backend
+        Data data = new Data.Builder()
+                .putString("funcion", "rechazar")
+                .putString("cookie", cookie)
+                .putString("actividad", actividad)
+                .build();
+        // Tiene que existir conexión a internet
+        Constraints restricciones = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        // Preparar la petición
+        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(SolicitudesWorker.class)
+                .setConstraints(restricciones)
+                .setInputData(data)
+                .build();
+
+        // Lanzar la petición
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
+            if (status != null && status.getState().isFinished()) {
+                Toast.makeText(this, R.string.actividadRechazadaExito, Toast.LENGTH_SHORT).show();
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
+        WorkManager.getInstance(this).enqueue(req);
     }
 }

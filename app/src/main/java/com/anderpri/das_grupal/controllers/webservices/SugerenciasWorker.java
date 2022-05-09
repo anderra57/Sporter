@@ -54,7 +54,6 @@ public class SugerenciasWorker extends Worker {
             // Comprobar qué se quiere hacer
 
             if("sugerir".equals(funcion)) {
-
                 String cookie = getInputData().getString("cookie");
                 String actividad = getInputData().getString("actividad");
                 String city = getInputData().getString("city");
@@ -80,6 +79,39 @@ public class SugerenciasWorker extends Worker {
                 if (statusCode == 200) {
                     return Result.success();
                 }
+            }else if("mostrarSolicitudes".equals(funcion)) {
+                String cookie = getInputData().getString("cookie");
+                urlConnection.setRequestProperty("Cookie", "PHPSESSID=" + cookie);
+                // Preparar los parámetros para enviar en la petición
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("function", funcion);
+                String parametros = builder.build().getEncodedQuery();
+
+                // Se incluyen los parámetros en la petición HTTP
+                PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
+                out.print(parametros);
+                out.close();
+
+                // Se ejecuta la llamada al servicio web
+                int statusCode = urlConnection.getResponseCode();
+                String line;
+                StringBuilder result = new StringBuilder();
+                if (statusCode == 200) {
+                    // Cósigo 200 OK, se leen los datos de la respuesta
+                    BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result.append(line);
+                        Log.d("line",line);
+                    }
+                    inputStream.close();
+                }
+
+                Data resultados = new Data.Builder()
+                        .putString("datos", result.toString())
+                        .build();
+                // Devolver que t0do ha ido bien
+                return Result.success(resultados);
             }else {
                 // Algo no ha ido de forma correcta
                 return Result.failure();

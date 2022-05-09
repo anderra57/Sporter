@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_aceptar_rechazar_actividad.xml" value="0.2269021739130435" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_crear_actividad.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_lista_actividades.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_lista_actividades_admin.xml" value="0.2269021739130435" />
@@ -20,6 +21,8 @@
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/lista_actividades_recycler_view_row.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/nav_header.xml" value="0.14270833333333333" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/toolbar.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/menu/drawer_view.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/menu/drawer_view_admin.xml" value="0.15729166666666666" />
       </map>
     </option>
   </component>

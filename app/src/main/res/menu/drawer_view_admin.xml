@@ -5,15 +5,15 @@
         <item
             android:id="@+id/nav_first_fragment"
             android:icon="@drawable/ic_launcher_background"
-            android:title="@string/actividadesInscrito" />
+            android:title="@string/mostrarActividades" />
         <item
             android:id="@+id/nav_second_fragment"
             android:icon="@drawable/ic_launcher_background"
-            android:title="@string/actividadesNoInscrito" />
+            android:title="@string/crearActividad" />
         <item
             android:id="@+id/nav_third_fragment"
             android:icon="@drawable/ic_launcher_background"
-            android:title="@string/sugerirActividad" />
+            android:title="@string/acerptarRechazarActividad" />
     </group>
     <group
         android:id="@+id/grupo2"

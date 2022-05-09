@@ -18,9 +18,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class ActivitiesWorker extends Worker {
+public class SolicitudesWorker extends Worker {
 
-    public ActivitiesWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public SolicitudesWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 
@@ -38,7 +38,7 @@ public class ActivitiesWorker extends Worker {
 
             // Se genera un HttpURLConnection para conectarse con el script de php
             // Direción en la que se encuentra el fichero php
-            String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/aarias023/WEB/das_grupal/actividades_grupo.php";
+            String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/aarias023/WEB/das_grupal/solicitudes.php";
             HttpURLConnection urlConnection = null;
             URL url = new URL(direccion);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -53,13 +53,14 @@ public class ActivitiesWorker extends Worker {
 
             // Comprobar qué se quiere hacer
 
-            if("mostrarActivas".equals(funcion)) {
-                // Se recogen el usuario y la contraseña
+            if ("aceptar".equals(funcion)) {
                 String cookie = getInputData().getString("cookie");
+                String actividad = getInputData().getString("actividad");
                 urlConnection.setRequestProperty("Cookie", "PHPSESSID=" + cookie);
                 // Preparar los parámetros para enviar en la petición
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("function", "mostrarActivas");
+                        .appendQueryParameter("function", funcion)
+                        .appendQueryParameter("actividad", actividad);
                 String parametros = builder.build().getEncodedQuery();
 
                 // Se incluyen los parámetros en la petición HTTP
@@ -69,32 +70,17 @@ public class ActivitiesWorker extends Worker {
 
                 // Se ejecuta la llamada al servicio web
                 int statusCode = urlConnection.getResponseCode();
-                String line;
-                StringBuilder result = new StringBuilder();
                 if (statusCode == 200) {
-                    // Cósigo 200 OK, se leen los datos de la respuesta
-                    BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-                    while ((line = bufferedReader.readLine()) != null) {
-
-                        result.append(line);
-                    }
-                    inputStream.close();
+                    return Result.success();
                 }
-
-                Data resultados = new Data.Builder()
-                        .putString("datos", result.toString())
-                        .build();
-                // Devolver que t0do ha ido bien
-                return Result.success(resultados);
-
-            }else if("mostrarNoInscritos".equals(funcion)) {
-
+            }else if("rechazar".equals(funcion)){
                 String cookie = getInputData().getString("cookie");
+                String actividad = getInputData().getString("actividad");
                 urlConnection.setRequestProperty("Cookie", "PHPSESSID=" + cookie);
                 // Preparar los parámetros para enviar en la petición
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("function", "mostrarNoInscritos");
+                        .appendQueryParameter("function", funcion)
+                        .appendQueryParameter("actividad", actividad);
                 String parametros = builder.build().getEncodedQuery();
 
                 // Se incluyen los parámetros en la petición HTTP
@@ -104,24 +90,9 @@ public class ActivitiesWorker extends Worker {
 
                 // Se ejecuta la llamada al servicio web
                 int statusCode = urlConnection.getResponseCode();
-                String line;
-                StringBuilder result = new StringBuilder();
                 if (statusCode == 200) {
-                    // Cósigo 200 OK, se leen los datos de la respuesta
-                    BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-                    while ((line = bufferedReader.readLine()) != null) {
-                        result.append(line);
-                    }
-                    inputStream.close();
+                    return Result.success();
                 }
-
-
-                Data resultados = new Data.Builder()
-                        .putString("datos", result.toString())
-                        .build();
-                // Devolver que t0do ha ido bien
-                return Result.success(resultados);
             }else {
                 // Algo no ha ido de forma correcta
                 return Result.failure();

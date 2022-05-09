@@ -45,6 +45,19 @@
     <string name="fechaActividadErronea">La fecha de la actividad debe ser posterior a la fecha actual</string>
     <string name="sugerirExito">Actividad sugerida con éxito. Espere a la validación de los administradores</string>
     <string name="crearExito">Actividad creada con éxito</string>
+    <string name="actividadesInscrito">Actividades inscrito/a</string>
+    <string name="actividadesNoInscrito">Actividades no inscrito/a</string>
+    <string name="sugerirActividad">Sugerir actividad</string>
+    <string name="crearActividad">Crear actividad</string>
+    <string name="logOut">Cerrar sesión</string>
+    <string name="settings">Ajustes</string>
+    <string name="mostrarActividades">Mostrar actividades</string>
+    <string name="acerptarRechazarActividad">Aceptar/Rechazar actividades</string>
+    <string name="aceptarActividad">¿Deseas aceptar esta actividad?</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+    <string name="activiadadAceptadaExito">Actividad aceptada con éxito</string>
+    <string name="actividadRechazadaExito">Actividad rechazada con éxito</string>
 
 
 </resources>

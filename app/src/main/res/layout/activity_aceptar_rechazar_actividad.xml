@@ -2,7 +2,7 @@
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/lista_actividades_admin_drawer_layout"
+    android:id="@+id/aceptar_rechazar_actividad_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,7 +20,7 @@
 
         <!-- The main content view where fragments are loaded -->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/lista_actividades_admin_constraint_layout"
+            android:id="@+id/aceptar_rechazar_actividad_constraint_layout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
