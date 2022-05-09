@@ -77,9 +77,19 @@ public class CrearActividadWorker extends Worker {
 
                 // Se ejecuta la llamada al servicio web
                 int statusCode = urlConnection.getResponseCode();
-                if (statusCode == 200) {
-                    return Result.success();
+                String result = "";
+                if (statusCode == 400) {
+                    result = "Ya existe";
+                } else if(statusCode == 401) {
+                    result = "InvalidSession";
                 }
+
+                Data resultados = new Data.Builder()
+                        .putString("datos", result)
+                        .build();
+                // Devolver que t0do ha ido bien
+                return Result.success(resultados);
+
             }else {
                 // Algo no ha ido de forma correcta
                 return Result.failure();

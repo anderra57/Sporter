@@ -106,13 +106,30 @@ public class CrearActividad extends AppCompatActivity {
         OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(CrearActividadWorker.class).setConstraints(restricciones).setInputData(solicitud).build();
         WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
             if (status != null && status.getState().isFinished()) {
-                Toast.makeText(this, R.string.crearExito, Toast.LENGTH_SHORT).show();
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+                String result = status.getOutputData().getString("datos").trim();
+                if(result.isEmpty()) { // Actividad creada correctamente
+                    Toast.makeText(this, R.string.crearExito, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, ListaActividadesAdmin.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                } else if(result.equals("InvalidSession")) {
+                    Toast.makeText(this, getString(R.string.invalidSession), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, LoginMain.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(this, getString(R.string.actividadExiste), Toast.LENGTH_SHORT).show();
+                    borrarNombreActividad();
+                }
             }
         });
         WorkManager.getInstance(this).enqueue(req);
+    }
+
+    public void borrarNombreActividad() {
+        nombre.setText("");
     }
 
     private boolean fechaCorrecta(String fechaUsuario) {

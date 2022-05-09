@@ -66,5 +66,6 @@
     <string name="borrar">Borrar</string>
     <string name="borrado">Actividad borrada correctamente</string>
     <string name="invalidSession">Sesión no válida, vuelve a autenticarte</string>
+    <string name="actividadExiste">Ya existe una actividad con el mismo, elige otro nombre por favor</string>
 
 </resources>
