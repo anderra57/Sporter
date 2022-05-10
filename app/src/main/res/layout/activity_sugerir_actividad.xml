@@ -60,7 +60,7 @@
                 android:layout_marginBottom="40dp"
                 android:ems="10"
                 android:hint="@string/explicacion"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
