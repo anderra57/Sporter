@@ -19,9 +19,7 @@
             layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -46,14 +44,13 @@
 
                 <EditText
                     android:id="@+id/sugerir_actividad_numero_text"
-                    android:layout_width="325dp"
-                    android:layout_height="75dp"
+                    android:layout_width="321dp"
+                    android:layout_height="74dp"
                     android:ems="10"
                     android:hint="@string/numero_participantes"
                     android:inputType="numberDecimal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.523"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_nombre_text"
                     app:layout_constraintVertical_bias="0.031" />
@@ -85,22 +82,21 @@
 
                 <EditText
                     android:id="@+id/sugerir_actividad_ciudad_text"
-                    android:layout_width="325dp"
-                    android:layout_height="80dp"
+                    android:layout_width="321dp"
+                    android:layout_height="74dp"
                     android:ems="10"
                     android:hint="@string/ciudad"
                     android:inputType="textPersonName"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.534"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_numero_text"
                     app:layout_constraintVertical_bias="0.036" />
 
                 <EditText
                     android:id="@+id/sugerir_actividad_fecha_text"
-                    android:layout_width="326dp"
-                    android:layout_height="57dp"
+                    android:layout_width="321dp"
+                    android:layout_height="74dp"
                     android:clickable="true"
                     android:ems="10"
                     android:focusable="false"
@@ -108,7 +104,6 @@
                     android:inputType="date"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.546"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_ciudad_text"
                     app:layout_constraintVertical_bias="0.059" />
