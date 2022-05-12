@@ -17,9 +17,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/lista_actividades_recycler_view_row_cardview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="330dp"
+        android:layout_height="120dp"
         app:layout_constraintTop_toTopOf="parent"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
         card_view:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,15 +30,26 @@
 
             <TextView
                 android:id="@+id/lista_actividades_recycler_view_row_cardview_texto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:textAlignment="center"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.0"
+                card_view:layout_constraintHorizontal_bias="0.538"
+                card_view:layout_constraintStart_toEndOf="@+id/fow_imageview"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/fow_imageview"
+                android:layout_width="140dp"
+                android:layout_height="120dp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.175" />
+                card_view:layout_constraintVertical_bias="0.0"
+                card_view:srcCompat="@drawable/sporter_logo"
+                tools:srcCompat="@drawable/sporter_logo" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
