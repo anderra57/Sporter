@@ -1,23 +1,31 @@
 package com.anderpri.das_grupal.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.anderpri.das_grupal.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class AdapterActividades extends BaseAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
     private String[] titulos;
+    private String[] imagenes;
 
-    public AdapterActividades(Context pContext, String[] pTitulos) {
+    public AdapterActividades(Context pContext, String[] pTitulos, String[] pImagenes) {
         context = pContext;
         titulos = pTitulos;
+        imagenes = pImagenes;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -44,6 +52,18 @@ public class AdapterActividades extends BaseAdapter {
         TextView nombre = (TextView) view.findViewById(R.id.lista_actividades_recycler_view_row_cardview_texto);
         // Añadirlos a la lista
         nombre.setText(titulos[i]);
+
+        ImageView img = (ImageView) view.findViewById(R.id.fow_imageview);
+        // Conseguimos la imagen de firebase
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference path = storageReference.child(imagenes[i]);
+        path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri.toString()).into(img);
+            }
+        });
 
         return view;
     }

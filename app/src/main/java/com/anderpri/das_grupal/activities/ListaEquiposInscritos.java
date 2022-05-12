@@ -35,7 +35,7 @@ public class ListaEquiposInscritos extends AppCompatActivity {
     private String actividad;
 
     private AdapterActividades adapterActividades;
-    private ArrayList<String> listaEquipos;
+    private ArrayList<Equipo> listaEquipos;
     private ListView list_equipos;
 
 
@@ -45,7 +45,7 @@ public class ListaEquiposInscritos extends AppCompatActivity {
         setContentView(R.layout.activity_lista_equipos_inscritos);
 
         // Inicalizar la lista de actividades
-        listaEquipos = new ArrayList<String>();
+        listaEquipos = new ArrayList<Equipo>();
         list_equipos = (ListView) findViewById(R.id.lista_equipos_inscritos_recycler_view);
 
         cookie = getIntent().getExtras().getString("sesion");
@@ -85,8 +85,8 @@ public class ListaEquiposInscritos extends AppCompatActivity {
                                     JSONArray miArray = new JSONArray(status.getOutputData().getString("datos"));
                                     for (int i = 0; i < miArray.length(); i++) { //asi es, no se hacer un foreach en java
                                         JSONObject miJson = new JSONObject(miArray.get(i).toString());
-                                        String name = miJson.getString("name");
-                                        listaEquipos.add(name);
+                                        Equipo equipo = new Equipo(miJson.getString("name"), miJson.getString("imageName"));
+                                        listaEquipos.add(equipo);
                                     }
                                     listarEquipos();
                                 }else{ // No hay equipos inscritos
@@ -105,20 +105,34 @@ public class ListaEquiposInscritos extends AppCompatActivity {
     }
 
     private void listarEquipos() {
-        adapterActividades = new AdapterActividades(this, getNames(listaEquipos));
-        list_equipos.setAdapter(adapterActividades);
+            adapterActividades = new AdapterActividades(this, getNames(listaEquipos), getImageNames(listaEquipos));
+            list_equipos.setAdapter(adapterActividades);
+    }
+
+    // Este método dado una lista de actividades, devolerá un array con los nombres de las imágenes
+    private String[] getImageNames(ArrayList<Equipo> lista) {
+        Iterator<Equipo> itr = lista.iterator();
+        Equipo act;
+        String[] images = new String[lista.size()];
+        int i = 0;
+        while(itr.hasNext()) {
+            act = itr.next();
+            images[i] = act.imagen;
+            i++;
+        }
+        return images;
     }
 
 
     // Este método dado una lista de nombres, devolverá un array con los nombres
-    private String[] getNames(ArrayList<String> lista) {
-        Iterator<String> itr = lista.iterator();
-        String nombre;
+    private String[] getNames(ArrayList<Equipo> lista) {
+        Iterator<Equipo> itr = lista.iterator();
+        Equipo equipo;
         String[] nombres = new String[lista.size()];
         int i = 0;
         while(itr.hasNext()) {
-            nombre = itr.next();
-            nombres[i] = nombre;
+            equipo = itr.next();
+            nombres[i] = equipo.nombre;
             i++;
         }
         return nombres;

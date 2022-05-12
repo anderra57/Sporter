@@ -2,6 +2,7 @@ package com.anderpri.das_grupal.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -22,6 +23,10 @@ import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.InscripcionesWorker;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class VisualizarInfoActividad extends AppCompatActivity {
 
@@ -40,6 +45,7 @@ public class VisualizarInfoActividad extends AppCompatActivity {
     private String desc;
     private String data;
     private String city;
+    String imgName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +57,30 @@ public class VisualizarInfoActividad extends AppCompatActivity {
         descripcion = findViewById(R.id.descripcion);
         fecha = findViewById(R.id.fecha);
         ciudad = findViewById(R.id.ciudad);
+        imagen = findViewById(R.id.imagen_actividad);
 
         actividad = getIntent().getExtras().getString("titulo");
         desc = getIntent().getExtras().getString("descripcion");
         data = getIntent().getExtras().getString("fecha");
         city = getIntent().getExtras().getString("ciudad");
+        imgName = getIntent().getExtras().getString("imagen");
+
 
         titulo.setText(actividad);
         descripcion.setText(desc);
         fecha.setText("Fecha: " + data);
         ciudad.setText("Ciudad: " + city);
+
+        // Cargar la imagen
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference path = storageReference.child(imgName);
+        path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri.toString()).into(imagen);
+            }
+        });
 
         // Depende de qué actividad venimos, se hará una cosa u otra
         funcion = getIntent().getExtras().getString("funcion");

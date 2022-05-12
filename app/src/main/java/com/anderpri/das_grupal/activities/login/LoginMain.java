@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.Constraints;
 import androidx.work.Data;
@@ -26,10 +27,10 @@ import com.anderpri.das_grupal.activities.ListaActividadesInscrito;
 import com.anderpri.das_grupal.activities.ListaActividadesAdmin;
 import com.anderpri.das_grupal.controllers.LoginController;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
-/*import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;*/
+import com.google.firebase.iid.InstanceIdResult;
 
 
 public class LoginMain extends AppCompatActivity {
@@ -61,6 +62,8 @@ public class LoginMain extends AppCompatActivity {
         registro = findViewById(R.id.login_main_txt_title);
         warning = findViewById(R.id.login_main_txt_warning);
 
+        token = "";
+
         registro.setText(R.string.login_register_here);
         warning.setVisibility(View.INVISIBLE);
         botonLogin.setText(R.string.login_log_in);
@@ -72,10 +75,55 @@ public class LoginMain extends AppCompatActivity {
     /// GESTIONAR LOGIN ///
 
     public void onLogin(View v) {
+        getFirebaseToken();
+    }
+
+    private void saveCookie(String cookie) {
+        Log.d("cookie_loginmain",cookie);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("cookie",cookie);
+        editor.commit();
+    }
+
+    private void manageIdUser(String id_user) {
+        if (id_user.equals("administrator")){
+            Intent intent = new Intent(this, ListaActividadesAdmin.class);
+            startActivity(intent);
+            finish();
+        } else if (id_user.equals("nogroup")){ // user normal SIN grupo
+            Intent intent = new Intent(this, LoginTeamButtons.class);
+            startActivity(intent);
+            finish();
+        } else { // user normal con grupo
+            Intent intent = new Intent(this, ListaActividadesInscrito.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    // Conseguimos el token de firebase
+    // El script del backend está configurado tal que si el token ya existiera, no se haría nada,
+    // en caso de no existir, se inserta en la base de datos
+    private void getFirebaseToken() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d("firebase_error", "Firebase error: " + task.getException().toString());
+                            return;
+                        }
+                        String token = task.getResult().getToken();
+                        Log.d("token_firebase", "Token: " + token);
+                        doLogin(token);
+                    }
+                });
+    }
+
+    private void doLogin(String tok) {
+
         String username = user.getText().toString();
         String password = pass.getText().toString();
-        //getFirebaseToken();
-        token = "test"; // provisional
 
         // Los campos del login no pueden estar vacios
         if(username.isEmpty() || password.isEmpty()) {
@@ -91,7 +139,7 @@ public class LoginMain extends AppCompatActivity {
                         .putString("funcion", "login")
                         .putString("username", username)
                         .putString("password", password)
-                        .putString("token", token)
+                        .putString("token", tok)
                         .build();
 
                 // Tiene que existir conexión a internet
@@ -138,106 +186,6 @@ public class LoginMain extends AppCompatActivity {
             }
         }
     }
-
-    private void saveCookie(String cookie) {
-        Log.d("cookie_loginmain",cookie);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("cookie",cookie);
-        editor.commit();
-    }
-
-    private void manageIdUser(String id_user) {
-        if (id_user.equals("administrator")){
-            Intent intent = new Intent(this, ListaActividadesAdmin.class);
-            startActivity(intent);
-            finish();
-        } else if (id_user.equals("nogroup")){ // user normal SIN grupo
-            Intent intent = new Intent(this, LoginTeamButtons.class);
-            startActivity(intent);
-            finish();
-        } else { // user normal con grupo
-            Intent intent = new Intent(this, ListaActividadesInscrito.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-
-    /*// Conseguimos el token de firebase
-    // El script del backend está configurado tal que si el token ya existiera, no se haría nada,
-    // en caso de no existir, se inserta en la base de datos
-    private void getFirebaseToken() {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.d("firebase_error", "Firebase error: " + task.getException().toString());
-                            return;
-                        }
-                        String token = task.getResult().getToken();
-                        Log.d("token_firebase", "Token: " + token);
-                        setToken(token);
-                    }
-                });
-    }
-
-    private void setToken(String tok) {
-        token = tok;
-    }*/
-
-    /*
-    public void onLogin(View v) {
-        username = this.user.getText().toString();
-        String password = this.password.getText().toString();
-        // Uso de Toast para evitar un nombre repetido, un nombre vacío, o un nombre genérico.
-        if(username.isEmpty() || password.isEmpty()){
-            Toast.makeText(this, getString(R.string.login_no_empty_field), Toast.LENGTH_SHORT).show();
-            warning.setText(getString(R.string.login_no_empty_field));
-            warning.setVisibility(View.VISIBLE);
-            warning.setTextColor(Color.RED);
-        }
-        // El jugador no exíste
-        else{
-            userExists(username, password);
-        }
-
-    }*/
-
-    /*
-    private void userExists(String username, String password) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo == null || !networkInfo.isConnected()) {
-            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-        }
-
-        Data datos = new Data.Builder().putString("usuario", username).putString("password", password).putString("token", token).build();
-        Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-        OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(UserExistsWebService.class).setInputData(datos).setConstraints(restricciones).build();
-        WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId()).observe(this, status -> {
-            if(status != null && status.getState().isFinished()) {
-                userExists = status.getOutputData().getBoolean("existe", false);
-                if (username.equals("a") && password.equals("a")) userExists = true; // temporal
-                if(!userExists){
-                    Toast.makeText(this, getString(R.string.login_wrong_user_pass), Toast.LENGTH_SHORT).show();
-                    warning.setText(getString(R.string.login_wrong_user_pass));
-                    warning.setVisibility(View.VISIBLE);
-                    warning.setTextColor(Color.RED);
-                }
-                else{
-                    SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("username", username);
-                    editor.commit();
-                    Intent i = new Intent(this, UnaActividad.class);
-                    i.putExtra("user", username);
-                    startActivity(i);
-                    finish();
-                }
-            }
-        });
-        WorkManager.getInstance(this).enqueue(req);
-    }*/
 
     /// GESTIONAR CLICK EN REGISTRARSE ///
 

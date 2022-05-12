@@ -93,16 +93,31 @@ public class ListaActividadesInscrito extends AppCompatActivity {
         intent.putExtra("descripcion", actividad.description);
         intent.putExtra("fecha", actividad.fecha);
         intent.putExtra("ciudad", actividad.city);
+        intent.putExtra("imagen", actividad.image);
         startActivity(intent);
     }
 
     private void listarActividades() {
         if (listaActividades.size() != 0) {
-            adapterActividades = new AdapterActividades(this, getTitles(listaActividades));
+            adapterActividades = new AdapterActividades(this, getTitles(listaActividades), getImageNames(listaActividades));
             list_actividades.setAdapter(adapterActividades);
         } else {
             Toast.makeText(this, getString(R.string.noActividades), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // Este método dado una lista de actividades, devolerá un array con los nombres de las imágenes
+    private String[] getImageNames(ArrayList<Actividad> lista) {
+        Iterator<Actividad> itr = lista.iterator();
+        Actividad act;
+        String[] images = new String[lista.size()];
+        int i = 0;
+        while(itr.hasNext()) {
+            act = itr.next();
+            images[i] = act.image;
+            i++;
+        }
+        return images;
     }
 
     // Este método dado una lista de actividades, devolverá un array con los títulos
@@ -152,7 +167,7 @@ public class ListaActividadesInscrito extends AppCompatActivity {
                                 JSONArray miArray = new JSONArray(status.getOutputData().getString("datos"));
                                 for(int i = 0; i<miArray.length(); i++){ //asi es, no se hacer un foreach en java
                                     JSONObject miJson = new JSONObject(miArray.get(i).toString());
-                                    Actividad actual= new Actividad(miJson.getString("name"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"));
+                                    Actividad actual= new Actividad(miJson.getString("name"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"),miJson.getString("imageName"),miJson.getString("latitude"),miJson.getString("longitude"));
                                     listaActividades.add(actual);
                                 }
                                 listarActividades();
