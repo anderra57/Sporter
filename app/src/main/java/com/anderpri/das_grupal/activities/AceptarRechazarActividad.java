@@ -93,8 +93,7 @@ AceptarRechazarActividad extends AppCompatActivity {
 
     }
     private void visualizarActividad(Actividad actividad) {
-        Intent intent = new Intent(this, VisualizarInfoActividad.class);
-        intent.putExtra("funcion", "lista_admin");
+        Intent intent = new Intent(this, AceptarRechazar.class);
         intent.putExtra("titulo", actividad.name);
         intent.putExtra("descripcion", actividad.description);
         intent.putExtra("fecha", actividad.fecha);

@@ -49,6 +49,9 @@
             android:name=".activities.login.LoginTeamButtons"
             android:exported="false" />
         <activity
+            android:name=".activities.AceptarRechazar"
+            android:exported="false" />
+        <activity
             android:name=".activities.LauncherActivity"
             android:exported="true">
             <intent-filter>

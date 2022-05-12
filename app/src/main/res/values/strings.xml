@@ -69,5 +69,9 @@
     <string name="actividadExiste">Ya existe una actividad con el mismo, elige otro nombre por favor</string>
     <string name="mostrarListaEquiposParticipantes">Mostrar lista de equipos</string>
     <string name="noEquipos">No hay equipos inscritos a esta actividad</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="rechazar">Rechazar</string>
+    <string name="aceptada">Solicitud aceptada con exito</string>
+    <string name="rechazada">Solicitud rechazada con exito</string>
 
 </resources>

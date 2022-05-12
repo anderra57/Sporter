@@ -70,9 +70,18 @@ public class SolicitudesWorker extends Worker {
 
                 // Se ejecuta la llamada al servicio web
                 int statusCode = urlConnection.getResponseCode();
-                if (statusCode == 200) {
-                    return Result.success();
+                String result = "";
+                if (statusCode != 200) {
+                    result = "Invalid request";
                 }
+
+                Data resultados = new Data.Builder()
+                        .putString("datos", result)
+                        .putString("cookie", cookie)
+                        .build();
+
+                return Result.success(resultados);
+
             }else if("rechazar".equals(funcion)){
                 String cookie = getInputData().getString("cookie");
                 String actividad = getInputData().getString("actividad");
@@ -90,9 +99,18 @@ public class SolicitudesWorker extends Worker {
 
                 // Se ejecuta la llamada al servicio web
                 int statusCode = urlConnection.getResponseCode();
-                if (statusCode == 200) {
-                    return Result.success();
+                String result = "";
+                if (statusCode != 200) {
+                    result = "Invalid request";
                 }
+
+                Data resultados = new Data.Builder()
+                        .putString("datos", result)
+                        .putString("cookie", cookie)
+                        .build();
+
+                return Result.success(resultados);
+
             }else {
                 // Algo no ha ido de forma correcta
                 return Result.failure();

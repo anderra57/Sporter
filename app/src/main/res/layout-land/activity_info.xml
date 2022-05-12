@@ -17,12 +17,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toEndOf="@+id/titulo"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion"
+        app:layout_constraintStart_toEndOf="@+id/titulo_1"
+        app:layout_constraintTop_toBottomOf="@+id/descripcion_1"
         app:layout_constraintVertical_bias="0.129" />
 
     <TextView
-        android:id="@+id/ciudad"
+        android:id="@+id/ciudad_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -30,11 +30,11 @@
         android:text="TextView"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/titulo"
-        app:layout_constraintTop_toBottomOf="@+id/fecha" />
+        app:layout_constraintStart_toEndOf="@+id/titulo_1"
+        app:layout_constraintTop_toBottomOf="@+id/fecha_1" />
 
     <TextView
-        android:id="@+id/descripcion"
+        android:id="@+id/descripcion_1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -43,11 +43,11 @@
         android:text="TextView"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/titulo"
-        app:layout_constraintTop_toBottomOf="@+id/ciudad" />
+        app:layout_constraintStart_toEndOf="@+id/titulo_1"
+        app:layout_constraintTop_toBottomOf="@+id/ciudad_1" />
 
     <TextView
-        android:id="@+id/fecha"
+        android:id="@+id/fecha_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -56,22 +56,22 @@
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toEndOf="@+id/titulo"
+        app:layout_constraintStart_toEndOf="@+id/titulo_1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imagen_actividad"
+        android:id="@+id/imagen_actividad_1"
         android:layout_width="214dp"
         android:layout_height="198dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.181"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titulo"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_1"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
-        android:id="@+id/titulo"
+        android:id="@+id/titulo_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -91,7 +91,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toEndOf="@+id/titulo"
+        app:layout_constraintStart_toEndOf="@+id/titulo_1"
         app:layout_constraintTop_toBottomOf="@+id/btn_actividad"
         app:layout_constraintVertical_bias="0.469" />
 
