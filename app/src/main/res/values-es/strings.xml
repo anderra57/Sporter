@@ -57,4 +57,6 @@
     <string name="borrado">Actividad borrada correctamente</string>
     <string name="invalidSession">Sesión no válida, vuelve a autenticarte</string>
     <string name="actividadExiste">Ya existe una actividad con el mismo, elige otro nombre por favor</string>
+    <string name="mostrarListaEquiposParticipantes">Mostrar lista de equipos</string>
+    <string name="noEquipos">No hay equipos inscritos a esta actividad</string>
 </resources>

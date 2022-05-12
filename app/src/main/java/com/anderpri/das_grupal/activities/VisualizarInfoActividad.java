@@ -30,7 +30,7 @@ public class VisualizarInfoActividad extends AppCompatActivity {
     private TextView fecha;
     private TextView ciudad;
     private ImageView imagen;
-    private Button btn;
+    private Button btn, btn_lista_teams;
 
     private String funcion;
     private String cookie;
@@ -66,6 +66,7 @@ public class VisualizarInfoActividad extends AppCompatActivity {
         funcion = getIntent().getExtras().getString("funcion");
         imagen = findViewById(R.id.imagen_actividad);
         btn = findViewById(R.id.btn_actividad);
+        btn_lista_teams = findViewById(R.id.btn_lista);
 
         if(funcion.equals("lista_admin")) { // Borrar actividad de la base de datos
             btn.setText(getString(R.string.borrar));
@@ -74,6 +75,8 @@ public class VisualizarInfoActividad extends AppCompatActivity {
         } else { // Desapuntar a un grupo de una actividad
             btn.setText(getString(R.string.desapuntarse));
         }
+
+        btn_lista_teams.setText(getString(R.string.mostrarListaEquiposParticipantes));
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         cookie = preferences.getString("cookie","");
@@ -233,5 +236,12 @@ public class VisualizarInfoActividad extends AppCompatActivity {
         } else { // Desapuntar a un grupo de una actividad
             desapuntarse();
         }
+    }
+
+    public void mostrarListaEquiposParticipantes(View v){
+        Intent intent = new Intent(this, ListaEquiposInscritos.class);
+        intent.putExtra("actividad", actividad);
+        intent.putExtra("sesion", cookie);
+        startActivity(intent);
     }
 }

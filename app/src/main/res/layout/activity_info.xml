@@ -80,4 +80,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descripcion"
         app:layout_constraintVertical_bias="0.094" />
+
+    <Button
+        android:id="@+id/btn_lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="mostrarListaEquiposParticipantes"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_actividad"
+        app:layout_constraintVertical_bias="0.362" />
 </androidx.constraintlayout.widget.ConstraintLayout>

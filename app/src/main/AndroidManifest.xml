@@ -13,6 +13,9 @@
         android:theme="@style/Theme.DAS_Grupal"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.ListaEquiposInscritos"
+            android:exported="false" />
+        <activity
             android:name=".activities.AceptarRechazarActividad"
             android:exported="false" />
         <activity
@@ -63,6 +66,26 @@
         <activity
             android:name=".activities.OtraActividad"
             android:exported="false" />
+        <activity
+            android:name=".controllers.widget.WidgetConfigureActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".controllers.widget.Widget"
+            android:exported="true"
+            android:label="Widget DAS">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_conf" />
+        </receiver>
     </application>
 
 </manifest>
