@@ -81,14 +81,17 @@ public class ListaEquiposInscritos extends AppCompatActivity {
                     .observe(this, status -> {
                         if (status != null && status.getState().isFinished()) {
                             try {
-                               // Si hay equipos inscritos
-                                JSONArray miArray = new JSONArray(status.getOutputData().getString("datos"));
-                                for (int i = 0; i < miArray.length(); i++) { //asi es, no se hacer un foreach en java
-                                    JSONObject miJson = new JSONObject(miArray.get(i).toString());
-                                    String name = miJson.getString("name");
-                                    listaEquipos.add(name);
+                                if(status.getOutputData().getString("datos").length() != 1){ // Si hay equipos inscritos
+                                    JSONArray miArray = new JSONArray(status.getOutputData().getString("datos"));
+                                    for (int i = 0; i < miArray.length(); i++) { //asi es, no se hacer un foreach en java
+                                        JSONObject miJson = new JSONObject(miArray.get(i).toString());
+                                        String name = miJson.getString("name");
+                                        listaEquipos.add(name);
+                                    }
+                                    listarEquipos();
+                                }else{ // No hay equipos inscritos
+                                    Toast.makeText(this, getString(R.string.noEquipos), Toast.LENGTH_SHORT).show();
                                 }
-                                listarEquipos();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
