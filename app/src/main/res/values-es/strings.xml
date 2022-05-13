@@ -2,11 +2,11 @@
 <resources>
     <string name="app_name">5porter</string>
     <string name="no_internet">No hay conexión a internet</string>
-    <string name="logout">Log out</string>
+    <string name="logout">Cerrar sesión</string>
     <string name="login_name">Usuario</string>
     <string name="login_pass">Contraseña</string>
     <string name="login_log_in">Iniciar sesión</string>
-    <string name="login_register_here">¿No tienes cuenta? Registrate aquí</string>
+    <string name="login_register_here">¿No tienes cuenta? Regístrate aquí</string>
     <string name="login_wrong_user_pass">No existe ningún usuario con ese nombre o la contraseña es incorrecta</string>
     <string name="login_register">Regístrate</string>
     <string name="login_no_empty_field">No puede haber ningún campo vacío</string>
@@ -61,8 +61,14 @@
     <string name="noEquipos">No hay equipos inscritos a esta actividad</string>
     <string name="aceptar">Aceptar</string>
     <string name="rechazar">Rechazar</string>
-    <string name="aceptada">Solicitud aceptada con exito</string>
-    <string name="rechazada">Solicitud rechazada con exito</string>
+    <string name="aceptada">Solicitud aceptada con éxito</string>
+    <string name="rechazada">Solicitud rechazada con éxito</string>
+    <string name="login_register_team">Registrar equipo</string>
+    <string name="login_choose_image">Escoger imagen</string>
+    <string name="login_enter_name">Introduce el nombre</string>
+    <string name="login_team_name">Nombre del equipo</string>
+    <string name="login_team_pass">Contraseña del equipo</string>
+    <string name="login_join">Unirse a equipo</string>
     <string name="borrar_titulo">Actividad borrada</string>
     <string name="borrar_contenido">La siguiente actividad ha sido borrada: </string>
     <string name="crear_titulo">Actividad creada</string>
@@ -73,4 +79,5 @@
     <string name="rechazar_contenido">La siguiente sugerencia ha sido rechazada: </string>
     <string name="aceptar_grupo_titulo">Sugerencia aceptada</string>
     <string name="aceptar_contenido_grupo">La siguiente sugerencia ha sido aceptada: </string>
+    <string name="login_enter_pass">Introducir contraseña</string>
 </resources>

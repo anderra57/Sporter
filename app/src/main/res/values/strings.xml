@@ -1,8 +1,8 @@
 <resources>
     <!-- Global strings -->
-    <string name="app_name">No hay conexión a internet</string>
+    <string name="app_name">5porter</string>
     <string name="no_internet">No hay conexión a internet</string>
-    <string name="logout">Log out</string>
+    <string name="logout">Cerrar sesión</string>
 
     <!-- Login activity strings -->
     <!-- Main -->
@@ -21,10 +21,16 @@
     <string name="login_btn_create">Crear equipo</string>
     <string name="login_btn_find">Unirse a equipo</string>
     <!-- Create -->
+    <string name="login_enter_name">Introducir nombre del equipo</string>
+    <string name="login_choose_image">Escoger imagen</string>
+    <string name="login_register_team">Registrar equipo</string>
     <string name="login_team_in_use">Ese nombre de equipo ya está escogido. Elige otro</string>
 
     <!-- Find -->
     <string name="login_wrong_team_pass">No existe ningún grupo con ese nombre o la contraseña es incorrecta</string>
+    <string name="login_team_name">Nombre del equipo</string>
+    <string name="login_team_pass">Contraseña del equipo</string>
+    <string name="login_join">Unirse a equipo</string>
 
     <!-- Settings activity strings -->
     <string name="settings_lang_text">Idioma</string>
@@ -83,4 +89,5 @@
     <string name="rechazar_contenido">La siguiente sugerencia ha sido rechazada: </string>
     <string name="aceptar_grupo_titulo">Sugerencia aceptada</string>
     <string name="aceptar_contenido_grupo">La siguiente sugerencia ha sido aceptada: </string>
+    <string name="login_enter_pass">Introducir contraseña</string>
 </resources>
