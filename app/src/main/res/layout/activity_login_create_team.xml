@@ -22,7 +22,7 @@
         android:layout_width="261dp"
         android:layout_height="60dp"
         android:ems="4"
-        android:hint="Enter name"
+        android:hint="@string/login_enter_name"
         android:textAlignment="center"
         tools:ignore="Autofill"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onRegister"
-        android:text="Register team"
+        android:text="@string/login_register_team"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:onClick="openGallery"
-        android:text="Choose image"
+        android:text="@string/login_choose_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_create_team_img" />
@@ -84,7 +84,8 @@
         android:onClick="clickX"
         android:text="X"
         app:layout_constraintStart_toEndOf="@+id/login_create_team_img"
-        app:layout_constraintTop_toTopOf="@+id/login_create_team_img" />
+        app:layout_constraintTop_toTopOf="@+id/login_create_team_img"
+        tools:ignore="HardcodedText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
