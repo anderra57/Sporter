@@ -53,6 +53,7 @@
         android:ems="4"
         android:hint="@string/login_enter_pass"
         android:textAlignment="center"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.119"

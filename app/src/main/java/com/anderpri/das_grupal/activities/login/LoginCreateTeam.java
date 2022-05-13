@@ -33,7 +33,7 @@ public class LoginCreateTeam extends AppCompatActivity {
 
     Button btn, btn_x;
     ImageView img;
-    EditText nameText;
+    EditText nameText,passText;
     TextView warning;
     int SELECT_PICTURE = 200;
     String cookie;
@@ -47,6 +47,7 @@ public class LoginCreateTeam extends AppCompatActivity {
         btn = findViewById(R.id.login_create_team_btn_img);
         img = findViewById(R.id.login_create_team_img);
         nameText = findViewById(R.id.login_create_team_txt_name);
+        passText = findViewById(R.id.login_create_team_txt_pass);
         warning = findViewById(R.id.login_create_team_txt_warning);
 
         btn_x = findViewById(R.id.login_create_team_btn_x);
@@ -108,6 +109,7 @@ public class LoginCreateTeam extends AppCompatActivity {
 
     public void onRegister(View v) {
         String name = nameText.getText().toString();
+        String pass = passText.getText().toString();
 
         // Los campos del login no pueden estar vacios
         if(name.isEmpty()) {
@@ -122,7 +124,7 @@ public class LoginCreateTeam extends AppCompatActivity {
                 Data logindata = new Data.Builder()
                         .putString("funcion", "register")
                         .putString("teamname", name)
-                        .putString("teampass", createPin())
+                        .putString("teampass", pass)
                         .putString("cookie", cookie)
                         .build();
 
@@ -166,9 +168,5 @@ public class LoginCreateTeam extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    private String createPin() {
-        return "5555";
     }
 }
