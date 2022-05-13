@@ -14,9 +14,21 @@
 	die("Connection failed: " . $conn->connect_error);
 	}
 
+	function buscar_id_actividad($actividad) {
+        global $conn;
+        $sql = "SELECT id from actividad where name = '$actividad'";
+        $result = $conn->query($sql);
+        $id = 0;
+        if ($result->num_rows > 0) {
+            if ($row = $result->fetch_assoc()) {
+                $id = $row['id'];
+            }
+        }
+        return $id;
+    }
 
     if(isset($_POST['function'])) {
-		if (valid_session()) {
+
 			$function = $_POST['function'];
 			$id_user = $_SESSION['id'];
 
@@ -80,13 +92,30 @@
 					}
 					
 				}
+			}elseif($function === "mostrarGruposActividad") {
+				$actividad = $_POST['actividad'];
+
+				// Conseguir el identificador de la actividad
+				$id_act = buscar_id_actividad($actividad);
+				// Conseguir los nombres del os grupos apuntados a esa actividad
+				$sql = "SELECT name, imageName from teams join participaciones on teams.id = participaciones.team_id where actividad_id = $id_act";
+				$result = $conn->query($sql);
+				$grupos = array();
+				if($result->num_rows > 0) {
+					while($row = mysqli_fetch_assoc($result)) {
+						$grupo = array();
+						$grupo['name'] = $row['name'];
+						$grupo['imageName'] = $row['imageName'];
+						array_push($grupos, $grupo);
+					}
+					echo json_encode($grupos);
+				}
+				http_response_code(200);
+
 			} else {
 				http_response_code(500);  			
 			}
-		} else {
-            echo "Invalid session";
-            http_response_code(401);
-        }
+		
     } 
 	
 	else {

@@ -14,6 +14,11 @@
     die("Connection failed: " . $conn->connect_error);
     }
 
+    $cabecera = array(
+        'Authorization: key=AAAADAAVG90:APA91bE5JnH2WxZyFDXq9l5mKNz5uSE6jsJ2IBprxcKRsXo1Zkn8gSyPVFNHYGXWpZsLb08MUBQji-AKg80XB2FB3QT3TLxQDp6U347gMwj0zSoCq2-6HYC6THU3wP2pMRySor1THeGW',
+        'Content-Type: application/json'             
+    );
+
     function actividad_id($actividad) {
         global $conn;
         $sql = "SELECT id from actividad where name = '$actividad'";
@@ -27,20 +32,18 @@
         return $id;
     }
 
-    function tokens_grupo($id_user) {
+    function tokens_grupo($actividad) {
         global $conn;
-        $sql = "SELECT id from common where id_team = (select id_team from common where id = $id_user);";
+        $sql = "SELECT token from tokens as t join common as c join teams as g join actividad_grupo as a join actividad as act on t.id_user = c.id and c.id_team = g.id and a.team_id = g.id and a.id = act.id where act.name = '$actividad'";
+        echo $sql;
         $result = $conn->query($sql);
         $tokens_array = [];
-        while ($row = mysqli_fetch_assoc($result)) {
-            $id = $row['id'];
-            // Conseguir el token de este id
-            $sql_token = "SELECT token from tokens as t join common as c on t.id_user = c.id where c.id = $id";
-            $res_token = $conn->query($sql_token);
-            if ($row_token = $res_token->fetch_assoc()) {
-                $token = $row_token['token'];
-                array_push($tokens_array, $token);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                array_push($tokens_array, $row['token']);
             }
+        } else {
+            echo "no existeeeeeee";
         }
         return $tokens_array;
     }
@@ -82,12 +85,14 @@
                     $sql = "UPDATE actividad_grupo set aceptada = 1 where id = $id_act";
                     $conn->query($sql);
                     // Enviar mensaje a todos los participantes del grupo que han sugerido la actividad
-                    $tok_team = tokens_grupo($_SESSION['id']);
+                    $tok_team = tokens_grupo($actividad);
                     // Preparar el mensaje para enviar
                     // Preparar el mensaje para enviar
+                    echo $tok_team;
                     $msg = array(
                         'registration_ids' => $tok_team,
                         'data' => array(
+                            "function" => "aceptar_grupo",
                             "actividad" => "$actividad"
                         ),
                         'notification' => array(
@@ -128,6 +133,7 @@
                     $msg = array(
                         'registration_ids' => $tok_participantes,
                         'data' => array(
+                            "function" => "aceptar_general",
                             "actividad" => "$actividad"
                         ),
                         'notification' => array(
@@ -173,6 +179,10 @@
 
                     // Conseguir identificador de la actividad
                     $id_act = actividad_id($actividad);
+
+                    // Conseguir los tokens de los participantes
+                    $tok_team = tokens_grupo($actividad);
+
                     // Borrar registro de la tabla actividad_grupo
                     $sql = "DELETE from actividad_grupo where id = $id_act";
                     $conn->query($sql);
@@ -180,13 +190,13 @@
                     $sql = "DELETE from actividad where id = $id_act";
                     $conn->query($sql);
                     // Enviar mensaje a todos los participantes del grupo que han sugerido la actividad
-                    $tok_team = tokens_grupo($_SESSION['id']);
-
+                    
                     // Preparar el mensaje para enviar
                     // Preparar el mensaje para enviar
                     $msg = array(
                         'registration_ids' => $tok_team,
                         'data' => array(
+                            "function" => "rechazar",
                             "actividad" => "$actividad"
                         ),
                         'notification' => array(

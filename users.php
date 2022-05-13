@@ -103,10 +103,27 @@
 		} elseif ($function === "verifysession") {
 			if (valid_session()) {
 				$id_user = $_SESSION['id'];
-				$sql = "SELECT id from common where id = $id_user";
+				$sql = "SELECT id, isAdmin from users where id = $id_user";
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
-					http_response_code(200);
+					$isAdmin = 0;
+					if($row = mysqli_fetch_assoc($result)) {
+						$isAdmin = $row['isAdmin'];
+					}
+					// Esto hay que refractorizarlo
+					if($isAdmin == 0) {
+						$sql_hasgroup = "SELECT id from common where id = $id_user";
+						$res = $conn->query($sql_hasgroup);
+						if ($res->num_rows > 0) {
+							echo $isAdmin;
+							http_response_code(200);
+						} else {
+							http_response_code(401);
+						}
+					} else {
+						echo $isAdmin;
+						http_response_code(200);
+					}
 				} else {
 					http_response_code(401);
 				}

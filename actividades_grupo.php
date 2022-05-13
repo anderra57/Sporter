@@ -31,7 +31,7 @@
                 if($row = mysqli_fetch_assoc($res_id_team)) {
                     $id_team = $row['id_team'];
                     // Seleccionar las actividades de grupo
-                    $sql_actividades_grupo = "SELECT name, description, fecha, city from actividad join participaciones on actividad_id = id and team_id = $id_team and active = 1";
+                    $sql_actividades_grupo = "SELECT name, description, fecha, city, imageName, latitude, longitude from actividad join participaciones on actividad_id = id and team_id = $id_team and active = 1";
                     $res_actividades_grupo = $conn->query($sql_actividades_grupo);
                     $actividades_activas_array = [];
                     while($row = mysqli_fetch_assoc($res_actividades_grupo)){
@@ -40,6 +40,9 @@
                         $element['description'] = $row['description'];
                         $element['fecha'] = $row['fecha'];
                         $element['city'] = $row['city'];
+                        $element['imageName'] = $row['imageName'];
+                        $element['latitude'] = $row['latitude'];
+                        $element['longitude'] = $row['longitude'];
                         array_push($actividades_activas_array, $element);
                     }
                     echo json_encode($actividades_activas_array);
@@ -57,7 +60,7 @@
                 if($row = mysqli_fetch_assoc($res_id_team)) {
                     $id_team = $row['id_team'];
                 // Seleccionar las actividades de grupo
-                    $sql_actividades_grupo = "SELECT name, description, fecha, city from actividad as a where active = 1 except select name, description, fecha, city from actividad join participaciones as p on actividad_id = id and team_id = $id_team and active = 1";
+                    $sql_actividades_grupo = "SELECT name, description, fecha, city, imageName, latitude, longitude from actividad as a where active = 1 and name not in (SELECT name from actividad join participaciones as p on actividad_id = id and team_id = $id_team and active = 1)";
                     $res_actividades_grupo = $conn->query($sql_actividades_grupo);
                     $array_final_no_inscritas = [];
                     while($row = mysqli_fetch_assoc($res_actividades_grupo)){
@@ -66,6 +69,9 @@
                         $element['description'] = $row['description'];
                         $element['fecha'] = $row['fecha'];
                         $element['city'] = $row['city'];
+                        $element['imageName'] = $row['imageName'];
+                        $element['latitude'] = $row['latitude'];
+                        $element['longitude'] = $row['longitude'];
                         array_push($array_final_no_inscritas, $element);
                     }
                     echo json_encode($array_final_no_inscritas);

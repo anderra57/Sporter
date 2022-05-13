@@ -53,6 +53,16 @@
                 $sql = "INSERT INTO participaciones VALUES('$id_act','$id_team')";
                 $result = $conn->query($sql);
                 http_response_code(200);
+            } elseif ($func === "desapuntar") {
+                $actividad = $_POST['actividad'];
+                // Primeramente buscamos el identificador del grupo al que pertenece este usuario
+                $id_team = buscar_id_grupo($_SESSION['id']);
+                // Ahora buscamos el identificador de esta actividad del
+                $id_act = buscar_id_actividad($actividad);
+                // Borrarmos el registro de la base de datos
+                $sql = "DELETE FROM participaciones WHERE actividad_id = $id_act AND team_id = $id_team";
+                $result = $conn->query($sql);
+                http_response_code(200);
             }
         } else {
             echo "Invalid session";
