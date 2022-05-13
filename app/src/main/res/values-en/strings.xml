@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">5porter</string>
-    <string name="no_internet">There is no Internet conection</string>
+    <string name="no_internet">There is no Internet connection</string>
     <string name="logout">Log out</string>
     <string name="login_name">User</string>
     <string name="login_pass">Password</string>
