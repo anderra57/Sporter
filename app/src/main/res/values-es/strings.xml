@@ -63,4 +63,14 @@
     <string name="rechazar">Rechazar</string>
     <string name="aceptada">Solicitud aceptada con exito</string>
     <string name="rechazada">Solicitud rechazada con exito</string>
+    <string name="borrar_titulo">Actividad borrada</string>
+    <string name="borrar_contenido">La siguiente actividad ha sido borrada: </string>
+    <string name="crear_titulo">Actividad creada</string>
+    <string name="crear_contenido">La siguiente actividad ha sido creada: </string>
+    <string name="sugerencia_titulo">Actividad sugerida</string>
+    <string name="sugerencia_contenido"> ha sugerido la siguiente actividad: </string>
+    <string name="rechazar_titulo">Sugerencia rechazada</string>
+    <string name="rechazar_contenido">La siguiente sugerencia ha sido rechazada: </string>
+    <string name="aceptar_grupo_titulo">Sugerencia aceptada</string>
+    <string name="aceptar_contenido_grupo">La siguiente sugerencia ha sido aceptada: </string>
 </resources>

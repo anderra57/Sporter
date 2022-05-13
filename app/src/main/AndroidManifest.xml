@@ -2,7 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.anderpri.das_grupal">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+        <!-- Requsito de cámara -->
+        <uses-feature
+            android:name="android.hardware.camera2.full"
+            android:required="true" />
+
+        <uses-permission android:name="android.permission.CAMERA" />                    <!-- Permiso para usar la cámara -->
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />     <!-- Permiso para leer de la galería -->
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    <!-- Permiso para escribir en la galería -->
+        <uses-permission android:name="android.permission.INTERNET" />                  <!-- Permiso para usar funciones mediante internet: peticiones HTTP -->
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />      <!-- Primer permiso para acceder a la geolocalización exacta -->
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>     <!-- Segundo permiso para acceder a la geolocalización exacta -->
+        <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />        <!-- Permiso para ejecutar servicios -->
+        <uses-permission android:name="android.permission.VIBRATE" />                   <!-- Permiso para acceder a la vibración del dispositivo -->
+        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />    <!-- Permiso para recibir acción tras arrancar el sistema -->
 
     <application
         android:allowBackup="true"
@@ -76,6 +89,35 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+        <!-- Servicio FirebaseMessagingService -->
+        <service
+            android:name=".FirebaseService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Configuracíon mensajes FCM -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher_background" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="canal por defecto" />
+
+        <!-- FileProvider para almacenar las imágenes sacadas desde la aplicación -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.anderpri.das_grupal.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/configalmacen" />
+        </provider>
 
         <receiver
             android:name=".controllers.widget.Widget"
