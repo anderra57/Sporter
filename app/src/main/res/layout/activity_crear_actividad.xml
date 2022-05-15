@@ -63,9 +63,9 @@
                 android:inputType="textMultiLine"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.49"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/crear_actividad_fecha_text"
-                app:layout_constraintVertical_bias="0.18" />
+                app:layout_constraintTop_toBottomOf="@+id/crear_actividad_ciudad_text" />
 
             <Button
                 android:id="@+id/crear_actividad_boton"
@@ -79,20 +79,6 @@
                 app:layout_constraintVertical_bias="0.523" />
 
             <EditText
-                android:id="@+id/crear_actividad_ciudad_text"
-                android:layout_width="325dp"
-                android:layout_height="80dp"
-                android:ems="10"
-                android:hint="@string/ciudad"
-                android:inputType="textPersonName"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.533"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/crear_actividad_numero_text"
-                app:layout_constraintVertical_bias="0.045" />
-
-            <EditText
                 android:id="@+id/crear_actividad_fecha_text"
                 android:layout_width="326dp"
                 android:layout_height="57dp"
@@ -103,10 +89,27 @@
                 android:inputType="date"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.546"
+                app:layout_constraintHorizontal_bias="0.529"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/crear_actividad_ciudad_text"
-                app:layout_constraintVertical_bias="0.059" />
+                app:layout_constraintTop_toBottomOf="@+id/crear_actividad_numero_text"
+                app:layout_constraintVertical_bias="0.054" />
+
+            <EditText
+                android:id="@+id/crear_actividad_ciudad_text"
+                android:layout_width="326dp"
+                android:layout_height="57dp"
+                android:clickable="true"
+                android:ems="10"
+                android:focusable="false"
+                android:editable="false"
+                android:hint="@string/ciudad"
+                android:inputType="date"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.529"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/crear_actividad_numero_text"
+                app:layout_constraintVertical_bias="0.237" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

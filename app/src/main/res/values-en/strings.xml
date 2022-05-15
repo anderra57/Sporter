@@ -27,7 +27,7 @@
     <string name="nombre_actividad">Activity name</string>
     <string name="numero_participantes">Maximum number of participants</string>
     <string name="explicacion">Explanation</string>
-    <string name="ciudad">City/town</string>
+    <string name="ciudad">Select location</string>
     <string name="fecha">Date</string>
     <string name="sugerir">Suggest</string>
     <string name="crear">Create</string>
@@ -80,4 +80,7 @@
     <string name="crear_titulo">Created activity</string>
     <string name="sugerencia_titulo">Suggested activity</string>
     <string name="login_enter_pass">Enter password</string>
+    <string name="apiKey">AIzaSyA1H1LQv2585yplooenK4xY1eb_iNnowyc</string>
+    <string name="ubicacionCorrecta">La ubicación se ha guardado con éxito</string>
+    <string name="ubicacionFallida">No se ha podido registrar la ubicación correctamente</string>
 </resources>

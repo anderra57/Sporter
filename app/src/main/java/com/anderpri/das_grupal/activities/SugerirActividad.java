@@ -11,12 +11,14 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -44,7 +46,7 @@ public class SugerirActividad extends AppCompatActivity {
     Button botonSugerir;
     EditText nombre, ciudad, fecha, explicacion, numeroParticipantes;
 
-    private String cookie;
+    private String cookie, ubicacion, latitude, longitude;
     private SharedPreferences preferences;
 
     @Override
@@ -81,19 +83,46 @@ public class SugerirActividad extends AppCompatActivity {
             }
         });
 
+        ciudad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int conseguirCoordenadas = 1;
+                Intent intentCoordenadas = new Intent(getApplicationContext(), Maps.class);
+                if(ubicacion != null){
+                    intentCoordenadas.putExtra("ubicacion", ubicacion);
+                    intentCoordenadas.putExtra("latitude", latitude);
+                    intentCoordenadas.putExtra("longitude", longitude);
+                }
+                startActivityForResult(intentCoordenadas, conseguirCoordenadas);
+            }
+        });
+
         botonSugerir.setOnClickListener(view -> {
-            if ("".equals(nombre.getText().toString()) || "".equals(ciudad.getText().toString()) || "".equals(fecha.getText().toString()) || "".equals(explicacion.getText().toString()) || "".equals(numeroParticipantes.getText().toString())) {
+            if (null == ubicacion || "".equals(nombre.getText().toString()) || "".equals(ciudad.getText().toString()) || "".equals(fecha.getText().toString()) || "".equals(explicacion.getText().toString()) || "".equals(numeroParticipantes.getText().toString())) {
                 Toast.makeText(this, R.string.noCampoVacio, Toast.LENGTH_SHORT).show();
             }else if (!fechaCorrecta(fecha.getText().toString())) {// la fecha debe ser posterior a la fecha actual
                 Toast.makeText(this, R.string.fechaActividadErronea, Toast.LENGTH_SHORT).show();
             }else{ // Todos los parámetros guay, llamamos al worker
-                solicitudSugerir(nombre.getText().toString(), ciudad.getText().toString(), numeroParticipantes.getText().toString(), fecha.getText().toString(), explicacion.getText().toString());
+                solicitudSugerir(nombre.getText().toString(), ciudad.getText().toString(), numeroParticipantes.getText().toString(), fecha.getText().toString(), explicacion.getText().toString(), latitude, longitude);
             }
         });
-
     }
 
-    private void solicitudSugerir(String nombre, String ciudad, String numero, String fecha, String explicacion) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                latitude = data.getStringExtra("latitude");
+                longitude = data.getStringExtra("longitude");
+                ubicacion = data.getStringExtra("ubicacion");
+                ciudad.setText(ubicacion);
+            }
+        }
+    }
+
+    private void solicitudSugerir(String nombre, String ciudad, String numero, String fecha, String explicacion, String latitud, String longitud) {
         Data solicitud = new Data.Builder()
                 .putString("funcion", "sugerir")
                 .putString("cookie", cookie)
@@ -101,6 +130,8 @@ public class SugerirActividad extends AppCompatActivity {
                 .putString("descripcion", explicacion)
                 .putString("city", ciudad)
                 .putString("fecha", fecha)
+                .putString("latitude", latitud)
+                .putString("longitude", longitud)
                 .build();
         Constraints restricciones = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
         OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(SugerenciasWorker.class).setConstraints(restricciones).setInputData(solicitud).build();

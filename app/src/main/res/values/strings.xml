@@ -43,7 +43,7 @@
     <string name="nombre_actividad">Nombre actividad</string>
     <string name="numero_participantes">Número de participantes máximo</string>
     <string name="explicacion">Explicación</string>
-    <string name="ciudad">Ciudad</string>
+    <string name="ciudad">Seleccionar ubicación</string>
     <string name="fecha">Fecha</string>
     <string name="sugerir">Sugerir</string>
     <string name="crear">Crear</string>
@@ -90,4 +90,7 @@
     <string name="aceptar_grupo_titulo">Sugerencia aceptada</string>
     <string name="aceptar_contenido_grupo">La siguiente sugerencia ha sido aceptada: </string>
     <string name="login_enter_pass">Introducir contraseña</string>
+    <string name="apiKey">AIzaSyA1H1LQv2585yplooenK4xY1eb_iNnowyc</string>
+    <string name="ubicacionCorrecta">La ubicación se ha guardado con éxito</string>
+    <string name="ubicacionFallida">No se ha podido registrar la ubicación correctamente</string>
 </resources>

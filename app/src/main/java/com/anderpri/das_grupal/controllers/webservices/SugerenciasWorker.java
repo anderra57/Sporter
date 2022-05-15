@@ -59,6 +59,8 @@ public class SugerenciasWorker extends Worker {
                 String city = getInputData().getString("city");
                 String descripcion = getInputData().getString("descripcion");
                 String fecha = getInputData().getString("fecha");
+                String latitude = getInputData().getString("latitude");
+                String longitude = getInputData().getString("longitude");
                 urlConnection.setRequestProperty("Cookie", "PHPSESSID=" + cookie);
                 // Preparar los parámetros para enviar en la petición
                 Uri.Builder builder = new Uri.Builder()
@@ -66,7 +68,9 @@ public class SugerenciasWorker extends Worker {
                         .appendQueryParameter("actividad", actividad)
                         .appendQueryParameter("city", city)
                         .appendQueryParameter("description", descripcion)
-                        .appendQueryParameter("fecha", fecha);
+                        .appendQueryParameter("fecha", fecha)
+                        .appendQueryParameter("latitude", latitude)
+                        .appendQueryParameter("longitude", longitude);
                 String parametros = builder.build().getEncodedQuery();
 
                 // Se incluyen los parámetros en la petición HTTP
