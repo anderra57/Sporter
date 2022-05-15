@@ -83,7 +83,7 @@
                     $actividad = $_POST['actividad'];
                     $descripcion = $_POST['description'];
                     $city = $_POST['city'];
-                    $fecha = date('Y-m-d');
+                    $fecha = $_POST['fecha'];
 
                     // Comprobar si la actividad ya existe
                     $s = "SELECT id from actividad where name = '$actividad'";
@@ -224,17 +224,24 @@
 
             } elseif ($func === "update") {
                 if (verify_user() == 1) {
-                    // Borrar todos los registros de la tabla actividad_admin que ya se hayan celebrado de la base de datos
-                    $sql = "DELETE FROM actividad_admin WHERE id = (SELECT id from actividad where fecha <= now())";
-                    $conn->query($sql);
 
-                    // Borrar todos los registros de la tabla actividad_grupo que ya se hayan celebrado de la base de datos
-                    $sql1 = "DELETE FROM actividad_grupo WHERE id = (SELECT id from actividad where fecha <= now())";
-                    $conn->query($sql1);
+                    // Conseguir los identificadores  de lac actividades que ya han pasado
+                    $s = "SELECT id from actividad where fecha <= now()";
+                    $result = $conn->query($s);
+                    while ($row = $result->fetch_assoc()) {
+                        $id = $row['id'];
+                        // Borrar todos los registros de la tabla actividad_admin que ya se hayan celebrado de la base de datos
+                        $sql = "DELETE FROM actividad_admin WHERE id = $id";
+                        $conn->query($sql);
 
-                    // Borrar todos los registros de la tabla actividad que ya se hayan celebrado de la base de datos
-                    $sql2 = "DELETE FROM actividad WHERE fecha <= now()";
-                    $conn->query($sql2);
+                        // Borrar todos los registros de la tabla actividad_grupo que ya se hayan celebrado de la base de datos
+                        $sql1 = "DELETE FROM actividad_grupo WHERE id = $id";
+                        $conn->query($sql1);
+
+                        // Borrar todos los registros de la tabla actividad que ya se hayan celebrado de la base de datos
+                        $sql2 = "DELETE FROM actividad WHERE id = $id";
+                        $conn->query($sql2);
+                    }
                     
                     http_response_code(200);
                 

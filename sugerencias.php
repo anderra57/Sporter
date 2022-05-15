@@ -83,7 +83,7 @@
                 $actividad = $_POST['actividad'];
                 $descripcion = $_POST['description'];
                 $city = $_POST['city'];
-                $fecha = date('Y-m-d');
+                $fecha = $_POST['fecha'];
 
                 // Comprobar si la actividad ya existe
                 $s = "SELECT id from actividad where name = '$actividad'";
