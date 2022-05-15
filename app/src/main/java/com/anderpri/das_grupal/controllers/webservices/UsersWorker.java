@@ -134,6 +134,32 @@ public class UsersWorker extends Worker {
 
                 // Devolver que t0do ha ido bien
                 return Result.success(resultados);
+            } else if("updatepass".equals(funcion)) {
+                // Se actualiza la contraseña
+                String username = getInputData().getString("username");
+                String password = getInputData().getString("password");
+
+                // Preparar los parámetros para enviar en la petición
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("function", funcion)
+                        .appendQueryParameter("username", username)
+                        .appendQueryParameter("password", password);
+                String parametros = builder.build().getEncodedQuery();
+
+                // Se incluyen los parámetros en la petición HTTP
+                PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
+                out.print(parametros);
+                out.close();
+
+                // Se ejecuta la llamada al servicio web
+                urlConnection.getResponseCode();
+
+                Data resultados = new Data.Builder()
+                        .putString("datos", "")
+                        .build();
+
+                // Devolver que t0do ha ido bien
+                return Result.success(resultados);
             } else if("logout".equals(funcion)) {
                 String session = getInputData().getString("cookie");
                 // Comprobar si la cookie es correcta

@@ -125,7 +125,37 @@ public class TeamsWorker extends Worker {
 
                 // Devolver que t0do ha ido bien
                 return Result.success(resultados);
-            }else if("mostrarGruposActividad".equals(funcion)) {
+            }else if("updatepass".equals(funcion)) {
+                // Se realizar el registro del usuario en la base de datos
+                String name = getInputData().getString("teamname");
+                String password = getInputData().getString("teampass");
+                String cookie = getInputData().getString("cookie");
+                Log.d("debasjd","PHPSESSID=" + cookie);
+                urlConnection.setRequestProperty("Cookie","PHPSESSID=" + cookie);
+
+                // Preparar los parámetros para enviar en la petición
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("function", "updatepass")
+                        .appendQueryParameter("teamname", name)
+                        .appendQueryParameter("teampass", password);
+                String parametros = builder.build().getEncodedQuery();
+
+                // Se incluyen los parámetros en la petición HTTP
+                PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
+                out.print(parametros);
+                out.close();
+
+                // Se ejecuta la llamada al servicio web
+                urlConnection.getResponseCode();
+
+
+                Data resultados = new Data.Builder()
+                        .putString("datos", "")
+                        .build();
+
+                // Devolver que t0do ha ido bien
+                return Result.success(resultados);
+            } else if("mostrarGruposActividad".equals(funcion)) {
                 // Se realizar el registro del usuario en la base de datos
                 String actividad = getInputData().getString("actividad");
                 String cookie = getInputData().getString("cookie");
