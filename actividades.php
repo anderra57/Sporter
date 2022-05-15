@@ -222,6 +222,27 @@
                     http_response_code(403);
                 }
 
+            } elseif ($func === "update") {
+                if (verify_user() == 1) {
+                    // Borrar todos los registros de la tabla actividad_admin que ya se hayan celebrado de la base de datos
+                    $sql = "DELETE FROM actividad_admin WHERE id = (SELECT id from actividad where fecha <= now())";
+                    $conn->query($sql);
+
+                    // Borrar todos los registros de la tabla actividad_grupo que ya se hayan celebrado de la base de datos
+                    $sql1 = "DELETE FROM actividad_grupo WHERE id = (SELECT id from actividad where fecha <= now())";
+                    $conn->query($sql1);
+
+                    // Borrar todos los registros de la tabla actividad que ya se hayan celebrado de la base de datos
+                    $sql2 = "DELETE FROM actividad WHERE fecha <= now()";
+                    $conn->query($sql2);
+                    
+                    http_response_code(200);
+                
+                } else {
+                    echo "Access denied";
+                    http_response_code(403);
+                }
+
             }
         } else {
             echo "Invalid session";
