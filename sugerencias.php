@@ -84,6 +84,8 @@
                 $descripcion = $_POST['description'];
                 $city = $_POST['city'];
                 $fecha = $_POST['fecha'];
+		$latitude = $_POST['latitude'];
+		$longitude = $_POST['longitude'];
 
                 // Comprobar si la actividad ya existe
                 $s = "SELECT id from actividad where name = '$actividad'";
@@ -92,7 +94,7 @@
                     http_response_code(400);
                 } else {
                     // Primeramente añadimos una nueva actividad que no estará activa
-                    $sql = "INSERT into actividad(name, description, active, fecha, city) values('$actividad', '$descripcion', 0, '$fecha', '$city')";
+                    $sql = "INSERT into actividad(name, description, active, fecha, city, latitude, longitude) values('$actividad', '$descripcion', 0, '$fecha', '$city', '$latitude', '$longitude')";
                     $result = $conn->query($sql);
                     // Ahora añadimos una nueva fila a la tabla actividad_grupo (necesitamos saber el identificador de la actividad y del grupo al que pertenece el usuario)
                     

@@ -84,6 +84,8 @@
                     $descripcion = $_POST['description'];
                     $city = $_POST['city'];
                     $fecha = $_POST['fecha'];
+                    $latitude = $_POST['latitude'];
+                    $longitude = $_POST['longitude'];
 
                     // Comprobar si la actividad ya existe
                     $s = "SELECT id from actividad where name = '$actividad'";
@@ -94,7 +96,7 @@
                         // Conseguir el identificador del administrador
                         $admin_id = $_SESSION['id'];
                         // Añadir a actividad nuevo registro
-                        $sql = "INSERT into actividad(name, description, active, fecha, city) values('$actividad', '$descripcion', 1, '$fecha', '$city')";
+                        $sql = "INSERT into actividad(name, description, active, fecha, city, latitude, longitude) values('$actividad', '$descripcion', 1, '$fecha', '$city', '$latitude', '$longitude')";
                         $result = $conn->query($sql);
                         // Conseguir el identificador de la actividad creada
                         $id_act = buscar_id_actividad($actividad);
@@ -250,6 +252,35 @@
                     http_response_code(403);
                 }
 
+            } elseif ($func === "getCoordinates") {
+                $sql = "SELECT name,latitude,longitude from actividad where active = 1";
+                $result = $conn->query($sql);
+                $actividades = array();
+                while ($row = $result->fetch_assoc()) {
+                    $actividad = array();
+                    $actividad['name'] = $row['name'];
+                    $actividad['latitude'] = $row['latitude'];
+                    $actividad['longitude'] = $row['longitude'];
+                    array_push($actividades, $actividad);
+                }
+                echo json_encode($actividades);
+                http_response_code(200);
+
+            } elseif ($func === "getLocation") {
+                $actividad = $_POST['actividad'];
+                $id_act = buscar_id_actividad($actividad);
+                $sql = "SELECT name, latitude, longitude from actividad where id=$id_act and active=1";
+                $result = $conn->query($sql);
+                $actividades = array();
+                while ($row = $result->fetch_assoc()) {
+                    $actividad = array();
+                    $actividad['name'] = $row['name'];
+                    $actividad['latitude'] = $row['latitude'];
+                    $actividad['longitude'] = $row['longitude'];
+                    array_push($actividades, $actividad);
+                }
+                echo json_encode($actividades);
+                http_response_code(200);
             }
         } else {
             echo "Invalid session";
