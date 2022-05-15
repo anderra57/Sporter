@@ -19,9 +19,7 @@
             android:icon="@drawable/ic_launcher_background"
             android:title="@string/verMapa" />
     </group>
-    <group
-        android:id="@+id/grupo2"
-        android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_launcher_background"

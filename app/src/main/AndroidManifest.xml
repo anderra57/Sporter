@@ -23,7 +23,31 @@
         android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DAS_Grupal"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true" >
+
+        <!-- ajustes -->
+        <activity
+        android:name=".activities.settings.SettingsActivity"
+        android:exported="false"/>
+
+        <activity
+            android:name=".activities.settings.SettingsChangeImage"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="action.changeimage" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activities.settings.SettingsChangeInfo"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="action.changeinfo" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".activities.ActividadesMapaAdmin"
             android:exported="false" />
@@ -83,12 +107,6 @@
         </activity>
         <activity
             android:name=".activities.login.LoginMain"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".activities.OtraActividad"
             android:exported="false" />
         <activity
             android:name=".controllers.widget.WidgetConfigureActivity"

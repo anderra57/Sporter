@@ -115,9 +115,17 @@ public class LoginMain extends AppCompatActivity {
                         }
                         String token = task.getResult().getToken();
                         Log.d("token_firebase", "Token: " + token);
+                        addTokenToSP(token);
                         doLogin(token);
                     }
                 });
+    }
+
+    private void addTokenToSP(String token) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("token", token);
+        editor.apply();
     }
 
     private void doLogin(String tok) {
@@ -166,6 +174,7 @@ public class LoginMain extends AppCompatActivity {
 
                                     saveCookie(cookie);
                                     manageIdUser(id_user);
+                                    addUserToSP(username);
                                     /*
                                     Intent intent = new Intent(this, MainActivity.class);
                                     intent.putExtra("username", username);
@@ -185,6 +194,13 @@ public class LoginMain extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void addUserToSP(String username) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("username", username);
+        editor.apply();
     }
 
     /// GESTIONAR CLICK EN REGISTRARSE ///
