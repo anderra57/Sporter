@@ -224,6 +224,11 @@ public class ListaActividadesAdmin extends AppCompatActivity {
                 finish();
                 startActivity(intent);
                 break;
+            case R.id.nav_fourth_fragment:
+                intent = new Intent(this, ActividadesMapaAdmin.class);
+                finish();
+                startActivity(intent);
+                break;
             case R.id.settings:
                 break;
             case R.id.logout:

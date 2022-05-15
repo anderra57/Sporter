@@ -43,8 +43,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class
-AceptarRechazarActividad extends AppCompatActivity {
+public class AceptarRechazarActividad extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -229,6 +228,11 @@ AceptarRechazarActividad extends AppCompatActivity {
                 break;
             case R.id.nav_third_fragment:
                 mDrawer.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.nav_fourth_fragment:
+                intent = new Intent(this, ActividadesMapaAdmin.class);
+                finish();
+                startActivity(intent);
                 break;
             case R.id.settings:
                 break;

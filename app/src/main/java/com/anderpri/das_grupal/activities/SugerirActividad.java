@@ -225,6 +225,11 @@ public class SugerirActividad extends AppCompatActivity {
             case R.id.nav_third_fragment:
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
+            case R.id.nav_fourth_fragment:
+                intent = new Intent(this, ActividadesMapa.class);
+                finish();
+                startActivity(intent);
+                break;
             case R.id.settings:
                 break;
             case R.id.logout:

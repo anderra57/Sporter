@@ -34,6 +34,7 @@ public class LauncherActivity extends AppCompatActivity {
          * si no es válida -> a LoginMain
          *
          * */
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         cookie = preferences.getString("cookie","no_cookie");
         Log.d("cookie_launcher",cookie);

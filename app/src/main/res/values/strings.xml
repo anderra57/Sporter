@@ -93,4 +93,5 @@
     <string name="apiKey">AIzaSyA1H1LQv2585yplooenK4xY1eb_iNnowyc</string>
     <string name="ubicacionCorrecta">La ubicación se ha guardado con éxito</string>
     <string name="ubicacionFallida">No se ha podido registrar la ubicación correctamente</string>
+    <string name="verMapa">Ver mapa de actividades</string>
 </resources>

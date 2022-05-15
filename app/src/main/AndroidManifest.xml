@@ -25,6 +25,12 @@
         android:theme="@style/Theme.DAS_Grupal"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activities.ActividadesMapaAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ActividadesMapa"
+            android:exported="false" />
+        <activity
             android:name=".activities.Maps"
             android:exported="false" />
         <activity

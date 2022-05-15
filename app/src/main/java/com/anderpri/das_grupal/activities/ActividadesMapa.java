@@ -1,6 +1,7 @@
 package com.anderpri.das_grupal.activities;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -13,10 +14,12 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,8 +29,17 @@ import android.widget.Toast;
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.adapters.AdapterActividades;
+import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
+import com.anderpri.das_grupal.controllers.webservices.CrearActividadWorker;
+import com.anderpri.das_grupal.controllers.webservices.SolicitudesWorker;
+import com.anderpri.das_grupal.controllers.webservices.SugerenciasWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -37,7 +49,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ListaActividadesInscrito extends AppCompatActivity {
+public class ActividadesMapa extends AppCompatActivity implements OnMapReadyCallback {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -45,17 +57,10 @@ public class ListaActividadesInscrito extends AppCompatActivity {
     private String cookie;
     private SharedPreferences preferences;
 
-    private AdapterActividades adapterActividades;
-    private ArrayList<Actividad> listaActividades;
-    private ListView list_actividades;
-
-    public ListaActividadesInscrito() {
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_actividades);
+        setContentView(R.layout.activity_actividades_mapa);
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,74 +69,15 @@ public class ListaActividadesInscrito extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.crear_actividad_drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.actividades_mapa_drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
-
-        // Inicalizar la lista de actividades
-        listaActividades = new ArrayList<Actividad>();
-        list_actividades = (ListView) findViewById(R.id.lista_actividades_recycler_view);
+        SupportMapFragment mapa = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentoActividadesMapa);
+        mapa.getMapAsync(this);
 
         getCookie();
-        solicitud();
-
-        list_actividades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                visualizarActividad(listaActividades.get(i));
-            }
-        });
-
-    }
-
-    private void visualizarActividad(Actividad actividad) {
-        Intent intent = new Intent(this, VisualizarInfoActividad.class);
-        intent.putExtra("funcion", "lista_inscritos");
-        intent.putExtra("titulo", actividad.name);
-        intent.putExtra("descripcion", actividad.description);
-        intent.putExtra("fecha", actividad.fecha);
-        intent.putExtra("ciudad", actividad.city);
-        intent.putExtra("imagen", actividad.image);
-        startActivity(intent);
-    }
-
-    private void listarActividades() {
-        if (listaActividades.size() != 0) {
-            adapterActividades = new AdapterActividades(this, getTitles(listaActividades), getImageNames(listaActividades));
-            list_actividades.setAdapter(adapterActividades);
-        } else {
-            Toast.makeText(this, getString(R.string.noActividades), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Este método dado una lista de actividades, devolerá un array con los nombres de las imágenes
-    private String[] getImageNames(ArrayList<Actividad> lista) {
-        Iterator<Actividad> itr = lista.iterator();
-        Actividad act;
-        String[] images = new String[lista.size()];
-        int i = 0;
-        while(itr.hasNext()) {
-            act = itr.next();
-            images[i] = act.image;
-            i++;
-        }
-        return images;
-    }
-
-    // Este método dado una lista de actividades, devolverá un array con los títulos
-    private String[] getTitles(ArrayList<Actividad> lista) {
-        Iterator<Actividad> itr = lista.iterator();
-        Actividad act;
-        String[] titles = new String[lista.size()];
-        int i = 0;
-        while(itr.hasNext()) {
-            act = itr.next();
-            titles[i] = act.name;
-            i++;
-        }
-        return titles;
     }
 
     private void getCookie() {
@@ -139,49 +85,6 @@ public class ListaActividadesInscrito extends AppCompatActivity {
         cookie = preferences.getString("cookie","");
     }
 
-    private void solicitud() {
-
-        try {
-            // Preparar los datos para enviar al backend
-            Data logindata = new Data.Builder()
-                    .putString("funcion", "mostrarActivas")
-                    .putString("cookie", cookie)
-                    .build();
-
-            // Tiene que existir conexión a internet
-            Constraints restricciones = new Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build();
-
-            // Preparar la petición
-            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ActivitiesWorker.class)
-                    .setConstraints(restricciones)
-                    .setInputData(logindata)
-                    .build();
-
-            // Lanzar la petición
-            WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
-                    .observe(this, status -> {
-                        if (status != null && status.getState().isFinished()) {
-                            try {
-                                JSONArray miArray = new JSONArray(status.getOutputData().getString("datos"));
-                                for(int i = 0; i<miArray.length(); i++){ //asi es, no se hacer un foreach en java
-                                    JSONObject miJson = new JSONObject(miArray.get(i).toString());
-                                    Actividad actual= new Actividad(miJson.getString("name"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"),miJson.getString("imageName"),miJson.getString("latitude"),miJson.getString("longitude"));
-                                    listaActividades.add(actual);
-                                }
-                                listarActividades();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
-            WorkManager.getInstance(this).enqueue(req);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -212,7 +115,9 @@ public class ListaActividadesInscrito extends AppCompatActivity {
 
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
-                mDrawer.closeDrawer(GravityCompat.START);
+                intent = new Intent(this, ListaActividadesInscrito.class);
+                finish();
+                startActivity(intent);
                 break;
             case R.id.nav_second_fragment:
                 intent = new Intent(this, ListaActividadesNoInscrito.class);
@@ -225,9 +130,7 @@ public class ListaActividadesInscrito extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.nav_fourth_fragment:
-                intent = new Intent(this, ActividadesMapa.class);
-                finish();
-                startActivity(intent);
+                mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.settings:
                 break;
@@ -266,5 +169,61 @@ public class ListaActividadesInscrito extends AppCompatActivity {
             });
             WorkManager.getInstance(this).enqueue(req);
         } catch (Exception e) {  e.printStackTrace();  }
+
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        cargarMarcadores(googleMap);
+
+    }
+
+    private void cargarMarcadores(GoogleMap googleMap) {
+        try {
+            // Preparar los datos para enviar al backend
+            Data data = new Data.Builder()
+                    .putString("funcion", "getCoordinates")
+                    .putString("cookie", cookie)
+                    .build();
+
+            // Tiene que existir conexión a internet
+            Constraints restricciones = new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build();
+
+            // Preparar la petición
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ActivitiesAdminWorker.class)
+                    .setConstraints(restricciones)
+                    .setInputData(data)
+                    .build();
+
+            // Lanzar la petición
+            WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
+                    .observe(this, status -> {
+                        if (status != null && status.getState().isFinished()) {
+                            try {
+                                JSONArray miArray = new JSONArray(status.getOutputData().getString("datos"));
+                                for(int i = 0; i<miArray.length(); i++){ //asi es, no se hacer un foreach en java
+                                    JSONObject miJson = new JSONObject(miArray.get(i).toString());
+                                    String name = miJson.getString("name");
+                                    Log.d("prueba", name);
+                                    Double latitude = Double.valueOf(miJson.getString("latitude"));
+                                    Double longitude = Double.valueOf(miJson.getString("longitude"));
+                                    googleMap.addMarker(new MarkerOptions()
+                                            .position(new LatLng(latitude, longitude))
+                                            .title(name));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+            WorkManager.getInstance(this).enqueue(req);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -14,6 +14,10 @@
             android:id="@+id/nav_third_fragment"
             android:icon="@drawable/ic_launcher_background"
             android:title="@string/sugerirActividad" />
+        <item
+            android:id="@+id/nav_fourth_fragment"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="@string/verMapa" />
     </group>
     <group
         android:id="@+id/grupo2"

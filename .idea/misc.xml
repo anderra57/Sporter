@@ -3,9 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_lista_actividades_no_inscrito.xml" value="0.15520282186948853" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_maps.xml" value="0.2019400352733686" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_actividades_mapa.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_actividades_mapa_admin.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_crear_actividad.xml" value="0.2" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_lista_actividades.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_lista_actividades_no_inscrito.xml" value="0.18333333333333332" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_maps.xml" value="0.25" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_sugerir_actividad.xml" value="0.13125" />
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/toolbar.xml" value="0.15052083333333333" />
       </map>
     </option>
   </component>

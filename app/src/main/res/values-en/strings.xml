@@ -81,6 +81,7 @@
     <string name="sugerencia_titulo">Suggested activity</string>
     <string name="login_enter_pass">Enter password</string>
     <string name="apiKey">AIzaSyA1H1LQv2585yplooenK4xY1eb_iNnowyc</string>
-    <string name="ubicacionCorrecta">La ubicación se ha guardado con éxito</string>
-    <string name="ubicacionFallida">No se ha podido registrar la ubicación correctamente</string>
+    <string name="verMapa">See activities map</string>
+    <string name="ubicacionFallida">Failed to register location successfully</string>
+    <string name="ubicacionCorrecta">The location has been saved successfully</string>
 </resources>

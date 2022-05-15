@@ -119,6 +119,40 @@ public class ActivitiesAdminWorker extends Worker {
                 // Devolver que t0do ha ido bien
                 return Result.success(resultados);
 
+            }  if("getCoordinates".equals(funcion)) {
+                // Se recogen el usuario y la contraseña
+                String cookie = getInputData().getString("cookie");
+                urlConnection.setRequestProperty("Cookie", "PHPSESSID=" + cookie);
+                // Preparar los parámetros para enviar en la petición
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("function", funcion);
+                String parametros = builder.build().getEncodedQuery();
+
+                // Se incluyen los parámetros en la petición HTTP
+                PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
+                out.print(parametros);
+                out.close();
+
+                // Se ejecuta la llamada al servicio web
+                int statusCode = urlConnection.getResponseCode();
+                String line;
+                StringBuilder result = new StringBuilder();
+                if (statusCode == 200) {
+                    // Código 200 OK, se leen los datos de la respuesta
+                    BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result.append(line);
+                    }
+                    inputStream.close();
+                }
+
+                Data resultados = new Data.Builder()
+                        .putString("datos", result.toString())
+                        .build();
+                // Devolver que t0do ha ido bien
+                return Result.success(resultados);
+
             } else {
                 // Algo no ha ido de forma correcta
                 Log.d("funcion", "algo mal");
