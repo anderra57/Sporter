@@ -84,4 +84,24 @@
     <string name="verMapa">See activities map</string>
     <string name="ubicacionFallida">Failed to register location successfully</string>
     <string name="ubicacionCorrecta">The location has been saved successfully</string>
+    <string name="settings_change_image_title">Change profile image</string>
+    <string name="settings_change_image_summary">Change your profile image</string>
+    <string name="settings_change_info_title">Change personal information</string>
+    <string name="settings_change_info_summary">Change the personal information linked to your account</string>
+    <string name="settings_header_personal">User settings</string>
+    <string name="settings_header_app">App settings</string>
+    <string name="settings_dark_mode">Set dark mode</string>
+    <string name="settings_dark_mode_off">Dark mode OFF</string>
+    <string name="settings_dark_mode_on">Dark mode ON</string>
+    <string name="settings_change_image_btn">Change image</string>
+    <string name="settings_header_info">App information</string>
+    <string name="settings_change_pass_user_btn">Change user password</string>
+    <string name="settings_change_pass_team_btn">Change team password</string>
+    <string name="settings_change_pass_old">Old password</string>
+    <string name="settings_change_pass_new">New password</string>
+    <string name="settings_wrong_pass">The password is not correct</string>
+    <string name="settings_pass_updated">Password updated</string>
+    <string name="settings_change_pass_team">Team name</string>
+    <string name="settings_info_devs">App developers</string>
+    <string name="settings_info_version">App version</string>
 </resources>
