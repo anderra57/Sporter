@@ -14,12 +14,13 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.anderpri.das_grupal.activities.login.LoginMain;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
 public class LauncherActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
-    String cookie;
+    String cookie,lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,8 @@ public class LauncherActivity extends AppCompatActivity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         cookie = preferences.getString("cookie","no_cookie");
+        lang = preferences.getString("lang","es");
+        Utils.getInstance().setLocale(lang,getBaseContext());
         Log.d("cookie_launcher",cookie);
 
         if (cookie.equals("no_cookie")){ // No hay cookoe guradado, por lo que accedemos al login
