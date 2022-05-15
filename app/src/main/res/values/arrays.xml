@@ -1,0 +1,11 @@
+<resources>
+    <string-array name="lang">
+        <item>@string/settings_lang_radio_es</item>
+        <item>@string/settings_lang_radio_en</item>
+    </string-array>
+
+    <string-array name="lang_values">
+        <item>es</item>
+        <item>en</item>
+    </string-array>
+</resources>

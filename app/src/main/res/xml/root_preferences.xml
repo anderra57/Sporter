@@ -1,0 +1,58 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/settings_header_personal">
+
+
+        <Preference
+            android:key="settings_change_image"
+            android:title="@string/settings_change_image_title"
+            android:summary="@string/settings_change_image_summary">
+            <intent android:action="action.changeimage"/>
+        </Preference>
+
+        <Preference
+            android:key="settings_change_info"
+            android:title="@string/settings_change_info_title"
+            android:summary="@string/settings_change_info_summary">
+            <intent android:action="action.changeinfo"/>
+        </Preference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_header_app">
+
+        <ListPreference
+            app:key="settings_lang"
+            app:entries="@array/lang"
+            app:entryValues="@array/lang_values"
+            app:title="@string/settings_lang_radio_text"
+            app:useSimpleSummaryProvider="true" />
+
+        <!--
+        <SwitchPreferenceCompat
+            app:key="settings_theme"
+            app:title="@string/settings_dark_mode"
+            app:summaryOff="@string/settings_dark_mode_off"
+            app:summaryOn="@string/settings_dark_mode_on" />
+        -->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_header_info">
+
+
+        <EditTextPreference
+            app:key="settings_version"
+            app:title="@string/settings_info_version"
+            app:summary="@string/version"
+            />
+        <EditTextPreference
+            app:key="settings_devs"
+            app:title="@string/settings_info_devs"
+            app:summary="@string/app_devs"
+        />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
