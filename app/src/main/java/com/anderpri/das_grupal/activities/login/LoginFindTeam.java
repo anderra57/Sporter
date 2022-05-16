@@ -90,7 +90,7 @@ public class LoginFindTeam extends AppCompatActivity {
                                     // Avanzar a la siguiente actividad (MainActivity)
 
                                     Intent intent = new Intent(this, ListaActividadesInscrito.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                     finish();
                                 } else {

@@ -131,7 +131,7 @@ public class VisualizarInfoActividad extends AppCompatActivity {
                                 // Usamos las flags porque queremos que la lista de actividades se actualice
                                 Toast.makeText(this, getString(R.string.inscripcion), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(this, ListaActividadesInscrito.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                                 finish();
                             } else { // La sesión es invalida, vuelta al login
