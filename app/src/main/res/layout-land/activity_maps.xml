@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/fragmentoBarra"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        android:layout_width="405dp"
+        android:layout_width="727dp"
         android:layout_height="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,17 +21,20 @@
         android:id="@+id/fragmentoMapa"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="727dp"
-        android:layout_height="287dp"
+        android:layout_height="260dp"
         android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_mapa"
+        />
 
     <Button
         android:id="@+id/btn_mapa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/aceptar"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -7,6 +7,17 @@
     tools:context=".activities.login.LoginCreateTeam">
 
 
+    <ImageView
+        android:id="@+id/login_create_team_img"
+        android:layout_width="187dp"
+        android:layout_height="165dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/default_icon_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.834"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/login_create_team_txt_warning"
         android:layout_width="310dp"
@@ -14,22 +25,10 @@
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.967" />
-
-    <ImageView
-        android:id="@+id/login_create_team_banner"
-        android:layout_width="342dp"
-        android:layout_height="170dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        app:srcCompat="@drawable/sporter_text" />
+        app:layout_constraintVertical_bias="0.879" />
 
     <EditText
         android:id="@+id/login_create_team_txt_name"
@@ -40,10 +39,10 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
+        app:layout_constraintHorizontal_bias="0.127"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.590"
+        app:layout_constraintVertical_bias="0.501"
         tools:ignore="Autofill" />
 
     <EditText
@@ -52,62 +51,63 @@
         android:layout_height="60dp"
         android:ems="4"
         android:hint="@string/login_enter_pass"
-        android:textAlignment="center"
         android:inputType="textPassword"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
+        app:layout_constraintHorizontal_bias="0.127"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775"
+        app:layout_constraintVertical_bias="0.686"
         tools:ignore="Autofill" />
 
     <ImageView
-        android:id="@+id/login_create_team_img"
-        android:layout_width="187dp"
-        android:layout_height="165dp"
-        android:layout_marginTop="64dp"
-        android:src="@drawable/default_icon_group"
+        android:id="@+id/login_create_team_banner"
+        android:layout_width="342dp"
+        android:layout_height="170dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.826"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/login_create_team_btn_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:onClick="openGallery"
-        android:text="@string/login_choose_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_create_team_img" />
-
-    <Button
-        android:id="@+id/login_create_team_btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:onClick="onRegister"
-        android:text="@string/login_register_team"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.802"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_create_team_btn_img" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07"
+        app:srcCompat="@drawable/sporter_text" />
 
     <Button
         android:id="@+id/login_create_team_btn_x"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="-6dp"
         android:onClick="clickX"
         android:text="X"
         app:layout_constraintStart_toEndOf="@+id/login_create_team_img"
         app:layout_constraintTop_toTopOf="@+id/login_create_team_img"
         tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/login_create_team_btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="onRegister"
+        android:text="@string/login_register_team"
+        app:layout_constraintEnd_toEndOf="@+id/login_create_team_btn_img"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="@+id/login_create_team_btn_img"
+        app:layout_constraintTop_toBottomOf="@+id/login_create_team_btn_img" />
+
+    <Button
+        android:id="@+id/login_create_team_btn_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:onClick="openGallery"
+        android:text="@string/login_choose_image"
+        app:layout_constraintEnd_toEndOf="@+id/login_create_team_img"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/login_create_team_img"
+        app:layout_constraintTop_toBottomOf="@+id/login_create_team_img" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
