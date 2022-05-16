@@ -121,7 +121,7 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
         });
 
         botonSugerir.setOnClickListener(view -> {
-            if (null == ubicacion || "".equals(nombre.getText().toString()) || "".equals(ciudad.getText().toString()) || "".equals(fecha.getText().toString()) || "".equals(explicacion.getText().toString()) || "".equals(numeroParticipantes.getText().toString())) {
+            if ("".equals(nombre.getText().toString()) || "".equals(ciudad.getText().toString()) || "".equals(fecha.getText().toString()) || "".equals(explicacion.getText().toString()) || "".equals(numeroParticipantes.getText().toString())) {
                 Toast.makeText(this, R.string.noCampoVacio, Toast.LENGTH_SHORT).show();
             }else if (!fechaCorrecta(fecha.getText().toString())) {// la fecha debe ser posterior a la fecha actual
                 Toast.makeText(this, R.string.fechaActividadErronea, Toast.LENGTH_SHORT).show();
