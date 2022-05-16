@@ -92,6 +92,15 @@
 					}
 					
 				}
+			}elseif($function === "updatepass"){
+				$teamname = $_POST['teamname'];
+				$teampass = $_POST['teampass'];
+
+				$secure_password = password_hash($teampass, PASSWORD_DEFAULT);
+				$sql_update_pass = "UPDATE teams SET password='$secure_password' WHERE name='$teamname'";
+				$res_update_pass = $conn->query($sql_update_pass);
+				http_response_code(200);
+				
 			}elseif($function === "mostrarGruposActividad") {
 				$actividad = $_POST['actividad'];
 
