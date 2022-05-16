@@ -95,6 +95,16 @@
 				http_response_code(200);
             }
 		} 
+		elseif ($function === "updatepass") {
+			$username = $_POST['username'];
+			$password = $_POST['password'];
+			$secure_password = password_hash($password, PASSWORD_DEFAULT);
+       
+			$sql = "UPDATE users SET password='$secure_password' WHERE username='$username'";
+			$conn->query($sql);
+			http_response_code(200);
+
+		}  
 		elseif ($function === "logout") {
 			if (isset($_SESSION['id'])) {
 				$_SESSION['id'] = '';
