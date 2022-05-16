@@ -24,7 +24,7 @@ import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
 public class SettingsChangeInfo extends AppCompatActivity {
 
-    EditText pass_team_old, pass_team_new, pass_user_old, pass_user_new, pass_name;
+    EditText pass_team_old, pass_team_new, pass_user_old, pass_user_new;
     String token,username,teamname,cookie;
 
     @Override
@@ -35,12 +35,12 @@ public class SettingsChangeInfo extends AppCompatActivity {
         pass_user_old = findViewById(R.id.settings_change_pass_user_txt_old);
         pass_team_new = findViewById(R.id.settings_change_pass_team_txt_new);
         pass_team_old = findViewById(R.id.settings_change_pass_team_txt_old);
-        pass_name = findViewById(R.id.settings_change_pass_team_txt_team);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         token = preferences.getString("token",null);
         username = preferences.getString("username",null);
         cookie = preferences.getString("cookie",null);
+        getTeamName();
 
     }
 
@@ -159,7 +159,6 @@ public class SettingsChangeInfo extends AppCompatActivity {
     public void checkPassTeam() {
 
         String password = pass_team_old.getText().toString();
-        teamname = pass_name.getText().toString();
 
         // Los campos del login no pueden estar vacios
         if(teamname.isEmpty() || password.isEmpty()) {
@@ -204,6 +203,48 @@ public class SettingsChangeInfo extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void getTeamName() {
+        try {
+            // Preparar los datos para enviar al backend
+            Data logindata = new Data.Builder()
+                    .putString("funcion", "getteamname")
+                    .putString("username", username)
+                    .putString("cookie", cookie)
+                    .build();
+
+            // Tiene que existir conexión a internet
+            Constraints restricciones = new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build();
+
+            // Preparar la petición
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(TeamsWorker.class)
+                    .setConstraints(restricciones)
+                    .setInputData(logindata)
+                    .build();
+
+            // Lanzar la petición
+            WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
+                    .observe(this, status -> {
+                        if (status != null && status.getState().isFinished()) {
+                            String name = status.getOutputData().getString("datos").trim();
+                            Log.d("debug_name",name);
+                            if(!name.isEmpty()) {
+                                teamname = name;
+                                Log.d("debug_name","got it");
+                                Log.d("debug_name",name);
+                            } else {
+                                Log.d("debug_name","not got");
+                            }
+                        }
+                    });
+
+            WorkManager.getInstance(this).enqueue(req);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

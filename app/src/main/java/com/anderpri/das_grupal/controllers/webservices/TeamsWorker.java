@@ -127,6 +127,46 @@ public class TeamsWorker extends Worker {
 
                 // Devolver que t0do ha ido bien
                 return Result.success(resultados);
+            }else if("getteamname".equals(funcion)) {
+                // Se realizar el registro del usuario en la base de datos
+                String username = getInputData().getString("username");
+                String cookie = getInputData().getString("cookie");
+                Log.d("debasjd","PHPSESSID=" + cookie);
+                urlConnection.setRequestProperty("Cookie","PHPSESSID=" + cookie);
+
+                // Preparar los parámetros para enviar en la petición
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter("function", "getteamname")
+                        .appendQueryParameter("username", username);
+                String parametros = builder.build().getEncodedQuery();
+
+                // Se incluyen los parámetros en la petición HTTP
+                PrintWriter out = new PrintWriter(urlConnection.getOutputStream());
+                out.print(parametros);
+                out.close();
+
+                // Se ejecuta la llamada al servicio web
+                int statusCode = urlConnection.getResponseCode();
+                String line;
+                StringBuilder result = new StringBuilder();
+                System.out.println(statusCode);
+                if (statusCode == 200) {
+                    // Cósigo 200 OK, se leen los datos de la respuesta
+                    BufferedInputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result.append(line);
+                    }
+                    inputStream.close();
+                }
+
+                Data resultados = new Data.Builder()
+                        .putString("datos", result.toString())
+                        .build();
+
+                // Devolver que t0do ha ido bien
+                return Result.success(resultados);
             }else if("updatepass".equals(funcion)) {
                 // Se realizar el registro del usuario en la base de datos
                 String name = getInputData().getString("teamname");

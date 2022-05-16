@@ -24,13 +24,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
         rootKeyGlobal = rootKey;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        String role = preferences.getString("role","");
+        if (!role.equals("user")) findPreference("settings_change_info").setEnabled(false);
 
         findPreference("settings_version").setEnabled(false);
         findPreference("settings_version").setShouldDisableView(false);
         findPreference("settings_devs").setEnabled(false);
         findPreference("settings_devs").setShouldDisableView(false);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String lang = preferences.getString("lang","es");
         findPreference("settings_lang").setDefaultValue(lang);
         findPreference("settings_lang").setOnPreferenceChangeListener((preference, newValue) -> {
