@@ -172,7 +172,7 @@ public class AceptarRechazarActividad extends AppCompatActivity {
                                 for(int i = 0; i<miArray.length(); i++){ //asi es, no se hacer un foreach en java
                                     JSONObject miJson = new JSONObject(miArray.get(i).toString());
                                     Actividad actual= new Actividad(miJson.getString("actividad"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"),miJson.getString("imageName"),miJson.getString("latitude"),miJson.getString("longitude"));
-                                    System.out.println(actual.image);
+                                    Log.d("prueba",actual.image);
                                     listaActividades.add(actual);
                                 }
                                 listarActividades();

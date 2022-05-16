@@ -68,7 +68,6 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback {
         PlacesClient placesClient = Places.createClient(this);
 
         AutocompleteSupportFragment autoCompleteSupportFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentoBarra);
-        autoCompleteSupportFragment.setTypeFilter(TypeFilter.ADDRESS);
         autoCompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
         autoCompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override

@@ -3,50 +3,72 @@ package com.anderpri.das_grupal.activities;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.controllers.webservices.SugerenciasWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
+import com.anderpri.das_grupal.dialogs.ImagenDialog;
 import com.anderpri.das_grupal.fragments.DatePickerFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
-public class SugerirActividad extends AppCompatActivity {
+public class SugerirActividad extends AppCompatActivity implements ImagenDialog.ListenerDialog{
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
 
-    Button botonSugerir;
-    EditText nombre, ciudad, fecha, explicacion, numeroParticipantes;
+    private File imgFichero;
+    private Uri imagenUri;
+    private static int CODIGO_GALERIA = 1;
+    private static int CODIGO_FOTO_ARCHIVO = 2;
+    private static int conseguirCoordenadas = 3;
 
-    private String cookie, ubicacion, latitude, longitude;
+    Button botonSugerir, botonImagen;
+    EditText nombre, ciudad, fecha, explicacion, numeroParticipantes;
+    TextView avisoImagen;
+
+    private String cookie, ubicacion, latitude, longitude, imageName;
     private SharedPreferences preferences;
 
     @Override
@@ -67,11 +89,13 @@ public class SugerirActividad extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         botonSugerir = findViewById(R.id.sugerir_actividad_boton);
+        botonImagen = findViewById(R.id.sugerir_actividad_boton_imagen);
         nombre = findViewById(R.id.sugerir_actividad_nombre_text);
         ciudad = findViewById(R.id.sugerir_actividad_ciudad_text);
         fecha = findViewById(R.id.sugerir_actividad_fecha_text);
         explicacion = findViewById(R.id.sugerir_actividad_explicacion_text);
         numeroParticipantes = findViewById(R.id.sugerir_actividad_numero_text);
+        avisoImagen = findViewById(R.id.sugerir_actividad_aviso_imagen);
 
         getCookie();
 
@@ -86,7 +110,6 @@ public class SugerirActividad extends AppCompatActivity {
         ciudad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int conseguirCoordenadas = 1;
                 Intent intentCoordenadas = new Intent(getApplicationContext(), Maps.class);
                 if(ubicacion != null){
                     intentCoordenadas.putExtra("ubicacion", ubicacion);
@@ -103,7 +126,16 @@ public class SugerirActividad extends AppCompatActivity {
             }else if (!fechaCorrecta(fecha.getText().toString())) {// la fecha debe ser posterior a la fecha actual
                 Toast.makeText(this, R.string.fechaActividadErronea, Toast.LENGTH_SHORT).show();
             }else{ // Todos los parámetros guay, llamamos al worker
+                subirAFirebase();
                 solicitudSugerir(nombre.getText().toString(), ciudad.getText().toString(), numeroParticipantes.getText().toString(), fecha.getText().toString(), explicacion.getText().toString(), latitude, longitude);
+            }
+        });
+
+        botonImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment imagenDialog = new ImagenDialog();
+                imagenDialog.show(getSupportFragmentManager(), "seleccionarImagen");
             }
         });
     }
@@ -111,24 +143,34 @@ public class SugerirActividad extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
+        if (requestCode == conseguirCoordenadas) {
             if(resultCode == Activity.RESULT_OK){
                 latitude = data.getStringExtra("latitude");
                 longitude = data.getStringExtra("longitude");
                 ubicacion = data.getStringExtra("ubicacion");
                 ciudad.setText(ubicacion);
             }
+        } // En caso de coger la imagen desde la galería, ponerla en el imageview
+        else if(requestCode == CODIGO_GALERIA && resultCode == RESULT_OK) {
+            imagenUri = data.getData();
+            imageName = new File(imagenUri.getPath()).getName();
+            avisoImagen.setVisibility(View.VISIBLE);
+        }else if(requestCode == CODIGO_FOTO_ARCHIVO && resultCode == RESULT_OK) {
+            String path = imgFichero.getAbsolutePath();
+            imageName = imgFichero.getName();
+            avisoImagen.setVisibility(View.VISIBLE);
         }
     }
 
     private void solicitudSugerir(String nombre, String ciudad, String numero, String fecha, String explicacion, String latitud, String longitud) {
+
         Data solicitud = new Data.Builder()
                 .putString("funcion", "sugerir")
                 .putString("cookie", cookie)
                 .putString("actividad", nombre)
                 .putString("descripcion", explicacion)
                 .putString("city", ciudad)
+                .putString("imageName", imageName)
                 .putString("fecha", fecha)
                 .putString("latitude", latitud)
                 .putString("longitude", longitud)
@@ -285,5 +327,51 @@ public class SugerirActividad extends AppCompatActivity {
             WorkManager.getInstance(this).enqueue(req);
         } catch (Exception e) {  e.printStackTrace();  }
 
+    }
+
+    @Override
+    public void pulsarCamara(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            // Si el permiso no se ha pedido pedirlo
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)){
+                // Aceptar el permiso
+            }else{
+                // El usuario ha decidido que no quiere aceptar el permiso
+                Toast.makeText(this, getString(R.string.noPermisoCamara), Toast.LENGTH_SHORT).show();
+            }
+            // Pedir permiso al usuario
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
+        }else { // El permiso ya estaba concedido
+            // Definir donde almacenar las imágenes
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            String fichero = "imagen-"+timeStamp;
+            File directorio = this.getFilesDir();
+            // Crear archivo
+            try {
+                imgFichero = File.createTempFile(fichero, ".jpg", directorio);
+                imagenUri = FileProvider.getUriForFile(this,  getApplicationContext().getPackageName() + ".provider", imgFichero);
+            } catch (Exception e) {
+                System.out.println("Error al crear el fichero");
+            }
+            // Abrir la cámara
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imagenUri);
+            startActivityForResult(intent, CODIGO_FOTO_ARCHIVO);
+        }
+    }
+
+    @Override
+    public void pulsarGaleria(){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, CODIGO_GALERIA);
+    }
+
+    private void subirAFirebase(){
+        if(imagenUri != null) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference();
+            StorageReference spaceReference = storageReference.child(imageName);
+            spaceReference.putFile(imagenUri);
+        }
     }
 }

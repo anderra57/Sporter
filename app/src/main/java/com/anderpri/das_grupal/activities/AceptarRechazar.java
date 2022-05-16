@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +62,8 @@ public class AceptarRechazar extends AppCompatActivity {
         data = getIntent().getExtras().getString("fecha");
         city = getIntent().getExtras().getString("ciudad");
         imgName = getIntent().getExtras().getString("imagen");
+
+        Log.d("prueba", imgName);
 
 
         titulo.setText(actividad);

@@ -53,7 +53,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_nombre_text"
-                    app:layout_constraintVertical_bias="0.031" />
+                    app:layout_constraintVertical_bias="0.02" />
 
                 <EditText
                     android:id="@+id/sugerir_actividad_explicacion_text"
@@ -65,9 +65,10 @@
                     android:inputType="textMultiLine"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.499"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_fecha_text"
-                    app:layout_constraintVertical_bias="0.18" />
+                    app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_aviso_imagen"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <Button
                     android:id="@+id/sugerir_actividad_boton"
@@ -76,9 +77,10 @@
                     android:text="@string/sugerir"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.499"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_explicacion_text"
-                    app:layout_constraintVertical_bias="0.523" />
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <EditText
                     android:id="@+id/sugerir_actividad_ciudad_text"
@@ -91,14 +93,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_numero_text"
-                    app:layout_constraintVertical_bias="0.036" />
+                    app:layout_constraintVertical_bias="0.05" />
 
                 <EditText
                     android:id="@+id/sugerir_actividad_fecha_text"
                     android:layout_width="321dp"
                     android:layout_height="74dp"
-                    android:clickable="true"
                     android:ems="10"
+                    android:clickable="true"
                     android:focusable="false"
                     android:hint="@string/fecha"
                     android:inputType="date"
@@ -106,7 +108,34 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_ciudad_text"
-                    app:layout_constraintVertical_bias="0.059" />
+                    app:layout_constraintVertical_bias="0.065" />
+
+                <Button
+                    android:id="@+id/sugerir_actividad_boton_imagen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/subirImagen"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.496"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_fecha_text"
+                    app:layout_constraintVertical_bias="0.045" />
+
+                <TextView
+                    android:id="@+id/sugerir_actividad_aviso_imagen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/avisoImagen"
+                    android:textSize="15dp"
+                    android:textColor="@color/quantum_googredA200"
+                    android:gravity="center"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_boton_imagen"
+                    app:layout_constraintVertical_bias="0.0" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -123,6 +152,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@android:color/white"
-        app:menu="@menu/drawer_view"
-        app:headerLayout="@layout/nav_header" />
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_view" />
 </androidx.drawerlayout.widget.DrawerLayout>

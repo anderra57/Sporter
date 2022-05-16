@@ -104,4 +104,11 @@
     <string name="settings_change_pass_team">Team name</string>
     <string name="settings_info_devs">App developers</string>
     <string name="settings_info_version">App version</string>
+    <string name="subirImagen">Upload an image</string>
+    <string name="seleccionarImagen">Where do you want to select the image from?</string>
+    <string name="galeria">Gallery</string>
+    <string name="camara">Camera</string>
+    <string name="noPermisoCamara">Camera permission is denied</string>
+    <string name="uploading">The image is uploading</string>
+    <string name="avisoImagen">An image has already been selected</string>
 </resources>

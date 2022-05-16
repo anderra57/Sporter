@@ -58,6 +58,7 @@ public class CrearActividadWorker extends Worker {
                 String cookie = getInputData().getString("cookie");
                 String actividad = getInputData().getString("actividad");
                 String city = getInputData().getString("city");
+                String imageName = getInputData().getString("imageName");
                 String descripcion = getInputData().getString("descripcion");
                 String fecha = getInputData().getString("fecha");
                 String latitude = getInputData().getString("latitude");
@@ -68,6 +69,7 @@ public class CrearActividadWorker extends Worker {
                         .appendQueryParameter("function", funcion)
                         .appendQueryParameter("actividad", actividad)
                         .appendQueryParameter("city", city)
+                        .appendQueryParameter("imageName", imageName)
                         .appendQueryParameter("description", descripcion)
                         .appendQueryParameter("fecha", fecha)
                         .appendQueryParameter("latitude", latitude)

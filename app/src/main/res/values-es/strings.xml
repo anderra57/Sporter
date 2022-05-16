@@ -104,4 +104,11 @@
     <string name="settings_change_pass_team">Nombre del equipo</string>
     <string name="settings_info_devs">Desarrolladores de la aplicación</string>
     <string name="settings_info_version">Versión de la aplicación</string>
+    <string name="subirImagen">Subir una imagen</string>
+    <string name="seleccionarImagen">¿De dónde desea seleccionar la imagen?</string>
+    <string name="galeria">Galeria</string>
+    <string name="camara">Cámara</string>
+    <string name="noPermisoCamara">El permiso de cámara está denegado</string>
+    <string name="uploading">La imagen se está subiendo</string>
+    <string name="avisoImagen">Ya se ha seleccionado una imagen</string>
 </resources>

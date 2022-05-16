@@ -55,24 +55,22 @@
 
             <EditText
                 android:id="@+id/sugerir_actividad_explicacion_text"
-                android:layout_width="356dp"
-                android:layout_height="177dp"
-                android:layout_marginBottom="40dp"
+                android:layout_width="361dp"
+                android:layout_height="152dp"
+                android:layout_marginBottom="72dp"
                 android:ems="10"
                 android:hint="@string/explicacion"
                 android:inputType="textMultiLine"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.49"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_ciudad_text"
-                app:layout_constraintVertical_bias="0.405" />
+                app:layout_constraintHorizontal_bias="0.709"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/sugerir_actividad_boton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/crear"
+                android:text="@string/sugerir"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -112,6 +110,34 @@
                 app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_numero_text"
                 app:layout_constraintVertical_bias="0.237" />
 
+            <Button
+                android:id="@+id/sugerir_actividad_boton_imagen"
+                android:layout_width="224dp"
+                android:layout_height="50dp"
+                android:text="@string/subirImagen"
+                app:layout_constraintBottom_toBottomOf="@+id/sugerir_actividad_boton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_ciudad_text"
+                app:layout_constraintVertical_bias="0.083" />
+
+            <TextView
+                android:id="@+id/sugerir_actividad_aviso_imagen"
+                android:layout_width="325dp"
+                android:layout_height="33dp"
+                android:text="@string/avisoImagen"
+                android:textSize="15dp"
+                android:gravity="center"
+                android:textColor="@color/quantum_googredA200"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.505"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sugerir_actividad_boton_imagen"
+                app:layout_constraintVertical_bias="0.073" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!-- The main content view where fragments are loaded -->
@@ -126,5 +152,5 @@
         android:layout_gravity="start"
         android:background="@android:color/white"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_view_admin" />
+        app:menu="@menu/drawer_view" />
 </androidx.drawerlayout.widget.DrawerLayout>

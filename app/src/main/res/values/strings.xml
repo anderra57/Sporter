@@ -117,6 +117,13 @@
     <string name="ubicacionCorrecta">La ubicación se ha guardado con éxito</string>
     <string name="ubicacionFallida">No se ha podido registrar la ubicación correctamente</string>
     <string name="verMapa">Ver mapa de actividades</string>
+    <string name="subirImagen">Subir una imagen</string>
+    <string name="seleccionarImagen">¿De dónde desea seleccionar la imagen?</string>
+    <string name="galeria">Galeria</string>
+    <string name="camara">Cámara</string>
+    <string name="noPermisoCamara">El permiso de cámara está denegado</string>
+    <string name="uploading">La imagen se está subiendo</string>
+    <string name="avisoImagen">Ya se ha seleccionado una imagen</string>
 
 
 </resources>

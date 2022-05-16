@@ -59,8 +59,8 @@
 
     <TextView
         android:id="@+id/login_create_team_txt_warning"
-        android:layout_width="310dp"
-        android:layout_height="62dp"
+        android:layout_width="311dp"
+        android:layout_height="42dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,11 +71,12 @@
 
     <ImageView
         android:id="@+id/login_create_team_img"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="160dp"
+        android:layout_height="138dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/default_icon_group"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_create_team_txt_warning" />
 

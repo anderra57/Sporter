@@ -10,7 +10,9 @@ import androidx.work.WorkManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -25,8 +27,13 @@ import android.widget.Toast;
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.ListaActividadesInscrito;
 import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class LoginCreateTeam extends AppCompatActivity {
 
@@ -35,9 +42,11 @@ public class LoginCreateTeam extends AppCompatActivity {
     ImageView img;
     EditText nameText,passText;
     TextView warning;
-    int SELECT_PICTURE = 200;
-    String cookie;
+    private static int SELECT_PICTURE = 200;
+    String cookie, imageName;
     SharedPreferences preferences;
+    private File imgFichero;
+    private Uri imagenUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +74,15 @@ public class LoginCreateTeam extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE && null != data.getData()) {
-            try { setPfpImage(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData())); }
-            catch (IOException e) { e.printStackTrace(); }
+        if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE) {
+            imagenUri = data.getData();
+            imageName = new File(imagenUri.getPath()).getName();
+            try {
+                setPfpImage(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -80,18 +95,15 @@ public class LoginCreateTeam extends AppCompatActivity {
     public void openGallery(View view) {
         // create an instance of the
         // intent of the type image
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-
-        // pass the constant to compare it
-        // with the returned requestCode
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, SELECT_PICTURE);
     }
 
     public void clickX(View view) {
         img.setImageResource(R.drawable.default_icon_group);
         btn_x.setVisibility(View.GONE);
+        imageName = "";
+        imagenUri = null;
     }
 
     private Bitmap cropToSquare(Bitmap bitmap){
@@ -119,12 +131,14 @@ public class LoginCreateTeam extends AppCompatActivity {
             warning.setTextColor(Color.RED);
         } else {
             // login al usuario en la aplicación
+            subirAFirebase();
             try {
                 // Preparar los datos para enviar al backend
                 Data logindata = new Data.Builder()
                         .putString("funcion", "register")
                         .putString("teamname", name)
                         .putString("teampass", pass)
+                        .putString("imageName", imageName)
                         .putString("cookie", cookie)
                         .build();
 
@@ -167,6 +181,14 @@ public class LoginCreateTeam extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+    private void subirAFirebase(){
+        if(imagenUri != null) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference();
+            StorageReference spaceReference = storageReference.child(imageName);
+            spaceReference.putFile(imagenUri);
         }
     }
 }

@@ -88,6 +88,7 @@ public class TeamsWorker extends Worker {
                 // Se realizar el registro del usuario en la base de datos
                 String name = getInputData().getString("teamname");
                 String password = getInputData().getString("teampass");
+                String imageName = getInputData().getString("imageName");
                 String cookie = getInputData().getString("cookie");
                 Log.d("debasjd","PHPSESSID=" + cookie);
                 urlConnection.setRequestProperty("Cookie","PHPSESSID=" + cookie);
@@ -96,7 +97,8 @@ public class TeamsWorker extends Worker {
                 Uri.Builder builder = new Uri.Builder()
                         .appendQueryParameter("function", "create")
                         .appendQueryParameter("teamname", name)
-                        .appendQueryParameter("teampass", password);
+                        .appendQueryParameter("teampass", password)
+                        .appendQueryParameter("imageName", imageName);
                 String parametros = builder.build().getEncodedQuery();
 
                 // Se incluyen los parámetros en la petición HTTP
