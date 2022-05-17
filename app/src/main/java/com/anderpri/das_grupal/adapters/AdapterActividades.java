@@ -9,7 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.anderpri.das_grupal.R;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -58,12 +61,7 @@ public class AdapterActividades extends BaseAdapter {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         StorageReference path = storageReference.child(imagenes[i]);
-        path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri.toString()).into(img);
-            }
-        });
+        path.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri.toString()).into(img)).addOnFailureListener(e -> img.setImageResource(R.drawable.default_activity));
 
         return view;
     }
