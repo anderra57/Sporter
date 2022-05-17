@@ -79,26 +79,31 @@ public class LoginMain extends AppCompatActivity {
     }
 
     private void saveCookie(String cookie) {
-        Log.d("cookie_loginmain",cookie);
+        Log.d("cookie_loginmain?",cookie);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("cookie",cookie);
-        editor.commit();
+        editor.apply();
     }
 
     private void manageIdUser(String id_user) {
+        SharedPreferences.Editor editor = preferences.edit();
         if (id_user.equals("administrator")){
+            editor.putString("role","admin");
             Intent intent = new Intent(this, ListaActividadesAdmin.class);
             startActivity(intent);
             finish();
         } else if (id_user.equals("nogroup")){ // user normal SIN grupo
+            editor.putString("role","user");
             Intent intent = new Intent(this, LoginTeamButtons.class);
             startActivity(intent);
             finish();
         } else { // user normal con grupo
+            editor.putString("role","user");
             Intent intent = new Intent(this, ListaActividadesInscrito.class);
             startActivity(intent);
             finish();
         }
+        editor.apply();
     }
 
     // Conseguimos el token de firebase

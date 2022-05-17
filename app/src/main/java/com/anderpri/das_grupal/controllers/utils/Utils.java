@@ -21,7 +21,8 @@ public class Utils {
         Configuration config = context.getResources().getConfiguration();
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
-        config.locale = locale;
+        config.setLocale(locale);
+        config.setLayoutDirection(locale);
         context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
     }
 

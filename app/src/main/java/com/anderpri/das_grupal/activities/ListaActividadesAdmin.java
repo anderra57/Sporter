@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
+import com.anderpri.das_grupal.activities.settings.SettingsActivity;
 import com.anderpri.das_grupal.adapters.AdapterActividades;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
 import com.anderpri.das_grupal.controllers.webservices.CrearActividadWorker;
@@ -230,6 +231,8 @@ public class ListaActividadesAdmin extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.settings:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.logout:
                 logout();
