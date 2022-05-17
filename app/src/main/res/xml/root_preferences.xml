@@ -42,12 +42,12 @@
     <PreferenceCategory app:title="@string/settings_header_info">
 
 
-        <EditTextPreference
+        <Preference
             app:key="settings_version"
             app:title="@string/settings_info_version"
             app:summary="@string/version"
             />
-        <EditTextPreference
+        <Preference
             app:key="settings_devs"
             app:title="@string/settings_info_devs"
             app:summary="@string/app_devs"
