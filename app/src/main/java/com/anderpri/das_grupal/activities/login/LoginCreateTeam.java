@@ -9,9 +9,12 @@ import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -29,7 +32,10 @@ import com.anderpri.das_grupal.activities.ListaActividadesInscrito;
 import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -75,8 +81,6 @@ public class LoginCreateTeam extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE) {
-            imagenUri = data.getData();
-            imageName = new File(imagenUri.getPath()).getName();
             try {
                 setPfpImage(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
             } catch (IOException e) {
@@ -102,8 +106,6 @@ public class LoginCreateTeam extends AppCompatActivity {
     public void clickX(View view) {
         img.setImageResource(R.drawable.default_icon_group);
         btn_x.setVisibility(View.GONE);
-        imageName = "";
-        imagenUri = null;
     }
 
     private Bitmap cropToSquare(Bitmap bitmap){
@@ -122,6 +124,7 @@ public class LoginCreateTeam extends AppCompatActivity {
     public void onRegister(View v) {
         String name = nameText.getText().toString();
         String pass = passText.getText().toString();
+        imageName = nameText.getText().toString()+".png";
 
         // Los campos del login no pueden estar vacios
         if(name.isEmpty()) {
@@ -131,7 +134,6 @@ public class LoginCreateTeam extends AppCompatActivity {
             warning.setTextColor(Color.RED);
         } else {
             // login al usuario en la aplicación
-            subirAFirebase();
             try {
                 // Preparar los datos para enviar al backend
                 Data logindata = new Data.Builder()
@@ -163,6 +165,9 @@ public class LoginCreateTeam extends AppCompatActivity {
                                     //addFirebasetoken(username);
                                     // Avanzar a la siguiente actividad (MainActivity)
 
+                                    imageName = nameText.getText().toString()+".png";
+                                    subirAFirebase();
+
                                     Intent intent = new Intent(this, ListaActividadesInscrito.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
@@ -184,11 +189,25 @@ public class LoginCreateTeam extends AppCompatActivity {
         }
     }
     private void subirAFirebase(){
-        if(imagenUri != null) {
+        byte[] image = getBytes(img);
+        if(image != null) {
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageReference = storage.getReference();
             StorageReference spaceReference = storageReference.child(imageName);
-            spaceReference.putFile(imagenUri);
+            spaceReference.putBytes(image);
+        }
+    }
+    private byte[] getBytes(ImageView imageView) {
+        try {
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] bytesData = stream.toByteArray();
+            stream.close();
+            return bytesData;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
