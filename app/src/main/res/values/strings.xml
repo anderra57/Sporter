@@ -126,6 +126,8 @@
     <string name="avisoImagen">Ya se ha seleccionado una imagen</string>
     <string name="sinEspecificar">Sin especificar</string>
     <string name="localizacion">Localización</string>
+    <string name="settings_change_image_btn_default">Cargar imagen predeterminada</string>
+    <string name="settings_change_image_changed">Imagen actualizada correctamente</string>
 
 
 </resources>

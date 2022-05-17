@@ -113,4 +113,6 @@
     <string name="avisoImagen">An image has already been selected</string>
     <string name="sinEspecificar">Unspecified</string>
     <string name="localizacion">Location</string>
+    <string name="settings_change_image_changed">Image succesfully updated</string>
+    <string name="settings_change_image_btn_default">Load default image</string>
 </resources>
