@@ -116,7 +116,8 @@ public class AceptarRechazar extends AppCompatActivity {
                                 // Usamos las flags porque queremos que la lista de actividades se actualice
                                 Toast.makeText(this, getString(R.string.aceptada), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(this, ListaActividadesAdmin.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Log.d("prueba", "finish");
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             } else { // La sesión es invalida, vuelta al login
                                 Toast.makeText(this, getString(R.string.invalidSession), Toast.LENGTH_SHORT).show();
@@ -163,7 +164,7 @@ public class AceptarRechazar extends AppCompatActivity {
                                 // Usamos las flags porque queremos que la lista de actividades se actualice
                                 Toast.makeText(this, getString(R.string.rechazada), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(this, ListaActividadesAdmin.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             } else { // La sesión es invalida, vuelta al login
                                 Toast.makeText(this, getString(R.string.invalidSession), Toast.LENGTH_SHORT).show();

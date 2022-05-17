@@ -111,4 +111,6 @@
     <string name="noPermisoCamara">Camera permission is denied</string>
     <string name="uploading">The image is uploading</string>
     <string name="avisoImagen">An image has already been selected</string>
+    <string name="sinEspecificar">Unspecified</string>
+    <string name="localizacion">Location</string>
 </resources>

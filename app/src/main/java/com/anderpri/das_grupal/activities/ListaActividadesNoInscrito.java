@@ -170,7 +170,11 @@ public class ListaActividadesNoInscrito extends AppCompatActivity {
                                 JSONArray miArray = new JSONArray(status.getOutputData().getString("datos"));
                                 for(int i = 0; i<miArray.length(); i++){ //asi es, no se hacer un foreach en java
                                     JSONObject miJson = new JSONObject(miArray.get(i).toString());
-                                    Actividad actual= new Actividad(miJson.getString("name"),miJson.getString("description"),miJson.getString("fecha"),miJson.getString("city"),miJson.getString("imageName"),miJson.getString("latitude"),miJson.getString("longitude"));
+                                    String city = miJson.getString("city");
+                                    if(city.equals("null")){
+                                        city = getString(R.string.sinEspecificar);
+                                    }
+                                    Actividad actual= new Actividad(miJson.getString("name"),miJson.getString("description"),miJson.getString("fecha"),city,miJson.getString("imageName"),miJson.getString("latitude"),miJson.getString("longitude"));
                                     listaActividades.add(actual);
                                 }
                                 listarActividades();

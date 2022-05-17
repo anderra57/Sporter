@@ -208,12 +208,16 @@ public class ActividadesMapaAdmin extends AppCompatActivity implements OnMapRead
                                 for(int i = 0; i<miArray.length(); i++){ //asi es, no se hacer un foreach en java
                                     JSONObject miJson = new JSONObject(miArray.get(i).toString());
                                     String name = miJson.getString("name");
-                                    Log.d("prueba", name);
-                                    Double latitude = Double.valueOf(miJson.getString("latitude"));
-                                    Double longitude = Double.valueOf(miJson.getString("longitude"));
-                                    googleMap.addMarker(new MarkerOptions()
-                                            .position(new LatLng(latitude, longitude))
-                                            .title(name));
+                                    String latitud = miJson.getString("latitude");
+                                    String longitud = miJson.getString("longitude");
+
+                                    if(!latitud.equals("null") && !longitud.equals("null")){
+                                        Double latitude = Double.valueOf(latitud);
+                                        Double longitude = Double.valueOf(longitud);
+                                        googleMap.addMarker(new MarkerOptions()
+                                                .position(new LatLng(latitude, longitude))
+                                                .title(name));
+                                    }
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

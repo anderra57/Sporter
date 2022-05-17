@@ -67,8 +67,8 @@ public class VisualizarInfoActividad extends AppCompatActivity {
 
         titulo.setText(actividad);
         descripcion.setText(desc);
-        fecha.setText("Fecha: " + data);
-        ciudad.setText("Ciudad: " + city);
+        fecha.setText(getString(R.string.fecha) + ": " + data);
+        ciudad.setText(getString(R.string.localizacion) + ": " + city);
 
         // Cargar la imagen
         FirebaseStorage storage = FirebaseStorage.getInstance();
