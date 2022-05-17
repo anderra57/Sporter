@@ -67,7 +67,8 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
     Button botonSugerir, botonImagen;
     EditText nombre, ciudad, fecha, explicacion, numeroParticipantes;
     TextView avisoImagen;
-
+    private TextView nombreTextView, equipoTextView;
+    private String nombreString, equipoString;
     private String cookie, ubicacion, latitude, longitude, imageName;
     private SharedPreferences preferences;
 
@@ -98,7 +99,7 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
         avisoImagen = findViewById(R.id.sugerir_actividad_aviso_imagen);
 
         getCookie();
-
+        setUsernameTeamname();
         fecha.setOnClickListener(view -> {
             switch (view.getId()){
                 case R.id.sugerir_actividad_fecha_text:
@@ -374,4 +375,16 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
             spaceReference.putFile(imagenUri);
         }
     }
+
+    private void setUsernameTeamname() {
+        View headerView = nvDrawer.getHeaderView(0);
+        nombreTextView = (TextView) headerView.findViewById(R.id.usuario);
+        equipoTextView = (TextView) headerView.findViewById(R.id.equipo);
+
+        nombreString = preferences.getString("username", "");
+        nombreTextView.setText("@"+nombreString);
+        equipoString = preferences.getString("teamname", "");
+        equipoTextView.setText("#"+equipoString);
+    }
+
 }

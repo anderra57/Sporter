@@ -15,10 +15,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
@@ -26,6 +28,7 @@ import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.activities.settings.SettingsActivity;
 import com.anderpri.das_grupal.adapters.AdapterActividades;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
+import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.google.android.material.navigation.NavigationView;
 
@@ -43,11 +46,12 @@ public class ListaActividadesInscrito extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private String cookie;
     private SharedPreferences preferences;
-
+    private TextView nombreTextView, equipoTextView;
     private AdapterActividades adapterActividades;
     private ArrayList<Actividad> listaActividades;
     private ListView list_actividades;
-
+    private String teamname = "Equipo"; //lo inicializo con valor por que nada me asegura que se ha recogido del server ya
+    private String username;
     public ListaActividadesInscrito() {
     }
 
@@ -73,6 +77,11 @@ public class ListaActividadesInscrito extends AppCompatActivity {
         listaActividades = new ArrayList<Actividad>();
         list_actividades = (ListView) findViewById(R.id.lista_actividades_recycler_view);
 
+
+        getCookie();
+        setUsernameTeamname();
+
+
         getCookie();
         solicitud();
 
@@ -84,6 +93,8 @@ public class ListaActividadesInscrito extends AppCompatActivity {
         });
 
     }
+
+
 
     private void visualizarActividad(Actividad actividad) {
         Intent intent = new Intent(this, VisualizarInfoActividad.class);
@@ -267,5 +278,63 @@ public class ListaActividadesInscrito extends AppCompatActivity {
             });
             WorkManager.getInstance(this).enqueue(req);
         } catch (Exception e) {  e.printStackTrace();  }
+    }
+
+
+    private void setUsernameTeamname() {
+        View headerView = nvDrawer.getHeaderView(0);
+        nombreTextView = (TextView) headerView.findViewById(R.id.usuario);
+        equipoTextView = (TextView) headerView.findViewById(R.id.equipo);
+
+        username = preferences.getString("username", "");
+        nombreTextView.setText("@"+username);
+        getAndSetTeamName();
+    }
+
+    private void getAndSetTeamName() {
+        try {
+            // Preparar los datos para enviar al backend
+            Data logindata = new Data.Builder()
+                    .putString("funcion", "getteamname")
+                    .putString("username", username)
+                    .putString("cookie", cookie)
+                    .build();
+
+            // Tiene que existir conexión a internet
+            Constraints restricciones = new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build();
+
+            // Preparar la petición
+            OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(TeamsWorker.class)
+                    .setConstraints(restricciones)
+                    .setInputData(logindata)
+                    .build();
+
+            // Lanzar la petición
+            WorkManager.getInstance(this).getWorkInfoByIdLiveData(req.getId())
+                    .observe(this, status -> {
+                        if (status != null && status.getState().isFinished()) {
+                            String name = status.getOutputData().getString("datos").trim();
+                            Log.d("debug_name",name);
+                            if(!name.isEmpty()) {
+                                PreferenceManager.getDefaultSharedPreferences(this);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("teamname", name);
+                                editor.apply();
+                                teamname = name;
+                                equipoTextView.setText("#"+teamname); //no me gusta tener que ponerlo aqui pero hasta que no se recupera el valor no se puede poner
+                                Log.d("debug_name","got it");
+                                Log.d("debug_name",name);
+                            } else {
+                                Log.d("debug_name","not got");
+                            }
+                        }
+                    });
+
+            WorkManager.getInstance(this).enqueue(req);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

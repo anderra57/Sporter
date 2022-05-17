@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
@@ -43,7 +44,8 @@ public class ListaActividadesNoInscrito extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private String cookie;
     private SharedPreferences preferences;
-
+    private TextView nombreTextView, equipoTextView;
+    private String nombreString, equipoString;
     private AdapterActividades adapterActividades;
     private ArrayList<Actividad> listaActividades;
     private ListView list_actividades;
@@ -77,7 +79,7 @@ public class ListaActividadesNoInscrito extends AppCompatActivity {
 
         getCookie();
         getActivities();
-
+        setUsernameTeamname();
         list_actividades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -268,5 +270,16 @@ public class ListaActividadesNoInscrito extends AppCompatActivity {
             WorkManager.getInstance(this).enqueue(req);
         } catch (Exception e) {  e.printStackTrace();  }
 
+    }
+
+    private void setUsernameTeamname() {
+        View headerView = nvDrawer.getHeaderView(0);
+        nombreTextView = (TextView) headerView.findViewById(R.id.usuario);
+        equipoTextView = (TextView) headerView.findViewById(R.id.equipo);
+
+        nombreString = preferences.getString("username", "");
+        nombreTextView.setText("@"+nombreString);
+        equipoString = preferences.getString("teamname", "");
+        equipoTextView.setText("#"+equipoString);
     }
 }

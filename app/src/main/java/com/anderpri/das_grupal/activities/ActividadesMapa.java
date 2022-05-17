@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
@@ -56,6 +57,8 @@ public class ActividadesMapa extends AppCompatActivity implements OnMapReadyCall
     private ActionBarDrawerToggle drawerToggle;
     private String cookie;
     private SharedPreferences preferences;
+    private TextView nombreTextView, equipoTextView;
+    private String nombreString, equipoString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,8 @@ public class ActividadesMapa extends AppCompatActivity implements OnMapReadyCall
         mapa.getMapAsync(this);
 
         getCookie();
+
+        setUsernameTeamname();
     }
 
     private void getCookie() {
@@ -225,5 +230,17 @@ public class ActividadesMapa extends AppCompatActivity implements OnMapReadyCall
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void setUsernameTeamname() {
+        View headerView = nvDrawer.getHeaderView(0);
+        nombreTextView = (TextView) headerView.findViewById(R.id.usuario);
+        equipoTextView = (TextView) headerView.findViewById(R.id.equipo);
+
+        nombreString = preferences.getString("username", "");
+        nombreTextView.setText("@"+nombreString);
+        equipoString = preferences.getString("teamname", "");
+        equipoTextView.setText("#"+equipoString);
     }
 }
