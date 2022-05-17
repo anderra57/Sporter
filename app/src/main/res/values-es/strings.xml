@@ -111,4 +111,5 @@
     <string name="noPermisoCamara">El permiso de cámara está denegado</string>
     <string name="uploading">La imagen se está subiendo</string>
     <string name="avisoImagen">Ya se ha seleccionado una imagen</string>
+    <string name="sinEspecificar">Sin especificar</string>
 </resources>
