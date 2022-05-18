@@ -1,5 +1,6 @@
 package com.anderpri.das_grupal.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -146,6 +147,7 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
                 imagenDialog.show(getSupportFragmentManager(), "seleccionarImagen");
             }
         });
+
     }
 
     @Override
@@ -164,7 +166,6 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
             imageName = new File(imagenUri.getPath()).getName();
             avisoImagen.setVisibility(View.VISIBLE);
         }else if(requestCode == CODIGO_FOTO_ARCHIVO && resultCode == RESULT_OK) {
-            String path = imgFichero.getAbsolutePath();
             imageName = imgFichero.getName();
             avisoImagen.setVisibility(View.VISIBLE);
         }
@@ -396,4 +397,29 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
         equipoTextView.setText("#"+equipoString);
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(ubicacion != null && longitude != null && latitude != null){
+            outState.putString("ubicacion", ubicacion);
+            outState.putString("longitude", longitude);
+            outState.putString("latitude", latitude);
+        }if(imageName != null && imagenUri != null){
+            outState.putString("imageName", imageName);
+            outState.putParcelable("imageUri", imagenUri);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ubicacion = savedInstanceState.getString("ubicacion");
+        longitude = savedInstanceState.getString("longitude");
+        latitude = savedInstanceState.getString("latitude");
+        imageName = savedInstanceState.getString("imageName");
+        imagenUri = savedInstanceState.getParcelable("imageUri");
+        if(imageName != null && imagenUri != null) {
+            avisoImagen.setVisibility(View.VISIBLE);
+        }
+    }
 }

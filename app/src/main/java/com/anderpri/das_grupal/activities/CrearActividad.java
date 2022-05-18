@@ -381,4 +381,30 @@ public class CrearActividad extends AppCompatActivity implements ImagenDialog.Li
             spaceReference.putFile(imagenUri);
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(ubicacion != null && longitude != null && latitude != null){
+            outState.putString("ubicacion", ubicacion);
+            outState.putString("longitude", longitude);
+            outState.putString("latitude", latitude);
+        }if(imageName != null && imagenUri != null){
+            outState.putString("imageName", imageName);
+            outState.putParcelable("imageUri", imagenUri);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ubicacion = savedInstanceState.getString("ubicacion");
+        longitude = savedInstanceState.getString("longitude");
+        latitude = savedInstanceState.getString("latitude");
+        imageName = savedInstanceState.getString("imageName");
+        imagenUri = savedInstanceState.getParcelable("imageUri");
+        if(imageName != null && imagenUri != null) {
+            avisoImagen.setVisibility(View.VISIBLE);
+        }
+    }
 }
