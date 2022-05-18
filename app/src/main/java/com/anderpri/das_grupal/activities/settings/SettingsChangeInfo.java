@@ -27,12 +27,13 @@ public class SettingsChangeInfo extends AppCompatActivity {
 
     EditText pass_team_old, pass_team_new, pass_user_old, pass_user_new;
     String token,username,teamname,cookie;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
 

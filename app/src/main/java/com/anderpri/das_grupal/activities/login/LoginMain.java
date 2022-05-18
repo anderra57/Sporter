@@ -51,7 +51,7 @@ public class LoginMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
 
@@ -83,6 +83,7 @@ public class LoginMain extends AppCompatActivity {
     }
 
     private void saveCookie(String cookie) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Log.d("cookie_loginmain?",cookie);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("cookie",cookie);
@@ -131,7 +132,7 @@ public class LoginMain extends AppCompatActivity {
     }
 
     private void addTokenToSP(String token) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("token", token);
         editor.apply();
@@ -206,7 +207,7 @@ public class LoginMain extends AppCompatActivity {
     }
 
     private void addUserToSP(String username) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("username", username);
         editor.apply();

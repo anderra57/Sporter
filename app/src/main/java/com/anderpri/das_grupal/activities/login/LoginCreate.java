@@ -38,12 +38,13 @@ public class LoginCreate extends AppCompatActivity {
     Button botonRegistro;
     static boolean existeUsuario;
     static String token;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
 

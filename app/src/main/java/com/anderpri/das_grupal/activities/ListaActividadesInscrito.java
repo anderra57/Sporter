@@ -61,7 +61,7 @@ public class ListaActividadesInscrito extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
 
@@ -266,7 +266,7 @@ public class ListaActividadesInscrito extends AppCompatActivity {
 
     private void logout() {
         // borrar de SP
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         String cookie = preferences.getString("cookie","");
         editor.remove("cookie");

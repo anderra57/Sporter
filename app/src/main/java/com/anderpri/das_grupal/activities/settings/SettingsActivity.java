@@ -15,11 +15,14 @@ import com.anderpri.das_grupal.controllers.utils.Utils;
 
 public class SettingsActivity extends AppCompatActivity {
 
+
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
 
@@ -39,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String rol = preferences.getString("role", "");
         if(rol.equals("user")){
             Intent intent = new Intent(this, ListaActividadesInscrito.class);

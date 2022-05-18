@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.anderpri.das_grupal.R;
@@ -19,11 +20,12 @@ import okhttp3.internal.Util;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     String rootKeyGlobal;
+    SharedPreferences preferences;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getActivity());
 
@@ -39,7 +41,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         findPreference("settings_devs").setShouldDisableView(false);
 
         String lang = preferences.getString("lang","es");
-        findPreference("settings_lang").setDefaultValue(lang);
+        ListPreference listPreference = findPreference("settings_lang");
+        if(!lang.equals("en")) listPreference.setValue("es");
+        else listPreference.setValue("en");
         findPreference("settings_lang").setOnPreferenceChangeListener((preference, newValue) -> {
             Log.d("changed",preference.getTitle().toString());
             Log.d("changed",newValue.toString());
@@ -58,7 +62,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void setLocaleToSP(String lang) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("lang", lang);
         editor.apply();
