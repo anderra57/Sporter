@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/drawable-anydpi/ic_sugerir.xml" value="0.1" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_crear_actividad.xml" value="0.152" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_lista_actividades_no_inscrito.xml" value="0.15520282186948853" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_maps.xml" value="0.2019400352733686" />

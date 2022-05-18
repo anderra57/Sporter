@@ -68,9 +68,6 @@ public class AceptarRechazar extends AppCompatActivity {
         city = getIntent().getExtras().getString("ciudad");
         imgName = getIntent().getExtras().getString("imagen");
 
-        Log.d("prueba", imgName);
-
-
         titulo.setText(actividad);
         descripcion.setText(desc);
         fecha.setText("Fecha: " + data);
@@ -86,6 +83,9 @@ public class AceptarRechazar extends AppCompatActivity {
                 Picasso.get().load(uri.toString()).into(imagen);
             }
         });
+
+        path.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri.toString()).into(imagen)).addOnFailureListener(e -> imagen.setImageResource(R.drawable.default_activity));
+
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         cookie = preferences.getString("cookie","");
