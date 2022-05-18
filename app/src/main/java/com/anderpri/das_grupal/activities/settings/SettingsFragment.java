@@ -61,9 +61,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void reloadActivity() {
-        setPreferenceScreen(null);
-        //addPreferencesFromResource(R.xml.root_preferences);
-        setPreferencesFromResource(R.xml.root_preferences, rootKeyGlobal);
+
+        Intent intent = new Intent(getContext(), SettingsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+
     }
 
 /*
