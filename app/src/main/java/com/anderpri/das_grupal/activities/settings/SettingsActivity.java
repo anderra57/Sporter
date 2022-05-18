@@ -3,20 +3,26 @@ package com.anderpri.das_grupal.activities.settings;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.ListaActividadesAdmin;
 import com.anderpri.das_grupal.activities.ListaActividadesInscrito;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         setContentView(R.layout.activity_settings);
         if (savedInstanceState == null) {
             getSupportFragmentManager()

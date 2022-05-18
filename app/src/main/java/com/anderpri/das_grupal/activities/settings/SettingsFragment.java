@@ -22,9 +22,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getActivity());
+
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
         rootKeyGlobal = rootKey;
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String role = preferences.getString("role","");
         if (!role.equals("user")) findPreference("settings_change_info").setEnabled(false);

@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.GoogleMap;
@@ -50,6 +51,11 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             ubicacion = extras.getString("ubicacion");

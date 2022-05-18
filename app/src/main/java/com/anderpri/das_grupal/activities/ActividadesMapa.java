@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.adapters.AdapterActividades;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.CrearActividadWorker;
@@ -63,6 +64,11 @@ public class ActividadesMapa extends AppCompatActivity implements OnMapReadyCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         setContentView(R.layout.activity_actividades_mapa);
 
         // Set a Toolbar to replace the ActionBar.

@@ -12,12 +12,14 @@ import androidx.work.WorkManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.adapters.AdapterActividades;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
 import com.google.android.material.navigation.NavigationView;
@@ -37,11 +39,17 @@ public class ListaEquiposInscritos extends AppCompatActivity {
     private AdapterActividades adapterActividades;
     private ArrayList<Equipo> listaEquipos;
     private ListView list_equipos;
+    private SharedPreferences preferences;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         setContentView(R.layout.activity_lista_equipos_inscritos);
 
         // Inicalizar la lista de actividades

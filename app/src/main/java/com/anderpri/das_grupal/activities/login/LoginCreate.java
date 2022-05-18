@@ -13,10 +13,12 @@ import androidx.work.WorkerParameters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
 public class LoginCreate extends AppCompatActivity {
@@ -39,6 +42,11 @@ public class LoginCreate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         //AuxiliarColores.elegirColor(this);
         setContentView(R.layout.activity_login_create);
         getItems();

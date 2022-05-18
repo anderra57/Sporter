@@ -1,5 +1,6 @@
 package com.anderpri.das_grupal.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,6 +28,7 @@ import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.activities.settings.SettingsActivity;
 import com.anderpri.das_grupal.adapters.AdapterActividades;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
@@ -58,6 +60,11 @@ public class ListaActividadesInscrito extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         setContentView(R.layout.activity_lista_actividades);
 
         // Set a Toolbar to replace the ActionBar.

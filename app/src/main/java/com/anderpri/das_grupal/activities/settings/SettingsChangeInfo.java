@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.ListaActividadesInscrito;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.TeamsWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 
@@ -30,13 +31,17 @@ public class SettingsChangeInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         setContentView(R.layout.activity_settings_change_info);
         pass_user_new = findViewById(R.id.settings_change_pass_user_txt_new);
         pass_user_old = findViewById(R.id.settings_change_pass_user_txt_old);
         pass_team_new = findViewById(R.id.settings_change_pass_team_txt_new);
         pass_team_old = findViewById(R.id.settings_change_pass_team_txt_old);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         token = preferences.getString("token",null);
         username = preferences.getString("username",null);
         cookie = preferences.getString("cookie",null);

@@ -26,6 +26,7 @@ import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.ListaActividadesInscrito;
 import com.anderpri.das_grupal.activities.ListaActividadesAdmin;
 import com.anderpri.das_grupal.controllers.LoginController;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,11 +50,14 @@ public class LoginMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         //AuxiliarColores.elegirColor(this);
         setContentView(R.layout.activity_login_main);
         //defineReceiver();
-
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         user = findViewById(R.id.login_main_txt_user);
         pass = findViewById(R.id.login_main_txt_pass);

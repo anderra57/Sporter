@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.activities.settings.SettingsActivity;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.SugerenciasWorker;
 import com.anderpri.das_grupal.controllers.webservices.UsersWorker;
 import com.anderpri.das_grupal.dialogs.ImagenDialog;
@@ -76,6 +77,11 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         setContentView(R.layout.activity_sugerir_actividad);
 
         // Set a Toolbar to replace the ActionBar.
@@ -307,7 +313,7 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
     }
     private void logout() {
         // borrar de SP
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         String cookie = preferences.getString("cookie","");
         editor.remove("cookie");

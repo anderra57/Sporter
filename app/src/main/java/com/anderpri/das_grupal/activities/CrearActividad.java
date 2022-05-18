@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
 import com.anderpri.das_grupal.activities.settings.SettingsActivity;
+import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesWorker;
 import com.anderpri.das_grupal.controllers.webservices.CrearActividadWorker;
 import com.anderpri.das_grupal.dialogs.ImagenDialog;
@@ -76,6 +77,11 @@ public class CrearActividad extends AppCompatActivity implements ImagenDialog.Li
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = preferences.getString("lang","no_lang");
+        Utils.getInstance().setLocale(str,getBaseContext());
+
         setContentView(R.layout.activity_crear_actividad);
 
         // Set a Toolbar to replace the ActionBar.
