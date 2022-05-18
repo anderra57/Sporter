@@ -74,12 +74,7 @@ public class VisualizarInfoActividad extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         StorageReference path = storageReference.child(imgName);
-        path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri.toString()).into(imagen);
-            }
-        });
+        path.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri.toString()).into(imagen)).addOnFailureListener(e -> imagen.setImageResource(R.drawable.default_activity));
 
         // Depende de qué actividad venimos, se hará una cosa u otra
         funcion = getIntent().getExtras().getString("funcion");
