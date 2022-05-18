@@ -1,6 +1,6 @@
 <resources>
     <!-- Global strings -->
-    <string name="app_name">5porter</string>
+    <string name="app_name">Sporter</string>
     <string name="no_internet">No hay conexión a internet</string>
     <string name="logout">Cerrar sesión</string>
     <string name="app_devs" translatable="false">Adei Arias\nÁlvaro Hernández\nAnder Prieto\nAnder Sanjuan</string>
