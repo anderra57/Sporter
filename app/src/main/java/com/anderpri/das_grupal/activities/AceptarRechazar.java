@@ -86,7 +86,6 @@ public class AceptarRechazar extends AppCompatActivity {
 
         path.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri.toString()).into(imagen)).addOnFailureListener(e -> imagen.setImageResource(R.drawable.default_activity));
 
-
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         cookie = preferences.getString("cookie","");
 
