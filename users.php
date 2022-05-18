@@ -104,7 +104,7 @@
 			$conn->query($sql);
 			http_response_code(200);
 
-		}  
+		} 
 		elseif ($function === "logout") {
 			if (isset($_SESSION['id'])) {
 				$_SESSION['id'] = '';

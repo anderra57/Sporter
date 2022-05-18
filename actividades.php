@@ -83,6 +83,7 @@
                     $actividad = $_POST['actividad'];
                     $descripcion = $_POST['description'];
                     $city = $_POST['city'];
+		    $imageName = $_POST['imageName'];
                     $fecha = $_POST['fecha'];
                     $latitude = $_POST['latitude'];
                     $longitude = $_POST['longitude'];
@@ -96,7 +97,7 @@
                         // Conseguir el identificador del administrador
                         $admin_id = $_SESSION['id'];
                         // Añadir a actividad nuevo registro
-                        $sql = "INSERT into actividad(name, description, active, fecha, city, latitude, longitude) values('$actividad', '$descripcion', 1, '$fecha', '$city', '$latitude', '$longitude')";
+                        $sql = "INSERT into actividad(name, description, active, fecha, city, imageName, latitude, longitude) values('$actividad', '$descripcion', 1, '$fecha', '$city', '$imageName', '$latitude', '$longitude')";
                         $result = $conn->query($sql);
                         // Conseguir el identificador de la actividad creada
                         $id_act = buscar_id_actividad($actividad);

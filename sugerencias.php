@@ -83,6 +83,7 @@
                 $actividad = $_POST['actividad'];
                 $descripcion = $_POST['description'];
                 $city = $_POST['city'];
+		$imageName = $_POST['imageName'];
                 $fecha = $_POST['fecha'];
 		$latitude = $_POST['latitude'];
 		$longitude = $_POST['longitude'];
@@ -94,7 +95,7 @@
                     http_response_code(400);
                 } else {
                     // Primeramente añadimos una nueva actividad que no estará activa
-                    $sql = "INSERT into actividad(name, description, active, fecha, city, latitude, longitude) values('$actividad', '$descripcion', 0, '$fecha', '$city', '$latitude', '$longitude')";
+                    $sql = "INSERT into actividad(name, description, active, fecha, city, imageName, latitude, longitude) values('$actividad', '$descripcion', 0, '$fecha', '$city', '$imageName', '$latitude', '$longitude')";
                     $result = $conn->query($sql);
                     // Ahora añadimos una nueva fila a la tabla actividad_grupo (necesitamos saber el identificador de la actividad y del grupo al que pertenece el usuario)
                     

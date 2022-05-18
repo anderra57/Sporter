@@ -62,6 +62,7 @@
 			}elseif($function === "create"){
 				$teamname = $_POST['teamname'];
 				$teampass = $_POST['teampass'];
+				$imageName = $_POST['imageName'];
 
 				// Comprobar que no hay equipos con el mismo nombre
 				$sql_comprobar_nombre_equipo = "SELECT id FROM teams WHERE name = '$teamname'";
@@ -75,7 +76,7 @@
 					}
 				}else{
 					$secure_password = password_hash($teampass, PASSWORD_DEFAULT);
-					$sql_create_team = "INSERT INTO teams (name, password) VALUES ('$teamname', '$secure_password')";
+					$sql_create_team = "INSERT INTO teams (name, password, imageName) VALUES ('$teamname', '$secure_password', '$imageName')";
 					$res_create_team = $conn->query($sql_create_team);
 					if($res_create_team){
 						// Insertar a la tabla common el id del usuario y del equipo recien creado
@@ -91,6 +92,17 @@
 						http_response_code(500);
 					}
 					
+				}
+			}elseif($function === "getteamname"){
+				$username = $_POST['username'];
+				$sql_get_teamname = "SELECT name FROM teams WHERE id=(SELECT id_team FROM common WHERE id=(SELECT id FROM users WHERE username='$username' limit 1) limit 1)";
+				$res_get_teamname = $conn->query($sql_get_teamname);
+				if($res_get_teamname){
+					$row = mysqli_fetch_assoc($res_get_teamname); 
+					echo $row['name'];
+					http_response_code(200);
+				}else{
+					http_response_code(401);
 				}
 			}elseif($function === "updatepass"){
 				$teamname = $_POST['teamname'];
