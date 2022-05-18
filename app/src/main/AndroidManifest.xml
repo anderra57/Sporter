@@ -131,7 +131,8 @@
             android:value="canal por defecto" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA1H1LQv2585yplooenK4xY1eb_iNnowyc" /> <!-- FileProvider para almacenar las imágenes sacadas desde la aplicación -->
+            android:value="AIzaSyA1H1LQv2585yplooenK4xY1eb_iNnowyc" />
+        <!-- FileProvider para almacenar las imágenes sacadas desde la aplicación -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.anderpri.das_grupal.provider"

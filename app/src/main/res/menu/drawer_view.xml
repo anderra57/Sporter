@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_first_fragment"
-            android:icon="@drawable/ic_launcher_background"
+            android:icon="@drawable/ic_inscrito"
             android:title="@string/actividadesInscrito" />
         <item
             android:id="@+id/nav_second_fragment"
-            android:icon="@drawable/ic_launcher_background"
+            android:icon="@drawable/ic_no_inscrito"
             android:title="@string/actividadesNoInscrito" />
         <item
             android:id="@+id/nav_third_fragment"
-            android:icon="@drawable/ic_launcher_background"
+            android:icon="@drawable/ic_sugerir"
             android:title="@string/sugerirActividad" />
         <item
             android:id="@+id/nav_fourth_fragment"
-            android:icon="@drawable/ic_launcher_background"
+            android:icon="@drawable/ic_location"
             android:title="@string/verMapa" />
     </group>
     <group
@@ -24,11 +24,11 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/settings"
-            android:icon="@drawable/ic_launcher_background"
+            android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_launcher_background"
+            android:icon="@drawable/ic_sesion"
             android:title="@string/logOut" />
     </group>
 
