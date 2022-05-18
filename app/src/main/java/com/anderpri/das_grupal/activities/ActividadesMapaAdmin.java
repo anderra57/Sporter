@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.activities.login.LoginMain;
+import com.anderpri.das_grupal.activities.settings.SettingsActivity;
 import com.anderpri.das_grupal.adapters.AdapterActividades;
 import com.anderpri.das_grupal.controllers.utils.Utils;
 import com.anderpri.das_grupal.controllers.webservices.ActivitiesAdminWorker;
@@ -139,6 +140,8 @@ public class ActividadesMapaAdmin extends AppCompatActivity implements OnMapRead
                 mDrawer.closeDrawer(GravityCompat.START);
                 break;
             case R.id.settings:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.logout:
                 logout();
