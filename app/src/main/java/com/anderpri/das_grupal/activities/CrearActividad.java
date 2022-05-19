@@ -60,7 +60,7 @@ public class CrearActividad extends AppCompatActivity implements ImagenDialog.Li
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-
+    private TextView nombreTextView, equipoTextView;
     private File imgFichero;
     private Uri imagenUri;
     private static int CODIGO_GALERIA = 1;
@@ -109,6 +109,8 @@ public class CrearActividad extends AppCompatActivity implements ImagenDialog.Li
 
 
         getCookie();
+        setUsernameTeamname();
+
 
         fecha.setOnClickListener(view -> {
             switch (view.getId()){
@@ -408,5 +410,13 @@ public class CrearActividad extends AppCompatActivity implements ImagenDialog.Li
         if(imageName != null && imagenUri != null) {
             avisoImagen.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void setUsernameTeamname() {
+        View headerView = nvDrawer.getHeaderView(0);
+        nombreTextView = (TextView) headerView.findViewById(R.id.usuario);
+        equipoTextView = (TextView) headerView.findViewById(R.id.equipo);
+        nombreTextView.setText("Admin");
+        equipoTextView.setText("");
     }
 }

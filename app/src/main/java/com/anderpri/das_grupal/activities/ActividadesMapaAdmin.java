@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
@@ -58,6 +59,8 @@ public class ActividadesMapaAdmin extends AppCompatActivity implements OnMapRead
     private ActionBarDrawerToggle drawerToggle;
     private String cookie;
     private SharedPreferences preferences;
+    private TextView nombreTextView, equipoTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,8 @@ public class ActividadesMapaAdmin extends AppCompatActivity implements OnMapRead
         mapa.getMapAsync(this);
 
         getCookie();
+        setUsernameTeamname();
+
     }
 
     private void getCookie() {
@@ -240,5 +245,13 @@ public class ActividadesMapaAdmin extends AppCompatActivity implements OnMapRead
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setUsernameTeamname() {
+        View headerView = nvDrawer.getHeaderView(0);
+        nombreTextView = (TextView) headerView.findViewById(R.id.usuario);
+        equipoTextView = (TextView) headerView.findViewById(R.id.equipo);
+        nombreTextView.setText("Admin");
+        equipoTextView.setText("");
     }
 }

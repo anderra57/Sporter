@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anderpri.das_grupal.R;
@@ -51,7 +52,7 @@ public class AceptarRechazarActividad extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private String cookie;
     private SharedPreferences preferences;
-
+    private TextView nombreTextView, equipoTextView;
     private AdapterActividades adapterActividades;
     private ArrayList<Actividad> listaActividades;
     private ListView list_actividades;
@@ -90,6 +91,7 @@ public class AceptarRechazarActividad extends AppCompatActivity {
 
         getCookie();
         getActivities();
+        setUsernameTeamname();
 
         list_actividades.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -361,4 +363,12 @@ public class AceptarRechazarActividad extends AppCompatActivity {
 
         WorkManager.getInstance(this).enqueue(req);
     }*/
+
+    private void setUsernameTeamname() {
+        View headerView = nvDrawer.getHeaderView(0);
+        nombreTextView = (TextView) headerView.findViewById(R.id.usuario);
+        equipoTextView = (TextView) headerView.findViewById(R.id.equipo);
+        nombreTextView.setText("Admin");
+        equipoTextView.setText("");
+    }
 }
