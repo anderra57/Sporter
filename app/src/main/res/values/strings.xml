@@ -11,7 +11,7 @@
     <string name="login_name">Usuario</string>
     <string name="login_pass">Contraseña</string>
     <string name="login_log_in">Iniciar sesión</string>
-    <string name="login_register_here">¿No tienes cuenta? Registrate aquí</string>
+    <string name="login_register_here">¿No tienes cuenta? Regístrate aquí</string>
     <string name="login_wrong_user_pass">No existe ningún usuario con ese nombre o la contraseña es incorrecta</string>
     <!-- Create -->
     <string name="login_register">Regístrate</string>
@@ -100,8 +100,8 @@
     <string name="noEquipos">No hay equipos inscritos a esta actividad</string>
     <string name="aceptar">Aceptar</string>
     <string name="rechazar">Rechazar</string>
-    <string name="aceptada">Solicitud aceptada con exito</string>
-    <string name="rechazada">Solicitud rechazada con exito</string>
+    <string name="aceptada">Solicitud aceptada con éxito</string>
+    <string name="rechazada">Solicitud rechazada con éxito</string>
     <string name="borrar_titulo">Actividad borrada</string>
     <string name="borrar_contenido">La siguiente actividad ha sido borrada: </string>
     <string name="crear_titulo">Actividad creada</string>
