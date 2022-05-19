@@ -291,7 +291,8 @@ public class ListaActividadesAdmin extends AppCompatActivity {
         View headerView = nvDrawer.getHeaderView(0);
         nombreTextView = (TextView) headerView.findViewById(R.id.usuario);
         equipoTextView = (TextView) headerView.findViewById(R.id.equipo);
-        nombreTextView.setText("Admin");
-        equipoTextView.setText("");
+        String nombreString = preferences.getString("username", "");
+        nombreTextView.setText("@"+nombreString);
+        equipoTextView.setText("Admin");
     }
 }
