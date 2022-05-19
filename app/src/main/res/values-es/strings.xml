@@ -85,7 +85,7 @@
     <string name="ubicacionFallida">No se ha podido registrar la ubicación correctamente</string>
     <string name="verMapa">Ver mapa de actividades</string>
     <string name="settings_change_image_title">Cambiar imagen de perfil</string>
-    <string name="settings_change_image_summary">Cambia tu imagen de perfil</string>
+    <string name="settings_change_image_summary">Cambia la imagen de perfil de tu grupo</string>
     <string name="settings_change_info_title">Cambiar contraseñas</string>
     <string name="settings_change_info_summary">Cambia la contraseña de tu cuenta y de tu equipo</string>
     <string name="settings_header_personal">Ajustes del usuario</string>
@@ -106,7 +106,7 @@
     <string name="settings_info_version">Versión de la aplicación</string>
     <string name="subirImagen">Subir una imagen</string>
     <string name="seleccionarImagen">¿De dónde desea seleccionar la imagen?</string>
-    <string name="galeria">Galeria</string>
+    <string name="galeria">Galería</string>
     <string name="camara">Cámara</string>
     <string name="noPermisoCamara">El permiso de cámara está denegado</string>
     <string name="uploading">La imagen se está subiendo</string>
@@ -115,4 +115,5 @@
     <string name="localizacion">Localización</string>
     <string name="settings_change_image_btn_default">Cargar imagen predeterminada</string>
     <string name="settings_change_image_changed">Imagen actualizada correctamente</string>
+    <string name="admin">Administrador</string>
 </resources>

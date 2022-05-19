@@ -45,7 +45,6 @@
     <string name="acerptarRechazarActividad">Accept/reject activities</string>
     <string name="aceptarActividad">Do you want to accept this activity?</string>
     <string name="si">Yes</string>
-    <string name="no">No</string>
     <string name="activiadadAceptadaExito">Activity accepted successfully</string>
     <string name="actividadRechazadaExito">Activity successfully rejected</string>
     <string name="noActividades">There is no activity</string>
@@ -85,14 +84,14 @@
     <string name="ubicacionFallida">Failed to register location successfully</string>
     <string name="ubicacionCorrecta">The location has been saved successfully</string>
     <string name="settings_change_image_title">Change profile image</string>
-    <string name="settings_change_image_summary">Change your profile image</string>
+    <string name="settings_change_image_summary">Change your team\'s profile image</string>
     <string name="settings_change_info_title">Change personal information</string>
     <string name="settings_change_info_summary">Change the personal information linked to your account</string>
     <string name="settings_header_personal">User settings</string>
     <string name="settings_header_app">App settings</string>
     <string name="settings_dark_mode">Set dark mode</string>
-    <string name="settings_dark_mode_off">Dark mode OFF</string>
-    <string name="settings_dark_mode_on">Dark mode ON</string>
+    <string name="settings_dark_mode_off">Dark mode off</string>
+    <string name="settings_dark_mode_on">Dark mode on</string>
     <string name="settings_change_image_btn">Change image</string>
     <string name="settings_header_info">App information</string>
     <string name="settings_change_pass_user_btn">Change user password</string>
@@ -115,4 +114,6 @@
     <string name="localizacion">Location</string>
     <string name="settings_change_image_changed">Image succesfully updated</string>
     <string name="settings_change_image_btn_default">Load default image</string>
+    <string name="no">No</string>
+    <string name="admin">Administrator</string>
 </resources>

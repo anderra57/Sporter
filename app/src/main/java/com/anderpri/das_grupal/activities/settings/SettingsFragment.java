@@ -28,7 +28,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String str = preferences.getString("lang","no_lang");
+        String str = preferences.getString("lang","es");
         Utils.getInstance().setLocale(str,getActivity());
         boolean dark = preferences.getBoolean("dark",false);
         Utils.getInstance().setTheme(dark);
@@ -37,7 +37,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         rootKeyGlobal = rootKey;
 
         String role = preferences.getString("role","");
-        if (!role.equals("user")) findPreference("settings_change_info").setEnabled(false);
+        if (!role.equals("user")){
+            findPreference("settings_change_image").setEnabled(false);
+            findPreference("settings_change_info").setEnabled(false);
+        }
 
         findPreference("settings_version").setEnabled(false);
         findPreference("settings_version").setShouldDisableView(false);

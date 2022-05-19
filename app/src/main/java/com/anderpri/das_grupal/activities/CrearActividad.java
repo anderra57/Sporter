@@ -79,7 +79,7 @@ public class CrearActividad extends AppCompatActivity implements ImagenDialog.Li
         super.onCreate(savedInstanceState);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String str = preferences.getString("lang","no_lang");
+        String str = preferences.getString("lang","es");
         Utils.getInstance().setLocale(str,getBaseContext());
         boolean dark = preferences.getBoolean("dark",false);
         Utils.getInstance().setTheme(dark);
@@ -418,6 +418,6 @@ public class CrearActividad extends AppCompatActivity implements ImagenDialog.Li
         equipoTextView = (TextView) headerView.findViewById(R.id.equipo);
         String nombreString = preferences.getString("username", "");
         nombreTextView.setText("@"+nombreString);
-        equipoTextView.setText("Admin");
+        equipoTextView.setText(getString(R.string.admin));
     }
 }
