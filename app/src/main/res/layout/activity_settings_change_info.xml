@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.settings.SettingsChangeInfo">
+
+    <EditText
+        android:id="@+id/settings_change_pass_user_txt_old"
+        android:layout_width="259dp"
+        android:layout_height="65dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/settings_change_pass_old"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        tools:ignore="Autofill" />
+    
+    <EditText
+        android:id="@+id/settings_change_pass_user_txt_new"
+        android:layout_width="259dp"
+        android:layout_height="65dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/settings_change_pass_new"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        tools:ignore="Autofill" />
+
+    <Button
+        android:id="@+id/settings_change_pass_user_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_change_pass_user_btn"
+        android:onClick="onUpdateUser"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <EditText
+        android:id="@+id/settings_change_pass_team_txt_old"
+        android:layout_width="259dp"
+        android:layout_height="65dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/settings_change_pass_old"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/settings_change_pass_team_txt_new"
+        android:layout_width="259dp"
+        android:layout_height="65dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/settings_change_pass_new"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7"
+        tools:ignore="Autofill" />
+
+    <Button
+        android:id="@+id/settings_change_pass_team_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_change_pass_team_btn"
+        android:onClick="onUpdateTeam"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

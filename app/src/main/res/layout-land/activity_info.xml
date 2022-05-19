@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="104dp"
+    tools:layout_editor_absoluteY="2dp">
+
+    <TextView
+        android:id="@+id/titulo_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.232"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imagen_actividad_1"
+        android:layout_width="293dp"
+        android:layout_height="245dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_1"
+        app:layout_constraintVertical_bias="0.062"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <Button
+        android:id="@+id/btn_lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fecha_1"
+        app:layout_constraintStart_toStartOf="@+id/fecha_1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_actividad"
+        app:layout_constraintVertical_bias="0.578" />
+
+    <TextView
+        android:id="@+id/ciudad_1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:singleLine="false"
+        android:text="TextView"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/fecha_1"
+        app:layout_constraintEnd_toEndOf="@+id/fecha_1"
+        app:layout_constraintTop_toBottomOf="@+id/fecha_1" />
+
+    <TextView
+        android:id="@+id/descripcion_1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:singleLine="false"
+        android:text="TextView"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="@+id/fecha_1"
+        app:layout_constraintStart_toStartOf="@+id/fecha_1"
+        app:layout_constraintTop_toBottomOf="@+id/ciudad_1" />
+
+    <Button
+        android:id="@+id/btn_actividad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:onClick="doAction"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/fecha_1"
+        app:layout_constraintEnd_toEndOf="@+id/fecha_1"
+        app:layout_constraintHorizontal_bias="0.693"
+        app:layout_constraintTop_toBottomOf="@+id/descripcion_1"
+        app:layout_constraintVertical_bias="0.154" />
+
+    <TextView
+        android:id="@+id/fecha_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.672"
+        app:layout_constraintStart_toEndOf="@+id/titulo_1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
