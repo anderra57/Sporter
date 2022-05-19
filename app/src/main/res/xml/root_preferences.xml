@@ -29,12 +29,12 @@
             app:title="@string/settings_lang_radio_text"
             app:useSimpleSummaryProvider="true" />
 
-        <!--
+
         <SwitchPreferenceCompat
             app:key="settings_theme"
             app:title="@string/settings_dark_mode"
             app:summaryOff="@string/settings_dark_mode_off"
-            app:summaryOn="@string/settings_dark_mode_on" />
+            app:summaryOn="@string/settings_dark_mode_on" /><!--
         -->
 
     </PreferenceCategory>

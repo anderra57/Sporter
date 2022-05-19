@@ -62,6 +62,7 @@ public class AdapterActividades extends BaseAdapter {
         StorageReference storageReference = storage.getReference();
         StorageReference path = storageReference.child(imagenes[i]);
         path.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri.toString()).into(img)).addOnFailureListener(e -> img.setImageResource(R.drawable.default_activity));
+        img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
         return view;
     }

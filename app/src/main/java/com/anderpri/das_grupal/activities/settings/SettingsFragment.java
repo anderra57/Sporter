@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.controllers.utils.Utils;
@@ -28,6 +30,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getActivity());
+        boolean dark = preferences.getBoolean("dark",false);
+        Utils.getInstance().setTheme(dark);
 
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
         rootKeyGlobal = rootKey;
@@ -53,12 +57,27 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             return true;
         });
 
-        /*
-        findPreference("settings_theme").setOnPreferenceChangeListener((preference, newValue) -> {
+        SwitchPreferenceCompat switchPreferenceCompat = findPreference("settings_theme");
+        switchPreferenceCompat.setChecked(dark);
+        switchPreferenceCompat.setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean darkt = (Boolean) newValue;
             Log.d("changed",preference.getTitle().toString());
             Log.d("changed",newValue.toString());
+            setThemeToSP(darkt);
+            Utils.getInstance().setTheme(darkt);
+            /*
+            setLocaleToSP(newValue.toString());
+            ;*/
+            reloadActivity();
             return true;
-        });*/
+        });
+
+    }
+
+    private void setThemeToSP(boolean selected) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("dark",selected);
+        editor.apply();
     }
 
     private void setLocaleToSP(String lang) {

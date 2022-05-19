@@ -69,6 +69,8 @@ public class ActividadesMapa extends AppCompatActivity implements OnMapReadyCall
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
+        boolean dark = preferences.getBoolean("dark",false);
+        Utils.getInstance().setTheme(dark);
 
         setContentView(R.layout.activity_actividades_mapa);
 

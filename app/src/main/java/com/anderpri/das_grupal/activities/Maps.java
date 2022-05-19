@@ -55,6 +55,8 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
+        boolean dark = preferences.getBoolean("dark",false);
+        Utils.getInstance().setTheme(dark);
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){

@@ -46,6 +46,8 @@ public class SettingsChangeImage extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
+        boolean dark = preferences.getBoolean("dark",false);
+        Utils.getInstance().setTheme(dark);
 
         setContentView(R.layout.activity_settings_change_image);
 

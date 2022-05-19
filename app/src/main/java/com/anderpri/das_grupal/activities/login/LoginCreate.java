@@ -47,10 +47,14 @@ public class LoginCreate extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
+        boolean dark = preferences.getBoolean("dark",false);
+        Utils.getInstance().setTheme(dark);
+
 
         //AuxiliarColores.elegirColor(this);
         setContentView(R.layout.activity_login_create);
         getItems();
+        if(dark) imagen.setImageResource(R.drawable.sporter_text_alt);
 
         // TODO comprobar si tiene equipo o no
     }

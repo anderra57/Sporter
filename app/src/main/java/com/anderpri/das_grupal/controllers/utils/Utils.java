@@ -4,6 +4,8 @@ package com.anderpri.das_grupal.controllers.utils;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import java.util.Locale;
 
 public class Utils {
@@ -26,4 +28,8 @@ public class Utils {
         context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
     }
 
+    public void setTheme(boolean selected) {
+        if (selected) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+    }
 }

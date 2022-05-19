@@ -54,6 +54,9 @@ public class LoginMain extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
+        boolean dark = preferences.getBoolean("dark",false);
+        Utils.getInstance().setTheme(dark);
+
 
         //AuxiliarColores.elegirColor(this);
         setContentView(R.layout.activity_login_main);
@@ -62,6 +65,7 @@ public class LoginMain extends AppCompatActivity {
         user = findViewById(R.id.login_main_txt_user);
         pass = findViewById(R.id.login_main_txt_pass);
         imagen = findViewById(R.id.login_main_banner);
+        if(dark) imagen.setImageResource(R.drawable.sporter_text_alt);
         botonLogin = findViewById(R.id.login_main_btn);
         registro = findViewById(R.id.login_main_txt_title);
         warning = findViewById(R.id.login_main_txt_warning);

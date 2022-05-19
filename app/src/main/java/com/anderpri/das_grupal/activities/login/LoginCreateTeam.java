@@ -62,6 +62,8 @@ public class LoginCreateTeam extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
+        boolean dark = preferences.getBoolean("dark",false);
+        Utils.getInstance().setTheme(dark);
 
         setContentView(R.layout.activity_login_create_team);
 
@@ -70,6 +72,8 @@ public class LoginCreateTeam extends AppCompatActivity {
         nameText = findViewById(R.id.login_create_team_txt_name);
         passText = findViewById(R.id.login_create_team_txt_pass);
         warning = findViewById(R.id.login_create_team_txt_warning);
+        ImageView imagen = findViewById(R.id.login_create_team_banner);
+        if(dark) imagen.setImageResource(R.drawable.sporter_text_alt);
 
         btn_x = findViewById(R.id.login_create_team_btn_x);
         btn_x.setVisibility(View.GONE);

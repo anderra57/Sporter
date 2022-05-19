@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.anderpri.das_grupal.R;
 import com.anderpri.das_grupal.controllers.utils.Utils;
@@ -22,8 +23,13 @@ public class LoginTeamButtons extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String str = preferences.getString("lang","no_lang");
         Utils.getInstance().setLocale(str,getBaseContext());
+        boolean dark = preferences.getBoolean("dark",false);
+        Utils.getInstance().setTheme(dark);
 
         setContentView(R.layout.activity_login_team_buttons);
+
+        ImageView imagen = findViewById(R.id.login_team_buttons_banner);
+        if(dark) imagen.setImageResource(R.drawable.sporter_text_alt);
     }
 
     public void createBtn(View v) {
