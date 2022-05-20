@@ -9,6 +9,8 @@ import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.anderpri.das_grupal.R;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,7 +40,7 @@ public class ActivitiesAdminWorker extends Worker {
 
             // Se genera un HttpURLConnection para conectarse con el script de php
             // Direción en la que se encuentra el fichero php
-            String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/aarias023/WEB/das_grupal/actividades.php";
+            String direccion = getApplicationContext().getString(R.string.direccionHttp)+"actividades.php";
             HttpURLConnection urlConnection = null;
             URL url = new URL(direccion);
             urlConnection = (HttpURLConnection) url.openConnection();

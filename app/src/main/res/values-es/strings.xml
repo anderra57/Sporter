@@ -116,4 +116,5 @@
     <string name="settings_change_image_btn_default">Cargar imagen predeterminada</string>
     <string name="settings_change_image_changed">Imagen actualizada correctamente</string>
     <string name="admin">Administrador</string>
+    <string name="direccionHttp">http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/aarias023/WEB/das_grupal/</string>
 </resources>
