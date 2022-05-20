@@ -3,6 +3,38 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/aceptar_rechazar.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_aceptar_rechazar_actividad.xml" value="0.31040564373897706" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_actividades_mapa.xml" value="0.31040564373897706" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_actividades_mapa_admin.xml" value="0.31040564373897706" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_crear_actividad.xml" value="0.31040564373897706" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_info.xml" value="0.31040564373897706" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_lista_equipos_inscritos.xml" value="0.31040564373897706" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_login_create.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_login_create_team.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_login_find_team.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_login_main.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_login_team_buttons.xml" value="0.31040564373897706" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_maps.xml" value="0.31040564373897706" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_sugerir_actividad.xml" value="0.31040564373897706" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/aceptar_rechazar.xml" value="0.3473731884057971" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_aceptar_rechazar_actividad.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_actividades_mapa.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_actividades_mapa_admin.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_crear_actividad.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_info.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_lista_actividades_admin.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_lista_equipos_inscritos.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_create.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_create_team.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_find_team.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_main.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_login_team_buttons.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_maps.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_settings.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_settings_change_image.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_settings_change_info.xml" value="0.17831813576494426" />
+        <entry key="..\:/Users/Adei/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout/activity_sugerir_actividad.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/drawable-anydpi/ic_sugerir.xml" value="0.1" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_crear_actividad.xml" value="0.152" />
         <entry key="..\:/Users/alvar/AndroidStudioProjects/DAS_Grupal/app/src/main/res/layout-land/activity_lista_actividades_no_inscrito.xml" value="0.15520282186948853" />
@@ -22,6 +54,7 @@
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

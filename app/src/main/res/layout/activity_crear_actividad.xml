@@ -29,7 +29,7 @@
             <EditText
                 android:id="@+id/crear_actividad_nombre_text"
                 android:layout_width="321dp"
-                android:layout_height="74dp"
+                android:layout_height="50dp"
                 android:ems="10"
                 android:hint="@string/nombre_actividad"
                 android:inputType="textPersonName"
@@ -42,7 +42,7 @@
             <EditText
                 android:id="@+id/crear_actividad_numero_text"
                 android:layout_width="325dp"
-                android:layout_height="75dp"
+                android:layout_height="50dp"
                 android:ems="10"
                 android:hint="@string/numero_participantes"
                 android:inputType="numberDecimal"
@@ -56,14 +56,13 @@
             <EditText
                 android:id="@+id/crear_actividad_explicacion_text"
                 android:layout_width="361dp"
-                android:layout_height="152dp"
-                android:layout_marginBottom="72dp"
+                android:layout_height="130dp"
+                android:layout_marginBottom="116dp"
                 android:ems="10"
                 android:hint="@string/explicacion"
                 android:inputType="textMultiLine"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.709"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
@@ -73,14 +72,15 @@
                 android:text="@string/crear"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/crear_actividad_explicacion_text"
-                app:layout_constraintVertical_bias="0.523" />
+                app:layout_constraintVertical_bias="0.384" />
 
             <EditText
                 android:id="@+id/crear_actividad_fecha_text"
                 android:layout_width="326dp"
-                android:layout_height="57dp"
+                android:layout_height="50dp"
                 android:clickable="true"
                 android:ems="10"
                 android:focusable="false"
@@ -96,11 +96,11 @@
             <EditText
                 android:id="@+id/crear_actividad_ciudad_text"
                 android:layout_width="326dp"
-                android:layout_height="57dp"
+                android:layout_height="50dp"
                 android:clickable="true"
+                android:editable="false"
                 android:ems="10"
                 android:focusable="false"
-                android:editable="false"
                 android:hint="@string/ciudad"
                 android:inputType="date"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -126,17 +126,16 @@
                 android:id="@+id/crear_actividad_aviso_imagen"
                 android:layout_width="325dp"
                 android:layout_height="33dp"
-                android:text="@string/avisoImagen"
-                android:textSize="15dp"
                 android:gravity="center"
+                android:text="@string/avisoImagen"
                 android:textColor="@color/quantum_googredA200"
+                android:textSize="15dp"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/crear_actividad_boton_imagen"
-                app:layout_constraintVertical_bias="0.073" />
+                app:layout_constraintVertical_bias="0.037" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

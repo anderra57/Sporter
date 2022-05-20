@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteX="104dp"
-    tools:layout_editor_absoluteY="2dp">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/titulo_1"
@@ -37,7 +35,8 @@
         android:id="@+id/btn_lista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:onClick="aceptar"
+        android:text="@string/aceptar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/fecha_1"
         app:layout_constraintHorizontal_bias="0.666"
@@ -49,13 +48,13 @@
         android:id="@+id/ciudad_1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:singleLine="false"
         android:text="TextView"
         android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/fecha_1"
         app:layout_constraintStart_toStartOf="@+id/fecha_1"
+        app:layout_constraintEnd_toEndOf="@+id/fecha_1"
         app:layout_constraintTop_toBottomOf="@+id/fecha_1" />
 
     <TextView
@@ -76,14 +75,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:onClick="doAction"
-        android:text="Button"
+        android:onClick="rechazar"
+        android:text="@string/rechazar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/fecha_1"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="@+id/fecha_1"
         app:layout_constraintTop_toBottomOf="@+id/descripcion_1"
-        app:layout_constraintVertical_bias="0.041" />
+        app:layout_constraintVertical_bias="0.116" />
 
     <TextView
         android:id="@+id/fecha_1"
@@ -97,5 +96,4 @@
         app:layout_constraintHorizontal_bias="0.672"
         app:layout_constraintStart_toEndOf="@+id/titulo_1"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

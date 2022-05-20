@@ -29,8 +29,8 @@
             <fragment
                 android:id="@+id/fragmentoActividadesMapaAdmin"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="412dp"
-                android:layout_height="678dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
