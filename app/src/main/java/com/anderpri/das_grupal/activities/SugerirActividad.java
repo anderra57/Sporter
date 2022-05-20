@@ -98,6 +98,7 @@ public class SugerirActividad extends AppCompatActivity implements ImagenDialog.
         nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+        nvDrawer.getMenu().getItem(2).setChecked(true);
 
         botonSugerir = findViewById(R.id.sugerir_actividad_boton);
         botonImagen = findViewById(R.id.sugerir_actividad_boton_imagen);

@@ -85,6 +85,7 @@ public class ActividadesMapa extends AppCompatActivity implements OnMapReadyCall
         nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+        nvDrawer.getMenu().getItem(3).setChecked(true);
 
         SupportMapFragment mapa = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentoActividadesMapa);
         mapa.getMapAsync(this);

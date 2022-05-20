@@ -97,6 +97,7 @@ public class CrearActividad extends AppCompatActivity implements ImagenDialog.Li
         nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+        nvDrawer.getMenu().getItem(1).setChecked(true);
 
         botonCrear = findViewById(R.id.crear_actividad_boton);
         botonImagen = findViewById(R.id.crear_actividad_boton_imagen);

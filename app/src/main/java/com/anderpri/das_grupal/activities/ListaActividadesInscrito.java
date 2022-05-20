@@ -80,6 +80,7 @@ public class ListaActividadesInscrito extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+        nvDrawer.getMenu().getItem(0).setChecked(true);
 
 
         // Inicalizar la lista de actividades
@@ -220,12 +221,9 @@ public class ListaActividadesInscrito extends AppCompatActivity {
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
                 });
     }
 

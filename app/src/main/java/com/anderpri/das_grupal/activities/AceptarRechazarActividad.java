@@ -84,6 +84,7 @@ public class AceptarRechazarActividad extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.navigation_view);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+        nvDrawer.getMenu().getItem(2).setChecked(true);
 
 
         // Inicalizar la lista de actividades
